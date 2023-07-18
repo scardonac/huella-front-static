@@ -1,0 +1,719 @@
+.mediaViewInfo {
+	--web-view-name: 1920_Registros_Agregar año base_Sólo aparece si es nuevo en la plataforma y no ha cargado nada;
+	--web-view-id: n_920_Registros_Agregar_ao_base_Slo_aparece_si_es_nuevo_en_la_plataforma_y_no_ha_cargado_nada;
+	--web-show-by-media-query: true;
+	--web-enable-deep-linking: true;
+}
+:root {
+	--web-view-ids: n_920_Registros_Agregar_ao_base_Slo_aparece_si_es_nuevo_en_la_plataforma_y_no_ha_cargado_nada;
+}
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	border: none;
+}
+@keyframes  {
+
+
+}
+#n_920_Registros_Agregar_ao_base_Slo_aparece_si_es_nuevo_en_la_plataforma_y_no_ha_cargado_nada {
+	position: absolute;
+	width: 1920px;
+	height: 1080px;
+	background-color: rgba(255,255,255,1);
+	overflow: hidden;
+	--web-animation: fadein undefineds undefined;
+	--web-action-type: view;
+	--web-action-target: n_920_Registros_Paso1_Estado_por_defecto;
+	cursor: pointer;
+	--web-view-name: 1920_Registros_Agregar año base_Sólo aparece si es nuevo en la plataforma y no ha cargado nada;
+	--web-view-id: n_920_Registros_Agregar_ao_base_Slo_aparece_si_es_nuevo_en_la_plataforma_y_no_ha_cargado_nada;
+	--web-show-by-media-query: true;
+	--web-enable-deep-linking: true;
+}
+#Platform_menu_left {
+	position: absolute;
+	width: 262px;
+	height: 1080px;
+	left: 0px;
+	top: 0px;
+	overflow: visible;
+}
+#Rectngulo_1_b {
+	fill: url(#Rectngulo_1_b);
+}
+.Rectngulo_1_b {
+	position: absolute;
+	overflow: visible;
+	width: 262px;
+	height: 1080px;
+	left: 0px;
+	top: 0px;
+}
+#Rectngulo_1105 {
+	opacity: 0.8;
+	fill: rgba(255,255,255,1);
+}
+.Rectngulo_1105 {
+	position: absolute;
+	overflow: visible;
+	width: 194px;
+	height: 45px;
+	left: 40px;
+	top: 125px;
+}
+#Grupo_959 {
+	position: absolute;
+	width: 76px;
+	height: 21px;
+	left: 52px;
+	top: 92px;
+	overflow: visible;
+}
+#Inicio {
+	left: 30px;
+	top: 0px;
+	position: absolute;
+	overflow: visible;
+	width: 47px;
+	white-space: nowrap;
+	line-height: 22px;
+	margin-top: -3px;
+	text-align: left;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	color: rgba(32,38,38,1);
+	letter-spacing: 0.05px;
+}
+#icon_home {
+	position: absolute;
+	width: 18px;
+	height: 20.007px;
+	left: 0px;
+	top: 0px;
+	overflow: visible;
+}
+#Trazado_5874 {
+	fill: transparent;
+	stroke: rgba(32,38,38,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: miter;
+	stroke-linecap: butt;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_5874 {
+	overflow: visible;
+	position: absolute;
+	width: 19.5px;
+	height: 21.564px;
+	left: 0px;
+	top: 0px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#Rectngulo_1064 {
+	fill: transparent;
+	stroke: rgba(32,38,38,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: miter;
+	stroke-linecap: butt;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Rectngulo_1064 {
+	position: absolute;
+	overflow: visible;
+	width: 7.5px;
+	height: 9.5px;
+	left: 6px;
+	top: 11.824px;
+}
+#Grupo_960 {
+	position: absolute;
+	width: 111px;
+	height: 21px;
+	left: 52px;
+	top: 137px;
+	overflow: visible;
+}
+#Registros {
+	left: 30px;
+	top: 0px;
+	position: absolute;
+	overflow: visible;
+	width: 82px;
+	white-space: nowrap;
+	line-height: 22px;
+	margin-top: -3px;
+	text-align: left;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 16px;
+	color: rgba(14,85,92,1);
+	letter-spacing: 0.05px;
+}
+#icon_register {
+	position: absolute;
+	width: 17.922px;
+	height: 18px;
+	left: 0px;
+	top: 2px;
+	overflow: visible;
+}
+#Trazado_6229 {
+	fill: transparent;
+	stroke: rgba(14,85,92,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_6229 {
+	overflow: visible;
+	position: absolute;
+	width: 17.5px;
+	height: 19.5px;
+	left: 0px;
+	top: 0px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#Trazado_6230 {
+	fill: transparent;
+	stroke: rgba(14,85,92,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: miter;
+	stroke-linecap: butt;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_6230 {
+	overflow: visible;
+	position: absolute;
+	width: 13.537px;
+	height: 13.535px;
+	left: 6.055px;
+	top: 0.078px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#Trazado_6231 {
+	fill: transparent;
+	stroke: rgba(14,85,92,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: miter;
+	stroke-linecap: butt;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_6231 {
+	overflow: visible;
+	position: absolute;
+	width: 4.063px;
+	height: 4.063px;
+	left: 13.5px;
+	top: 1.5px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#Grupo_961 {
+	position: absolute;
+	width: 121px;
+	height: 21px;
+	left: 52px;
+	top: 182px;
+	overflow: visible;
+}
+#Resultados {
+	left: 30px;
+	top: 0px;
+	position: absolute;
+	overflow: visible;
+	width: 92px;
+	white-space: nowrap;
+	line-height: 22px;
+	margin-top: -3px;
+	text-align: left;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	color: rgba(32,38,38,1);
+	letter-spacing: 0.05px;
+}
+#icon_results {
+	position: absolute;
+	width: 18px;
+	height: 16px;
+	left: 0px;
+	top: 3px;
+	overflow: visible;
+}
+#Trazado_6461 {
+	fill: transparent;
+	stroke: rgba(32,38,38,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: miter;
+	stroke-linecap: round;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_6461 {
+	overflow: visible;
+	position: absolute;
+	width: 5.5px;
+	height: 8.5px;
+	left: 0px;
+	top: 9px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#Trazado_6462 {
+	fill: transparent;
+	stroke: rgba(32,38,38,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: miter;
+	stroke-linecap: round;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_6462 {
+	overflow: visible;
+	position: absolute;
+	width: 5.5px;
+	height: 17.5px;
+	left: 7px;
+	top: 0px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#Trazado_6463 {
+	fill: transparent;
+	stroke: rgba(32,38,38,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: miter;
+	stroke-linecap: round;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_6463 {
+	overflow: visible;
+	position: absolute;
+	width: 5.5px;
+	height: 13.5px;
+	left: 14px;
+	top: 4px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#Grupo_962 {
+	position: absolute;
+	width: 154px;
+	height: 21px;
+	left: 52px;
+	top: 227px;
+	overflow: visible;
+}
+#Compensacin {
+	left: 30px;
+	top: 0px;
+	position: absolute;
+	overflow: visible;
+	width: 125px;
+	white-space: nowrap;
+	line-height: 22px;
+	margin-top: -3px;
+	text-align: left;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	color: rgba(32,38,38,1);
+	letter-spacing: 0.05px;
+}
+#icon_compensation {
+	position: absolute;
+	width: 18px;
+	height: 12px;
+	left: 0px;
+	top: 5px;
+	overflow: visible;
+}
+#Trazado_6395 {
+	fill: transparent;
+	stroke: rgba(32,38,38,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_6395 {
+	overflow: visible;
+	position: absolute;
+	width: 20.109px;
+	height: 14.109px;
+	left: 0px;
+	top: 0px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#Trazado_6396 {
+	fill: transparent;
+	stroke: rgba(32,38,38,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: round;
+	stroke-linecap: round;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_6396 {
+	overflow: visible;
+	position: absolute;
+	width: 6.5px;
+	height: 6.5px;
+	left: 13px;
+	top: 7px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#Plataforma_HCero {
+	left: 40px;
+	top: 973px;
+	position: absolute;
+	overflow: visible;
+	width: 172px;
+	white-space: nowrap;
+	text-align: left;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 19px;
+	color: rgba(255,255,255,1);
+}
+#Grupo_1197 {
+	position: absolute;
+	width: 94.063px;
+	height: 15.236px;
+	left: 40px;
+	top: 1005px;
+	overflow: visible;
+}
+#Platform_bar_top {
+	position: absolute;
+	width: 1658px;
+	height: 64px;
+	left: 262px;
+	top: 0px;
+	overflow: visible;
+}
+#Rectngulo_1509 {
+	fill: rgba(255,255,255,1);
+}
+.Rectngulo_1509 {
+	position: absolute;
+	overflow: visible;
+	width: 1658px;
+	height: 64px;
+	left: 0px;
+	top: 0px;
+}
+#icon_notification {
+	position: absolute;
+	width: 16px;
+	height: 17px;
+	left: 1303px;
+	top: 24px;
+	overflow: visible;
+}
+#Componente_170 {
+	position: absolute;
+	width: 16px;
+	height: 17px;
+	left: 0px;
+	top: 0px;
+	overflow: visible;
+}
+#Trazado_6168 {
+	fill: transparent;
+	stroke: rgba(98,113,115,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: round;
+	stroke-linecap: butt;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_6168 {
+	overflow: visible;
+	position: absolute;
+	width: 17.5px;
+	height: 16.5px;
+	left: 0px;
+	top: 0px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#Trazado_6169 {
+	fill: transparent;
+	stroke: rgba(98,113,115,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: miter;
+	stroke-linecap: butt;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_6169 {
+	overflow: visible;
+	position: absolute;
+	width: 5.5px;
+	height: 2.75px;
+	left: 6px;
+	top: 15px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#icon_support {
+	position: absolute;
+	width: 19px;
+	height: 19px;
+	left: 1339px;
+	top: 23px;
+	overflow: visible;
+}
+#Elipse_4 {
+	fill: transparent;
+	stroke: rgba(98,113,115,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: miter;
+	stroke-linecap: butt;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Elipse_4 {
+	position: absolute;
+	overflow: visible;
+	width: 19px;
+	height: 19px;
+	left: 0px;
+	top: 0px;
+}
+#Text {
+	left: 5.5px;
+	top: 1px;
+	position: absolute;
+	overflow: visible;
+	width: 9px;
+	white-space: nowrap;
+	line-height: 20px;
+	margin-top: -3px;
+	text-align: left;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 14px;
+	color: rgba(98,113,115,1);
+	letter-spacing: 0.05px;
+}
+#icon_arrow {
+	position: absolute;
+	width: 7.211px;
+	height: 3.357px;
+	left: 1404.789px;
+	top: 31px;
+	overflow: visible;
+}
+#Trazado_5919 {
+	fill: transparent;
+	stroke: rgba(98,113,115,1);
+	stroke-width: 1.5px;
+	stroke-linejoin: miter;
+	stroke-linecap: round;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Trazado_5919 {
+	overflow: visible;
+	position: absolute;
+	width: 9.332px;
+	height: 5.248px;
+	left: 0px;
+	top: 0px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#icon_user {
+	position: absolute;
+	width: 19px;
+	height: 19px;
+	left: 1377.865px;
+	top: 23px;
+	overflow: visible;
+}
+#Grupo_963 {
+	position: absolute;
+	width: 19px;
+	height: 19px;
+	left: 0px;
+	top: 0px;
+	overflow: visible;
+}
+#NameUser {
+	left: 1432px;
+	top: 21px;
+	position: absolute;
+	overflow: visible;
+	width: 87px;
+	white-space: nowrap;
+	line-height: 22px;
+	margin-top: -3px;
+	text-align: right;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	color: rgba(32,38,38,1);
+	letter-spacing: 0.05px;
+}
+#Antes_de_comenzar_ingresar_un_ {
+	left: 734px;
+	top: 124px;
+	position: absolute;
+	overflow: visible;
+	width: 592px;
+	white-space: nowrap;
+	line-height: 38px;
+	margin-top: -5px;
+	text-align: left;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 28px;
+	color: rgba(14,85,92,1);
+	letter-spacing: 0.05px;
+}
+#Es_importante_para_la_certific {
+	left: 692px;
+	top: 179px;
+	position: absolute;
+	overflow: visible;
+	width: 675px;
+	height: 48px;
+	line-height: 26px;
+	margin-top: -4px;
+	text-align: center;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	color: rgba(98,113,115,1);
+	letter-spacing: 0.05px;
+}
+#Si_no_tienes_los_soportes_para {
+	left: 692px;
+	top: 255px;
+	position: absolute;
+	overflow: visible;
+	width: 675px;
+	height: 43px;
+	line-height: 22px;
+	margin-top: -3px;
+	text-align: center;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	color: rgba(156,160,159,1);
+	letter-spacing: 0.05px;
+}
+#Illustration_beginRegister {
+	position: absolute;
+	width: 450px;
+	height: 269.788px;
+	left: 794px;
+	top: 358px;
+	overflow: visible;
+}
+#Grupo_1203 {
+	position: absolute;
+	width: 450px;
+	height: 269.789px;
+	left: 0px;
+	top: 0px;
+	overflow: visible;
+}
+#Btn_Principal {
+	position: absolute;
+	width: 260px;
+	height: 42px;
+	left: 1030px;
+	top: 688px;
+	overflow: visible;
+	padding: 10px 48px 10px 48px;
+}
+#Rectngulo_1503 {
+	fill: rgba(254,80,0,1);
+}
+.Rectngulo_1503 {
+	filter: drop-shadow(0px 2px 6px rgba(206, 65, 0, 0.4));
+	position: absolute;
+	overflow: visible;
+	width: 278px;
+	height: 60px;
+	left: 0px;
+	top: 0px;
+}
+#Agregar_ao_base {
+	left: 48px;
+	top: 10px;
+	position: absolute;
+	overflow: visible;
+	width: 165px;
+	white-space: nowrap;
+	line-height: 26px;
+	margin-top: -4px;
+	text-align: center;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	color: rgba(255,255,255,1);
+	letter-spacing: 0.05px;
+}
+#Btn_DeSalida {
+	position: absolute;
+	width: 264px;
+	height: 42px;
+	left: 749px;
+	top: 688px;
+	overflow: visible;
+	padding: 10px 25px 10px 25px;
+}
+#Rectngulo_1503_dm {
+	fill: rgba(247,249,247,1);
+	stroke: rgba(98,113,115,1);
+	stroke-width: 1px;
+	stroke-linejoin: miter;
+	stroke-linecap: butt;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.Rectngulo_1503_dm {
+	filter: drop-shadow(0px 2px 3px rgba(193, 181, 176, 0.149));
+	position: absolute;
+	overflow: visible;
+	width: 273px;
+	height: 51px;
+	left: 0px;
+	top: 0px;
+}
+#Continuar_sin_ao_base {
+	left: 25px;
+	top: 10px;
+	position: absolute;
+	overflow: visible;
+	width: 215px;
+	white-space: nowrap;
+	line-height: 26px;
+	margin-top: -4px;
+	text-align: center;
+	font-family: Sora;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	color: rgba(98,113,115,1);
+	letter-spacing: 0.05px;
+}
