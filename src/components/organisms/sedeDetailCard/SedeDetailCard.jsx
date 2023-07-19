@@ -24,7 +24,7 @@ export const SedeDetailCard = ({ sector_productivo_id = null, address = "Cra XXX
         if (sector_productivo_id) {
             const newProductive = productiveSector.find(item => item.id === sector_productivo_id)
             setProductiveSelected(newProductive)
-            dispatch(getCenterCurrentCase(newProductive));
+            // dispatch(getCenterCurrentCase(newProductive));
         }
     }, [productiveSector])
 

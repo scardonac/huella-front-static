@@ -1,9 +1,11 @@
 //Dependencies
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 //Routes
 import { paths } from "../../../routes/paths";
 //Components
+import { CustomAlert } from '../../../components/molecules/customAlert/customAlert';
 import { LandingHeader } from '../../../components/organisms/header/LandingHeader';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
@@ -19,6 +21,8 @@ export const LandingLogin = () => {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+
+    const [textAlert, setTextAlert] = useState(null);
 
     const defaultValues = {
         email: '',
@@ -42,7 +46,9 @@ export const LandingLogin = () => {
             // otros datos del usuario
         };
 
-        dispatch(LogingAction(user, navigate)); // envía la acción de login con el usuario autenticado
+        const { error, verify } = await dispatch(LogingAction(user, navigate)); // envía la acción de login con el usuario autenticado
+        error && setTextAlert(error); // si hay un error, muestra el mensaje
+        verify && navigate(paths.APPHOME); // si el usuario está autenticado, redirige a la página de inicio
     }
 
     return (
@@ -95,6 +101,15 @@ export const LandingLogin = () => {
                         <div className="cursor-pointer absolute bottom-[0px] left-[calc(50%_-_155px)] text-base [text-decoration:underline] tracking-[0.08px] leading-[22px] font-sora text-gray-100 text-center">
                             ¿Aún no tienes una cuenta? Regístrate
                         </div>
+                        {textAlert && (
+                            // <div className='mt-10 flex justify-center'>
+                            <div className='mt-10 absolute top-[calc(50%_+_57.5px)] left-[80px]'>
+                                <CustomAlert
+                                    message={textAlert}
+                                    type='error'
+                                />
+                            </div>
+                        )}
                     </form>
                 </div>
             </div>

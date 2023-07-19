@@ -1,5 +1,5 @@
 // Dependencias
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 // Axios
 import axiosClient from '../../../config/AxiosClient';
 // Components
@@ -19,14 +19,12 @@ export const SelectSimple = ({
     validations,
 }) => {
 
-    const memoizedApiUrl = useMemo(() => apiUrl, [apiUrl]);
-    const memoizedOptions = useMemo(() => options, [options]);
+    const [list, setList] = useState([]);
 
-    const [list, setList] = useState(memoizedOptions);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axiosClient.get(memoizedApiUrl);
+                const response = await axiosClient.get(apiUrl);
                 const data = response.data.data ? response.data.data : [];
                 setList(data);
             } catch (error) {
@@ -37,10 +35,27 @@ export const SelectSimple = ({
         if (apiUrl) {
             fetchData();
         }
-    }, [memoizedApiUrl]);
+    }, [apiUrl]);
+
+    useEffect(() => {
+        if (options.length > 0) {
+            setList(options);
+        }
+    }, [options]);
+
+    // console.log(nameRegister, 'nameRegister')
+    // console.log(register, 'register')
+    // console.log(list, 'list')
 
     return (
         <>
+            {/* <select {...register("Title", { required: true })}>
+                <option value="Mr">Mr</option>
+                <option value="Mrs">Mrs</option>
+                <option value="Miss">Miss</option>
+                <option value="Dr">Dr</option>
+            </select> */}
+
             <label className='text-f18 text-primary-gris2'>{label}</label>
             <select
                 className='px-2 py-2 rounded-md border border-dimgray-200'

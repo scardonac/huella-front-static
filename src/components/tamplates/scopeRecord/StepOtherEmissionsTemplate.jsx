@@ -17,6 +17,8 @@ import { paths } from '../../../routes/paths';
 import { updateFourthStepCase } from '../../../redux/slices/RegisterSlice';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
+//Slice
+import { createCalculationAction } from '../../../redux/actions/RegisterAction';
 
 export const StepOtherEmissionsTemplate = () => {
 
@@ -45,9 +47,11 @@ export const StepOtherEmissionsTemplate = () => {
 
   const dataForm = watch();
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     dispatch(updateFourthStepCase(dataForm));
-    goNext();
+    const { error, verify } = await dispatch(createCalculationAction(dataForm));
+    // if (error) return setTextAlert(error);
+    if (verify) return goNext();
   };
 
   useEffect(() => {

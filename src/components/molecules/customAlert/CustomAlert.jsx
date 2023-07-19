@@ -1,4 +1,3 @@
-
 //Icons
 import { Icons } from "../../../assets/icons/IconProvider";
 
@@ -14,7 +13,7 @@ export const CustomAlert = ({ message, type }) => {
 
     return (
         <div className={`${containerStyle[type]} rounded h-[28px] flex items-center mt-1 whitespace-normal w-fit p-2`}>
-            <img src={IconAlertWhite} alt="Icono de alerta"/>
+            <img src={IconAlertWhite} alt="Icono de alerta" />
             <p className="ml-1 text-white text-left text-base leading-5 tracking-tighter font-normal opacity-100">
                 {message}
             </p>

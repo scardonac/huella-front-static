@@ -12,8 +12,6 @@ export const TextInputSimple = ({
     validations,
 }) => {
 
-    // validations,
-
     return (
         <>
             <label className='text-f18 text-primary-gris2'>{label}</label>

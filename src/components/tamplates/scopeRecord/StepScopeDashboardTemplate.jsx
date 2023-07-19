@@ -1,4 +1,3 @@
-import axios from 'axios';
 //Dependencies
 import { useEffect, useState } from 'react'
 //Components
@@ -9,10 +8,11 @@ import { SedeInfo } from '../../../components/organisms/sedeInfo/SedeInfo';
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 //Data
 import { ModalAddCategories } from '../../organisms/modals/ModalAddCategories';
-import { baseURL, calculoID, token } from '../../../ConstantsAPI';
+import { calculoID, token } from '../../../ConstantsAPI';
 import Modal from '../../organisms/modals/Modal';
 
 import deleteIcon from '../../../assets/Illustrations/Illustration_DeleteElement.svg'
+import axiosClient from '../../../config/AxiosClient';
 
 export const StepScopeDashboardTemplate = () => {
   // Comportamiento de Modal para confirmacion de delete.
@@ -41,15 +41,10 @@ export const StepScopeDashboardTemplate = () => {
   }
 
   // Función para actualizar el estado con todas las emisiones.
-  const updateAllEmisions = async (token_ = token) => {
+  const updateAllEmisions = async () => {
     try {
-      const respuesta = await axios.get(`${baseURL}/emisiones`, {
-        headers: {
-          Authorization: token_
-        }
-      });
+      const respuesta = await axiosClient.get('emisiones');
       const array = respuesta?.data?.data
-      console.log("getAllEmisions: ", array);
       setAllEmisions(array)
     } catch (error) {
       // Manejo de errores
@@ -57,13 +52,9 @@ export const StepScopeDashboardTemplate = () => {
     }
   };
 
-  const deleteEmision = async (token_ = token, id_ = null) => {
+  const deleteEmision = async (id = null) => {
     try {
-      const respuesta = await axios.delete(`${baseURL}/soportes/delete/${id_}`, {
-        headers: {
-          Authorization: token_
-        }
-      });
+      const respuesta = await axiosClient.delete(`/soportes/delete/${id}`);
 
       // Aquí puedes hacer algo con la respuesta obtenida
       const response = respuesta?.data
@@ -77,18 +68,12 @@ export const StepScopeDashboardTemplate = () => {
   };
 
   const confirmDeleteEmision = () => {
-    // console.log("token: ",token);
-    console.log("id: ", idToDelete);
     deleteEmision(token, idToDelete)
   }
 
-  const updateSelectedEmisions = async (token_ = token, id_ = calculoID) => {
+  const updateSelectedEmisions = async (id = calculoID) => {
     try {
-      const respuesta = await axios.get(`${baseURL}/render/${id_}`, {
-        headers: {
-          Authorization: token_
-        }
-      });
+      const respuesta = await axiosClient.get(`/render/${id}`);
 
       // Aquí puedes hacer algo con la respuesta obtenida
       const array = respuesta?.data?.logs_details
@@ -102,20 +87,13 @@ export const StepScopeDashboardTemplate = () => {
     }
   };
 
-  const putSelectedEmisions = async (token_ = token, id_ = calculoID, array_ = []) => {
-    console.log(token_);
+  const putSelectedEmisions = async (id = calculoID, array_ = []) => {
     try {
-      const respuesta = await axios.put(`${baseURL}/forms`, {
-        body: {
-          "calculo_id": id_,
-          "log_array": array_
-        },
-        headers: {
-          Authorization: token_
-        }
+      const respuesta = await axiosClient.put('/forms', {
+        "calculo_id": id,
+        "log_array": array_
       });
       // Aquí puedes hacer algo con la respuesta obtenida
-      console.log("respuesta: ", respuesta);
       handleCloseModal()
     } catch (error) {
       // Manejo de errores

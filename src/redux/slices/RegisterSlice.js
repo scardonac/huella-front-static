@@ -5,12 +5,13 @@ const initialState = {
     secondStep: {},
     thirdStep: {},
     fourthStep: {},
-    centerCurrent: {},
+    centerCurrent: null,
     centers: [],
     directEmissions: [],
     inDirectEmissions: [],
     otherEmissions: [],
     productiveSector: [],
+    calculations: [],
 };
 
 export const registerSlice = createSlice({
@@ -47,9 +48,12 @@ export const registerSlice = createSlice({
         getSectorProductivoCase: (state, action) => {
             state.productiveSector = action.payload;
         },
+        getCalculationsCase: (state, action) => {
+            state.calculations = action.payload;
+        },
 
         resetRegisterAction: (state) => {
-            state.centerCurrent = {};
+            state.centerCurrent = null;
             state.centers = [];
             state.directEmissions = [];
             state.firstStep = {};
@@ -59,6 +63,7 @@ export const registerSlice = createSlice({
             state.productiveSector = [];
             state.secondStep = {};
             state.thirdStep = {};
+            state.calculations = [];
         },
     },
 });
@@ -75,5 +80,6 @@ export const {
     updateFourthStepCase,
     updateSecondStepCase,
     updateThirdStepCase,
+    getCalculationsCase,
 } = registerSlice.actions;
 export default registerSlice.reducer;

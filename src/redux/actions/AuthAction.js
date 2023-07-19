@@ -2,7 +2,6 @@
 import axiosClient from "../../config/AxiosClient";
 //Slices
 import { loginCase } from "../slices/AuthSlice";
-import { paths } from "../../routes/paths";
 
 
 // Acción para el login
@@ -15,11 +14,10 @@ export const LogingAction = (user, navigate) => {
             const { user_id, nombre: username, empresa: company } = JSON.parse(data.info);
             localStorage.setItem('token', data.token);
             dispatch(loginCase({ user_id, username, company }));
-            navigate(paths.APPHOME);
+            return { error: null, verify: true };
         } catch (error) {
-            // dispatch(loginCase({ username, email }));
-            // navigate(paths.APPHOME);
             console.log(error);
+            return { error: 'Usuario o contraseña incorrectos', verify: false };
         }
     }
 

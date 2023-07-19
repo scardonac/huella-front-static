@@ -1,8 +1,21 @@
 //Axios Client
-import { emisionesDirectasIcons, emisionesIndirectasIcons, espaciosIcons, otrasEmisionesIndirectasIcons } from "../../Backend";
+import {
+    emisionesDirectasIcons,
+    emisionesIndirectasIcons,
+    espaciosIcons,
+    otrasEmisionesIndirectasIcons
+} from "../../Backend";
 import axiosClient from "../../config/AxiosClient";
 //Slices
-import { getCenterCurrentCase, getCentersCase, getDirectEmissionsCase, getInDirectEmissionsCase, getOtherEmissionsCase, getSectorProductivoCase } from "../slices/RegisterSlice";
+import {
+    getCentersCase,
+    getDirectEmissionsCase,
+    getInDirectEmissionsCase,
+    getOtherEmissionsCase,
+    getSectorProductivoCase,
+    getCenterCurrentCase,
+    getCalculationsCase,
+} from "../slices/RegisterSlice";
 
 // Acción para trear las sedes o centros
 export const getCentersAction = () => {
@@ -37,62 +50,23 @@ export const createCenterAction = (dataForm) => {
 
         try {
             const { data: { data } } = await axiosClient.post('/centros', dataCenter);
-
+            console.log(data, 'dataCreateCenter')
             // Despachar una acción con el resultado
             dispatch(getCenterCurrentCase(data));
+            dispatch(getCentersAction()); // Actualizar los centros
 
-            return true;
+            return { error: null, verify: true };
         } catch (error) {
             console.log(error);
-            if (error.response.data.message === 'centro already exists' && center !== '0') return true;
+            if (error.response.data.message == 'centro already exists' && center !== '0') return { error: 'El centro ya existe', verify: true };
             // Despachar una acción de error si es necesario
-            dispatch(getCenterCurrentCase({}));
-            return false;
+            dispatch(getCenterCurrentCase(null));
+            return { error: 'Error al crear el centro', verify: true };
         }
     };
 };
 
 // Acción para traer las emisiones directas
-// export const getEmissionsAction = () => {
-//     return async (dispatch) => {
-//         try {
-//             const { data: { data } } = await axiosClient.get('/emisiones/');
-//             if (!data) return;
-//             const newDataDirectEmissions = data?.emisiones_directas.map((item) => {
-//                 const iconData = emisionesDirectasIcons[item.nombre];
-//                 return {
-//                     ...item,
-//                     icon: iconData?.icon ? iconData.icon : "Car_Default",
-//                     iconChecked: iconData?.iconChecked ? iconData.iconChecked : "Car_VFuerte",
-//                     isChecked: false,
-//                 };
-//             });
-//             const newDataIndirectEmissions = data?.emisiones_directas.map((item) => {
-//                 const iconData = emisionesIndirectasIcons[item.nombre];
-//                 return {
-//                     ...item,
-//                     icon: iconData?.icon ? iconData.icon : "Car_Default",
-//                     iconChecked: iconData?.iconChecked ? iconData.iconChecked : "Car_VFuerte",
-//                     isChecked: false,
-//                 };
-//             });
-//             const newDataOtherEmissions = data?.emisiones_directas.map((item) => {
-//                 const iconData = otrasEmisionesIndirectasIcons[item.nombre];
-//                 return {
-//                     ...item,
-//                     icon: iconData?.icon ? iconData.icon : "Car_Default",
-//                     iconChecked: iconData?.iconChecked ? iconData.iconChecked : "Car_VFuerte",
-//                     isChecked: false,
-//                 };
-//             });
-//             newDataDirectEmissions && dispatch(getDirectEmissionsCase(newDataDirectEmissions));
-//             newDataIndirectEmissions && dispatch(getInDirectEmissionsCase(newDataIndirectEmissions));
-//             newDataOtherEmissions && dispatch(getOtherEmissionsCase(newDataOtherEmissions));
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     }
-// }
 export const getEmissionsAction = () => {
     return async (dispatch) => {
         try {
@@ -140,6 +114,43 @@ export const getSectorProductivoAction = () => {
             dispatch(getSectorProductivoCase(newData));
         } catch (error) {
             console.log(error);
+        }
+    }
+}
+
+// Acción para crear un Calculo con logs
+export const createCalculationAction = (dataFourthStep) => {
+
+    return async (dispatch, getState) => {
+
+        try {
+            const { register: { firstStep, secondStep, thirdStep, centerCurrent }, auth: { company } } = getState().persistedData;
+
+            const log_array = [
+                ...secondStep.categories,
+                ...thirdStep.categories,
+                ...dataFourthStep.categories
+            ]
+            console.log(dataFourthStep, 'dataFourthStep')
+            console.log(log_array, 'log_array')
+
+            let dataCalculation = {
+                calculo: {
+                    centro_id: firstStep.center,
+                    empresa: company,
+                    final_reg: firstStep.endDate,
+                    inicio_reg: firstStep.startDate,
+                    sector_productivo_id: centerCurrent.sector_productivo_id
+                },
+                log_array: log_array
+            }
+
+            const { data: { data } } = await axiosClient.post('/forms', dataCalculation);
+            dispatch(getCalculationsCase(data));
+            return { error: null, verify: true };
+        } catch (error) {
+            console.log(error);
+            return { error: 'Error al crear el calculo', verify: true };
         }
     }
 }

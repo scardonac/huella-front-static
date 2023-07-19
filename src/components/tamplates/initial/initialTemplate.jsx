@@ -10,6 +10,10 @@ import { Illustrations } from '../../../assets/Illustrations/IllustrationProvide
 import { paths } from '../../../routes/paths'
 //Data
 import { emisionesDirectasDashboardATable, emisionesDirectasDashboardBTable } from '../../../Backend'
+//Redux
+import { useAppDispatch } from '../../../redux/store'
+//Slice
+import { getCenterCurrentCase } from '../../../redux/slices/RegisterSlice'
 
 const { office_VSuave } = Illustrations; //Illustrations
 
@@ -17,6 +21,12 @@ export const InitialTemplate = () => {
 
     const nav = useNavigate();
 
+    const dispatch = useAppDispatch();
+
+    const handleOnClick = () => {
+        dispatch(getCenterCurrentCase(null));
+        nav(paths.APPREGISTROS)
+    }
     return (
         <div className='HomePage bg-primary-gris1 h-full'>
             <div className=' w-[90%] max-w-[1400px] min-w-[1000px] mx-auto pt-10 flex flex-col'>
@@ -25,7 +35,7 @@ export const InitialTemplate = () => {
                         <h3>¡Es un gusto que estés aquí!</h3>
                         <p>Mide tu impacto, sigue tu plan de mitigación y únete a la descarbonización.</p>
                     </div>
-                    <ButtonTypeA text='Nuevo cálculo' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={true} action={() => nav(paths.APPREGISTROS)} />
+                    <ButtonTypeA text='Nuevo cálculo' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={true} action={() => handleOnClick()} />
                 </div>
                 <div className='ContenedorMetas-Registros flex justify-between gap-8'>
                     <div className='w-full bg-primary-white1 mt-4 rounded-lg px-3'>

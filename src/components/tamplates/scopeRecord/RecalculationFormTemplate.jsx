@@ -7,6 +7,7 @@ import { useState, useEffect, useContext } from 'react'
 //Components
 import { ButtonNextRegistrosPage } from '../../organisms/buttonNextRegistrosPage/ButtonNextRegistrosPage';
 import { ButtonTypeA } from '../../molecules/buttons/buttonTypeA/ButtonTypeA';
+import { CustomAlert } from '../../molecules/customAlert/customAlert';
 import { SedeDetailCard } from '../../organisms/sedeDetailCard/SedeDetailCard';
 import { SelectionCard } from '../../organisms/selectionCard/SelectionCard';
 import { SelectSimple } from '../../molecules/selects/SelectSimple';
@@ -15,8 +16,6 @@ import { TextareaInputSimple } from '../../molecules/textarea/TextareaInputSimpl
 import { TextInputSimple } from '../../molecules/inputs/TextInputSimple';
 //Routes
 import { paths } from '../../../routes/paths';
-//Assets
-import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 //Context
 import { NavigateAppContext } from '../../../context/NavigateAppContext';
 //Redux
@@ -24,7 +23,7 @@ import { useAppDispatch } from '../../../redux/store';
 //Actions
 import { createCenterAction, getCentersAction, getSectorProductivoAction } from '../../../redux/actions/RegisterAction';
 //Slice
-import { updateFirstStepCase } from '../../../redux/slices/RegisterSlice';
+import { getCenterCurrentCase, updateFirstStepCase } from '../../../redux/slices/RegisterSlice';
 
 export const RecalculationFormTemplate = () => {
 
@@ -32,14 +31,14 @@ export const RecalculationFormTemplate = () => {
     const dispatch = useAppDispatch();
     const { goNext } = useContext(NavigateAppContext);
 
-    const { register: { firstStep, centers, productiveSector } } = useSelector(state => state.persistedData);
+    const { register: { firstStep, centers, productiveSector, centerCurrent } } = useSelector(state => state.persistedData);
 
     const [centerSelected, setCenterSelected] = useState(null);
+    const [textAlert, setTextAlert] = useState(null);
     const [dataSectors, setDataSectors] = useState([])
-    const [dataCenters] = useState([{ id: '0', nombre: 'Agregar nueva sede' }])
     const [defaultValues] = useState({
         address: "",
-        center: "",
+        center: "0",
         city: "",
         country: "",
         customName: "",
@@ -64,17 +63,31 @@ export const RecalculationFormTemplate = () => {
 
     const dataForm = watch();
 
-
     const onSubmit = async () => {
         dispatch(updateFirstStepCase(dataForm));
-        const responseNext = await dispatch(createCenterAction(dataForm));
-        responseNext && goNext();
+        if (centerCurrent) return goNext();
+        const { error, verify } = await dispatch(createCenterAction(dataForm));
+        if (error) return setTextAlert(error);
     };
+    useEffect(() => {
+        if (centerCurrent) {
+            setCenterSelected(centerCurrent)
+            dispatch(updateFirstStepCase({}))
+            reset(defaultValues)
+            setValue('center', centerCurrent.id); // Actualizar el valor del centro de trabajo seleccionado
+        }
+    }, [centerCurrent])
 
     useEffect(() => {
-        if (dataForm.center === '0') return setCenterSelected(null)
-        const centerSelected = centers.find(center => center.id === dataForm.center)
-        setCenterSelected(centerSelected)
+        if (dataForm.center === '0') {
+            setCenterSelected(null)
+            dispatch(getCenterCurrentCase(null))  // Validar si el usuario selecciona la opción de agregar un nuevo centro de trabajo
+            return
+        }
+        if (!centers) return setCenterSelected(null)
+        const centerSelected = centers.find(center => center.id === dataForm.center) // Obtener el centro de trabajo seleccionado
+        centerSelected && setCenterSelected(centerSelected) // Actualizar el valor del centro de trabajo seleccionado
+        centerSelected && dispatch(getCenterCurrentCase(centerSelected))
     }, [dataForm.center])
 
     useEffect(() => {
@@ -103,6 +116,8 @@ export const RecalculationFormTemplate = () => {
         if (productiveSector.length > 0) setDataSectors(productiveSector)
     }, [productiveSector])
 
+    console.log(dataForm, 'dataForm')
+
     return (
         <div className='RecalculationFormTemplate bg-primary-gris1 min-h-full'>
             <StepIndicator step={1} />
@@ -116,7 +131,7 @@ export const RecalculationFormTemplate = () => {
                             register={register}
                             nameRegister='startDate'
                             errors={errors}
-                            validations={{ required: 'La fecha de inicio es requerida' }}
+                            validations={{ required: 'La fecha es requerida' }}
                         />
                     </div>
                     <div className='w-1/2 flex flex-col'>
@@ -126,7 +141,7 @@ export const RecalculationFormTemplate = () => {
                             register={register}
                             nameRegister='endDate'
                             errors={errors}
-                            validations={{ required: 'La fecha de finalización es requerida' }}
+                            validations={{ required: 'La fecha es requerida' }}
                         />
                     </div>
                 </div>
@@ -137,7 +152,7 @@ export const RecalculationFormTemplate = () => {
                         label='Centro de trabajo'
                         nameRegister='center'
                         optionLabel='nombre'
-                        options={[...dataCenters, ...centers]}
+                        options={[{ id: '0', nombre: 'Agregar nueva sede' }, ...centers]}
                         optionValue='id'
                         register={register}
                         validations={{ required: 'El centro de trabajo es requerido' }}
@@ -151,7 +166,7 @@ export const RecalculationFormTemplate = () => {
                         sector_productivo_id={centerSelected?.sector_productivo_id}
                     />
                 )}
-                {dataForm.center === '0' && (
+                {dataForm.center === '0' && !centerSelected && (
                     <div className='sedeCustomContainer'>
                         <div className='flex flex-col mt-10'>
                             <TextInputSimple
@@ -251,6 +266,14 @@ export const RecalculationFormTemplate = () => {
                                 ))}
                             </ul>
                         </div>
+                    </div>
+                )}
+                {textAlert && (
+                    <div className='mt-10 flex justify-center'>
+                        <CustomAlert
+                            message={textAlert}
+                            type='error'
+                        />
                     </div>
                 )}
                 <div className='flex justify-between mt-16 pb-10'>
