@@ -154,3 +154,31 @@ export const createCalculationAction = (dataFourthStep) => {
         }
     }
 }
+
+// Acción para eliminar las emisiones
+export const deleteEmissionsAction = (id) => {
+    return async (dispatch) => {
+        try {
+            await axiosClient.delete(`/soportes/delete/${id}`);
+            dispatch(getEmissionsAction());
+            return { error: null, verify: true };
+        } catch (error) {
+            console.log(error);
+            return { error: 'Error al eliminar las emisiones', verify: false };
+        }
+    }
+}
+
+// Acción para actualizar las emisiones
+export const updateEmissionsAction = (dataForm) => {
+    return async (dispatch) => {
+        try {
+            const { data: { data } } = await axiosClient.put(`/render/${id}`);
+            // dispatch(getEmissionsAction());
+            return { error: null, verify: true, data };
+        } catch (error) {
+            console.log(error);
+            return { error: 'Error al actualizar las emisiones', verify: false, data: null };
+        }
+    }
+}

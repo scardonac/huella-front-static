@@ -13,8 +13,16 @@ import Modal from '../../organisms/modals/Modal';
 
 import deleteIcon from '../../../assets/Illustrations/Illustration_DeleteElement.svg'
 import axiosClient from '../../../config/AxiosClient';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../../redux/store';
+import { deleteEmissionsAction, updateEmissionsAction } from '../../../redux/actions/RegisterAction';
 
 export const StepScopeDashboardTemplate = () => {
+
+  const dispatch = useAppDispatch();
+
+  const { register: { directEmissions, inDirectEmissions, otherEmissions } } = useSelector(state => state.persistedData);
+
   // Comportamiento de Modal para confirmacion de delete.
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false)
   const handleOpenConfirmationModal = () => setOpenConfirmationModal(true)
@@ -41,50 +49,49 @@ export const StepScopeDashboardTemplate = () => {
   }
 
   // Función para actualizar el estado con todas las emisiones.
-  const updateAllEmisions = async () => {
-    try {
-      const respuesta = await axiosClient.get('emisiones');
-      const array = respuesta?.data?.data
-      setAllEmisions(array)
-    } catch (error) {
-      // Manejo de errores
-      console.error(error);
-    }
-  };
+  // const updateAllEmisions = async () => {
+  //   try {
+  //     const respuesta = await axiosClient.get('emisiones');
+  //     const array = respuesta?.data?.data
+  //     setAllEmisions(array)
+  //   } catch (error) {
+  //     // Manejo de errores
+  //     console.error(error);
+  //   }
+  // };
 
-  const deleteEmision = async (id = null) => {
-    try {
-      const respuesta = await axiosClient.delete(`/soportes/delete/${id}`);
+  // Actualizar el estado local de todas las emisiones.
+  useEffect(() => {
+    setAllEmisions([...directEmissions, ...inDirectEmissions, ...otherEmissions]);
+  }, [directEmissions, inDirectEmissions, otherEmissions])
 
-      // Aquí puedes hacer algo con la respuesta obtenida
-      const response = respuesta?.data
-      console.log("response: ", response);
-      updateSelectedEmisions()
-      handleCloseConfirmationModal()
-    } catch (error) {
-      // Manejo de errores
-      console.error(error);
-    }
-  };
+  // const deleteEmision = async (id = null) => {
+  //   try {
+  //     const respuesta = await axiosClient.delete(`/soportes/delete/${id}`);
 
-  const confirmDeleteEmision = () => {
-    deleteEmision(token, idToDelete)
+  //     // Aquí puedes hacer algo con la respuesta obtenida
+  //     const response = respuesta?.data
+  //     console.log("response: ", response);
+  //     updateSelectedEmisions()
+  //     handleCloseConfirmationModal()
+  //   } catch (error) {
+  //     // Manejo de errores
+  //     console.error(error);
+  //   }
+  // };
+
+  const confirmDeleteEmision = async () => {
+    const { error, verify } = await dispatch(deleteEmissionsAction(idToDelete));
+    verify && handleCloseConfirmationModal();
   }
 
-  const updateSelectedEmisions = async (id = calculoID) => {
-    try {
-      const respuesta = await axiosClient.get(`/render/${id}`);
-
-      // Aquí puedes hacer algo con la respuesta obtenida
-      const array = respuesta?.data?.logs_details
-      console.log("getSelectedEmisions: ", array);
-      setEmisionesAlcance1(array?.filter((emision) => emision?.tipo === 1))
-      setEmisionesAlcance2(array?.filter((emision) => emision?.tipo === 2))
-      setEmisionesAlcance3(array?.filter((emision) => emision?.tipo === 3))
-    } catch (error) {
-      // Manejo de errores
-      console.error(error);
-    }
+  const updateSelectedEmisions = async () => {
+    const { data, error, verify } = await dispatch(updateEmissionsAction());
+    if (!verify) return;
+    const array = data?.logs_details
+    setEmisionesAlcance1(array?.filter((emision) => emision?.tipo === 1))
+    setEmisionesAlcance2(array?.filter((emision) => emision?.tipo === 2))
+    setEmisionesAlcance3(array?.filter((emision) => emision?.tipo === 3))
   };
 
   const putSelectedEmisions = async (id = calculoID, array_ = []) => {
@@ -124,7 +131,7 @@ export const StepScopeDashboardTemplate = () => {
 
   useEffect(() => {
     updateSelectedEmisions();
-    updateAllEmisions();
+    // updateAllEmisions();
   }, [])
 
   return (
