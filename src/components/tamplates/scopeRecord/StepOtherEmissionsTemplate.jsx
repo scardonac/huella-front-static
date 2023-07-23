@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 //Components
 import { ButtonNextRegistrosPage } from '../../organisms/buttonNextRegistrosPage/ButtonNextRegistrosPage';
 import { ButtonTypeA } from '../../molecules/buttons/buttonTypeA/ButtonTypeA';
+import { CustomAlert } from '../../molecules/customAlert/customAlert';
 import { GoBackLink } from '../../molecules/goBackLink/GoBackLink';
 import { SelectionCard } from '../../organisms/selectionCard/SelectionCard';
 import { StepIndicator } from '../../organisms/stepIndicator/StepIndicator';
@@ -30,6 +31,7 @@ export const StepOtherEmissionsTemplate = () => {
   const { register: { fourthStep, otherEmissions } } = useSelector(state => state.persistedData);
 
   const [dataOtrasEmisionesIndirectas, setDataOtrasEmisionesIndirectas] = useState([])
+  const [textAlert, setTextAlert] = useState(null)
 
   const [defaultValues] = useState({
     categories: [],
@@ -50,7 +52,7 @@ export const StepOtherEmissionsTemplate = () => {
   const onSubmit = async () => {
     dispatch(updateFourthStepCase(dataForm));
     const { error, verify } = await dispatch(createCalculationAction(dataForm));
-    // if (error) return setTextAlert(error);
+    if (error) return setTextAlert(error);
     if (verify) return goNext();
   };
 
@@ -93,6 +95,14 @@ export const StepOtherEmissionsTemplate = () => {
               </div>
             ))}
           </ul>
+          {textAlert && (
+            <div className='mt-10 flex justify-center'>
+              <CustomAlert
+                message={textAlert}
+                type='error'
+              />
+            </div>
+          )}
           <div className='flex justify-between mt-16 pb-10'>
             <ButtonTypeA text='Cancelar' action={() => nav(paths.APPHOME)} />
             <ButtonNextRegistrosPage />

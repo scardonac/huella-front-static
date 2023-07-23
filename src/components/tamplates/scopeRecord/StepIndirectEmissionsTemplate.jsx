@@ -65,8 +65,6 @@ export const StepIndirectEmissionsTemplate = () => {
     if (inDirectEmissions.length > 0) setDataEmisionesIndirect(inDirectEmissions)
   }, [inDirectEmissions])
 
-  console.log(dataEmisionesIndirect, 'dataEmisionesIndirect')
-
   return (
     <div className='StepIndirectEmissionsPage bg-primary-gris1 min-h-full'>
       <GoBackLink />

@@ -68,11 +68,12 @@ export const RecalculationFormTemplate = () => {
         if (centerCurrent) return goNext();
         const { error, verify } = await dispatch(createCenterAction(dataForm));
         if (error) return setTextAlert(error);
+        if (verify) return goNext();
     };
     useEffect(() => {
         if (centerCurrent) {
             setCenterSelected(centerCurrent)
-            dispatch(updateFirstStepCase({}))
+            // dispatch(updateFirstStepCase({}))
             reset(defaultValues)
             setValue('center', centerCurrent.id); // Actualizar el valor del centro de trabajo seleccionado
         }

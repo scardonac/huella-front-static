@@ -17,13 +17,21 @@ import {
     getCalculationsCase,
 } from "../slices/RegisterSlice";
 
+const mapEmissions = (emissions, iconData) => {
+    return emissions.map((item) => {
+        const icon = iconData[item.nombre]?.icon ?? "Car_Default";
+        const iconChecked = iconData[item.nombre]?.iconChecked ?? "Car_VFuerte";
+        return { ...item, icon, iconChecked, isChecked: false };
+    });
+};
+
 // Acción para trear las sedes o centros
 export const getCentersAction = () => {
 
     return async (dispatch) => {
         try {
             const { data: { data } } = await axiosClient.get('/centros');
-            dispatch(getCentersCase(data ? data : []));
+            dispatch(getCentersCase(data ? data : [])); // Actualizar los centros dependiendo de la respuesta
         } catch (error) {
             console.log(error);
         }
@@ -52,16 +60,16 @@ export const createCenterAction = (dataForm) => {
             const { data: { data } } = await axiosClient.post('/centros', dataCenter);
             console.log(data, 'dataCreateCenter')
             // Despachar una acción con el resultado
-            dispatch(getCenterCurrentCase(data));
+            dispatch(getCenterCurrentCase(data)); // Actualizar el centro actual
             dispatch(getCentersAction()); // Actualizar los centros
 
             return { error: null, verify: true };
         } catch (error) {
             console.log(error);
-            if (error.response.data.message == 'centro already exists' && center !== '0') return { error: 'El centro ya existe', verify: true };
+            if (error.response.data.message == 'centro already exists' && center !== '0') return { error: 'El centro ya existe', verify: false };
             // Despachar una acción de error si es necesario
-            dispatch(getCenterCurrentCase(null));
-            return { error: 'Error al crear el centro', verify: true };
+            dispatch(getCenterCurrentCase(null)); // Actualizar el centro actual a null
+            return { error: 'Error al crear el centro', verify: false };
         }
     };
 };
@@ -73,22 +81,13 @@ export const getEmissionsAction = () => {
             const { data: { data } } = await axiosClient.get('/emisiones/');
             if (!data) return;
 
-            const mapEmissions = (emissions, iconData) => {
-                console.log(iconData, 'iconData')
-                return emissions.map((item) => {
-                    const icon = iconData[item.nombre]?.icon ?? "Car_Default";
-                    const iconChecked = iconData[item.nombre]?.iconChecked ?? "Car_VFuerte";
-                    return { ...item, icon, iconChecked, isChecked: false };
-                });
-            };
+            const newDataDirectEmissions = mapEmissions(data.emisiones_directas, emisionesDirectasIcons); // Mapear las emisiones directas
+            const newDataIndirectEmissions = mapEmissions(data.emisiones_indirectas, emisionesIndirectasIcons); // Mapear las emisiones indirectas
+            const newDataOtherEmissions = mapEmissions(data.emisiones_directas_otras, otrasEmisionesIndirectasIcons); // Mapear las otras emisiones
 
-            const newDataDirectEmissions = mapEmissions(data.emisiones_directas, emisionesDirectasIcons);
-            const newDataIndirectEmissions = mapEmissions(data.emisiones_indirectas, emisionesIndirectasIcons);
-            const newDataOtherEmissions = mapEmissions(data.emisiones_directas_otras, otrasEmisionesIndirectasIcons);
-
-            newDataDirectEmissions && dispatch(getDirectEmissionsCase(newDataDirectEmissions));
-            newDataIndirectEmissions && dispatch(getInDirectEmissionsCase(newDataIndirectEmissions));
-            newDataOtherEmissions && dispatch(getOtherEmissionsCase(newDataOtherEmissions));
+            newDataDirectEmissions && dispatch(getDirectEmissionsCase(newDataDirectEmissions)); // Actualizar las emisiones directas
+            newDataIndirectEmissions && dispatch(getInDirectEmissionsCase(newDataIndirectEmissions)); // Actualizar las emisiones indirectas
+            newDataOtherEmissions && dispatch(getOtherEmissionsCase(newDataOtherEmissions)); // Actualizar las otras emisiones
         } catch (error) {
             console.log(error);
         }
@@ -111,7 +110,7 @@ export const getSectorProductivoAction = () => {
                     isActived: iconData?.isActived,
                 };
             });
-            dispatch(getSectorProductivoCase(newData));
+            dispatch(getSectorProductivoCase(newData)); // Actualizar los sectores productivos
         } catch (error) {
             console.log(error);
         }
@@ -131,8 +130,7 @@ export const createCalculationAction = (dataFourthStep) => {
                 ...thirdStep.categories,
                 ...dataFourthStep.categories
             ]
-            console.log(dataFourthStep, 'dataFourthStep')
-            console.log(log_array, 'log_array')
+            console.log(firstStep, 'firstStep')
 
             let dataCalculation = {
                 calculo: {
@@ -145,12 +143,12 @@ export const createCalculationAction = (dataFourthStep) => {
                 log_array: log_array
             }
 
-            const { data: { data } } = await axiosClient.post('/forms', dataCalculation);
-            dispatch(getCalculationsCase(data));
-            return { error: null, verify: true };
+            const { data } = await axiosClient.post('/forms', dataCalculation);
+            dispatch(getCalculationsCase(data)); // Actualizar los calculos
+            return { error: null, verify: true, data };
         } catch (error) {
-            console.log(error);
-            return { error: 'Error al crear el calculo', verify: true };
+            console.log(error, 'errorCreateCalculation');
+            return { error: 'Error al crear el calculo', verify: false };
         }
     }
 }
@@ -160,7 +158,6 @@ export const deleteEmissionsAction = (id) => {
     return async (dispatch) => {
         try {
             await axiosClient.delete(`/soportes/delete/${id}`);
-            dispatch(getEmissionsAction());
             return { error: null, verify: true };
         } catch (error) {
             console.log(error);
@@ -170,12 +167,20 @@ export const deleteEmissionsAction = (id) => {
 }
 
 // Acción para actualizar las emisiones
-export const updateEmissionsAction = (dataForm) => {
+export const updateEmissionsAction = (id) => {
     return async (dispatch) => {
         try {
-            const { data: { data } } = await axiosClient.put(`/render/${id}`);
-            // dispatch(getEmissionsAction());
-            return { error: null, verify: true, data };
+            const { data } = await axiosClient.get(`/render/${id}`);
+            const arrayAllEmisiones = data?.logs_details;
+            const newDataDirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 1), emisionesDirectasIcons); // Mapear las emisiones directas
+            const newDataIndirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 3), emisionesIndirectasIcons); // Mapear las emisiones indirectas
+            const newDataOtherEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 2), otrasEmisionesIndirectasIcons); // Mapear las otras emisiones
+            // const newDataIndirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 2), emisionesIndirectasIcons); // Mapear las emisiones indirectas
+            // const newDataOtherEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 3), otrasEmisionesIndirectasIcons); // Mapear las otras emisiones
+            console.log(newDataDirectEmissions, 'newDataDirectEmissions')
+            console.log(newDataIndirectEmissions, 'newDataIndirectEmissions')
+            console.log(newDataOtherEmissions, 'newDataOtherEmissions')
+            return { error: null, verify: true, data: { ...data, directEmissions: newDataDirectEmissions, inDirectEmissions: newDataIndirectEmissions, otherEmissions: newDataOtherEmissions } };
         } catch (error) {
             console.log(error);
             return { error: 'Error al actualizar las emisiones', verify: false, data: null };
