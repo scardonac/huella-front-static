@@ -11,14 +11,15 @@ const { TrushIcon, InformationIcon } = Icons;
 export const EmisionesTable = ({
     handleOpenModal = null,
     label = "Tipo de Emisiones",
-    emisiones = [null],
+    emisiones = [],
     setIdToDelete = null,
     handleOpenConfirmationModal = null,
+    setTypeId = null,
 }) => {
 
-    console.log("emisiones: ", emisiones)
     const handleCompleteCategoriesSelection = () => {
         handleOpenModal()
+        setTypeId(emisiones[0]?.tipo)
     }
 
     const handleDeleteEmision = (id) => {

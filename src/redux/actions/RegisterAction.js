@@ -153,6 +153,26 @@ export const createCalculationAction = (dataFourthStep) => {
     }
 }
 
+// Acción para actualizar un Calculo con logs
+export const updateCalculationAction = (log_array) => {
+    return async (dispatch, getState) => {
+        try {
+            const { register: { calculations } } = getState().persistedData;
+            let dataCalculation = {
+                calculo_id: calculations?.id,
+                log_array
+            }
+            const { data } = await axiosClient.put('/forms', dataCalculation);
+            // dispatch(updateEmissionsAction(calculations?.id)); // Actualizar los calculos
+            return { error: null, verify: true, data };
+        } catch (error) {
+            console.log(error, 'errorCreateCalculation');
+            return { error: 'Error al crear el calculo', verify: false };
+        }
+    }
+}
+
+
 // Acción para eliminar las emisiones
 export const deleteEmissionsAction = (id) => {
     return async (dispatch) => {
@@ -180,7 +200,7 @@ export const updateEmissionsAction = (id) => {
             console.log(newDataDirectEmissions, 'newDataDirectEmissions')
             console.log(newDataIndirectEmissions, 'newDataIndirectEmissions')
             console.log(newDataOtherEmissions, 'newDataOtherEmissions')
-            return { error: null, verify: true, data: { ...data, directEmissions: newDataDirectEmissions, inDirectEmissions: newDataIndirectEmissions, otherEmissions: newDataOtherEmissions } };
+            return { error: null, verify: true, data: { ...data, emissions: [...newDataDirectEmissions, ...newDataIndirectEmissions, ...newDataOtherEmissions] } };
         } catch (error) {
             console.log(error);
             return { error: 'Error al actualizar las emisiones', verify: false, data: null };
