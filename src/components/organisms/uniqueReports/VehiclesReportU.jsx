@@ -29,7 +29,16 @@ export const VehiclesReportU = () => {
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
         defaultValues: {
             vehicles: [
-                { nameForm: 'Vehículo', flagNameForm: false, vehicleType: '', fuelType: '', kilometers: '', gallons: '', numberOfVehicles: '', attachedFiles: [null] },
+                {
+                    nameForm: 'Vehículo',
+                    flagNameForm: false,
+                    typeInput: '',
+                    unitConsumption: '',
+                    kilometers: '',
+                    consumption: '',
+                    amountInput: '',
+                    attachedFiles: [null]
+                },
             ]
         }
     });
@@ -102,7 +111,14 @@ export const VehiclesReportU = () => {
         dispatch(setTooltipCase({ ...tooltip, position: { x: e.pageX, y: e.pageY } }));
     };
 
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => {
+        console.log('data VehiclesReportU:', data);
+        // reset({
+        //     vehicles: [
+        //         { nameForm: 'Vehículo', flagNameForm: false, typeInput: '', unitConsumption: '', kilometers: '', consumption: '', amountInput: '', attachedFiles: [null] },
+        //     ]
+        // });
+    }
 
     const actionDraft = () => {
         console.log('Guardado como borrador');
@@ -185,7 +201,7 @@ export const VehiclesReportU = () => {
                         />
                         <Controller
                             control={control}
-                            name={`vehicles[${formIndex}].vehicleType`}
+                            name={`vehicles[${formIndex}].typeInput`}
                             rules={{ required: "Por favor, selecciona un tipo de vehículo" }}
                             render={({ field }) =>
                                 <div className='flex flex-col w-2/4'>
@@ -199,9 +215,9 @@ export const VehiclesReportU = () => {
                                         <option value="3">Camioneta 3</option>
                                         <option value="4">Camioneta 4</option>
                                     </select>
-                                    {errors.vehicles && errors.vehicles[formIndex]?.vehicleType && (
+                                    {errors.vehicles && errors.vehicles[formIndex]?.typeInput && (
                                         <CustomAlert
-                                            message={errors.vehicles[formIndex]?.vehicleType.message}
+                                            message={errors.vehicles[formIndex]?.typeInput.message}
                                             type='error'
                                         />
                                     )}
@@ -210,7 +226,7 @@ export const VehiclesReportU = () => {
                         />
                         <Controller
                             control={control}
-                            name={`vehicles[${formIndex}].fuelType`}
+                            name={`vehicles[${formIndex}].unitConsumption`}
                             rules={{ required: "Por favor, selecciona un tipo de combustible" }}
                             render={({ field }) =>
                                 <div className='flex flex-col w-2/4'>
@@ -224,9 +240,9 @@ export const VehiclesReportU = () => {
                                         <option value="3">Gasolina 3</option>
                                         <option value="4">Gasolina 4</option>
                                     </select>
-                                    {errors.vehicles && errors.vehicles[formIndex]?.fuelType && (
+                                    {errors.vehicles && errors.vehicles[formIndex]?.unitConsumption && (
                                         <CustomAlert
-                                            message={errors.vehicles[formIndex]?.fuelType.message}
+                                            message={errors.vehicles[formIndex]?.unitConsumption.message}
                                             type='error'
                                         />
                                     )}
@@ -254,7 +270,7 @@ export const VehiclesReportU = () => {
                         /> */}
                         <Controller
                             control={control}
-                            name={`vehicles[${formIndex}].gallons`}
+                            name={`vehicles[${formIndex}].consumption`}
                             rules={{ required: 'Por favor, ingresa los galones consumidos', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
                             render={({ field }) =>
                                 <div className='flex flex-col w-2/4'>
@@ -267,9 +283,9 @@ export const VehiclesReportU = () => {
                                         placeholder='Ingresa los galones consumidos'
                                         type='number'
                                     />
-                                    {errors.vehicles && errors.vehicles[formIndex]?.gallons && (
+                                    {errors.vehicles && errors.vehicles[formIndex]?.consumption && (
                                         <CustomAlert
-                                            message={errors.vehicles[formIndex]?.gallons.message}
+                                            message={errors.vehicles[formIndex]?.consumption.message}
                                             type='error'
                                         />
                                     )}
@@ -278,7 +294,7 @@ export const VehiclesReportU = () => {
                         />
                         <Controller
                             control={control}
-                            name={`vehicles[${formIndex}].numberOfVehicles`}
+                            name={`vehicles[${formIndex}].amountInput`}
                             rules={{ required: 'Por favor, ingresa la cantidad de vehículos', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
                             render={({ field }) =>
                                 <div className='flex flex-col w-2/4'>
@@ -291,9 +307,9 @@ export const VehiclesReportU = () => {
                                         placeholder='Ingresa la cantidad de vehículos'
                                         type='number'
                                     />
-                                    {errors.vehicles && errors.vehicles[formIndex]?.numberOfVehicles && (
+                                    {errors.vehicles && errors.vehicles[formIndex]?.amountInput && (
                                         <CustomAlert
-                                            message={errors.vehicles[formIndex]?.numberOfVehicles.message}
+                                            message={errors.vehicles[formIndex]?.amountInput.message}
                                             type='error'
                                         />
                                     )}
@@ -370,7 +386,7 @@ export const VehiclesReportU = () => {
                                 src={InformationIcon}
                             />
                             <div className='bg-primary-green2 bg-no-repeat px-4 py-2 rounded-lg opacity-100 cursor-pointer' onClick={() =>
-                                append({ nameForm: 'Vehículo', flagNameForm: false, vehicleType: '', fuelType: '', kilometers: '', gallons: '', numberOfVehicles: '', attachedFiles: [null] })}>
+                                append({ nameForm: 'Vehículo', flagNameForm: false, typeInput: '', unitConsumption: '', kilometers: '', consumption: '', amountInput: '', attachedFiles: [null] })}>
                                 <b className='tracking-tighter leading-6 text-primary-80 font-bold text-left text-base text-primary-title1 opacity-100'>
                                     Agregar otro tipo de vehículo
                                 </b>

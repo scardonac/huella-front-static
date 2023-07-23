@@ -134,7 +134,7 @@ export const createCalculationAction = (dataFourthStep) => {
 
             let dataCalculation = {
                 calculo: {
-                    centro_id: firstStep.center,
+                    centro_id: centerCurrent.id,
                     empresa: company,
                     final_reg: firstStep.endDate,
                     inicio_reg: firstStep.startDate,
@@ -197,13 +197,42 @@ export const updateEmissionsAction = (id) => {
             const newDataOtherEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 2), otrasEmisionesIndirectasIcons); // Mapear las otras emisiones
             // const newDataIndirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 2), emisionesIndirectasIcons); // Mapear las emisiones indirectas
             // const newDataOtherEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 3), otrasEmisionesIndirectasIcons); // Mapear las otras emisiones
-            console.log(newDataDirectEmissions, 'newDataDirectEmissions')
-            console.log(newDataIndirectEmissions, 'newDataIndirectEmissions')
-            console.log(newDataOtherEmissions, 'newDataOtherEmissions')
             return { error: null, verify: true, data: { ...data, emissions: [...newDataDirectEmissions, ...newDataIndirectEmissions, ...newDataOtherEmissions] } };
         } catch (error) {
             console.log(error);
             return { error: 'Error al actualizar las emisiones', verify: false, data: null };
+        }
+    }
+}
+
+// Acción para crear los soportes
+export const createSupportsAction = (dataForm) => {
+    return async (dispatch, getState) => {
+        const { auth: { user_id } } = getState().persistedData;
+        const dataSupports = dataForm.map((form) => {
+            return {
+                cantidad_insumo: form?.amountInput ? Number(form.amountInput) : 0,
+                consumo: form?.consumption ? Number(form.consumption) : 0,
+                dias_por_semana: form?.daysWeek ? Number(form.daysWeek) : 0,
+                horas_de_uso: form?.hoursUse ? Number(form.hoursUse) : 0,
+                id: "string",
+                kilometros_recorridos: form?.kilometers ? Number(form.kilometers) : 0,
+                libras_por_unidad: form?.poundsUnit ? Number(form.poundsUnit) : 0,
+                log_id: form?.log_id ? form.log_id : null,
+                soportes: {
+                    url: form?.attachedFiles ? form?.attachedFiles : null,
+                },
+                tipo_insumo: form?.typeInput ? Number(form.typeInput) : 0,
+                unidad_consumo: form?.unitConsumption ? Number(form.unitConsumption) : 0,
+                unique: true
+            }
+        });
+        try {
+            await axiosClient.post('/soportes/final', dataSupports);
+            return { error: null, verify: true };
+        } catch (error) {
+            console.log(error);
+            return { error: 'Error al crear los soportes', verify: false };
         }
     }
 }
