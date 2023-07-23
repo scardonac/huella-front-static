@@ -144,17 +144,17 @@ export const StepScopeDashboardTemplate = () => {
         <EmisionesTable
           label='Emisiones directas (alcance 1)'
           emisiones={emisionesAlcance1}
-          handleOpenModal={() => handleOpenModal(directEmissions, emisionesAlcance1)}
+          handleOpenModal={handleOpenModal(directEmissions, emisionesAlcance1)}
           setIdToDelete={setIdToDelete}
-          handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
+          handleOpenConfirmationModal={setOpenDeleteModal(true)}
         />
         <EmisionesTable
           label='Emisiones indirectas (alcance 2)'
           emisiones={emisionesAlcance2}
           navigationActive={true}
-          handleOpenModal={() => handleOpenModal(inDirectEmissions, emisionesAlcance2)}
+          handleOpenModal={handleOpenModal(inDirectEmissions, emisionesAlcance2)}
           setIdToDelete={setIdToDelete}
-          handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
+          handleOpenConfirmationModal={setOpenDeleteModal(true)}
         />
         <EmisionesTable
           label='Otras emisiones indirectas (alcance 3)'
