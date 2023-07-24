@@ -207,15 +207,13 @@ export const updateEmissionsAction = (id) => {
 
 // Acción para traer los soportes
 export const getSupportsAction = (id) => {
-    console.log(id, 'id')
     return async (dispatch) => {
         try {
             const { data } = await axiosClient.get(`/soportes/${id}`);
-            console.log(data, 'dataSupports')
-            return { error: null, verify: true, data };
+            return { msg: null, verify: true, data };
         } catch (error) {
             console.log(error);
-            return { error: 'Error al traer los soportes', verify: false, data: null };
+            return { msg: 'Error al traer los soportes', verify: false, data: null };
         }
     }
 }
@@ -249,10 +247,10 @@ export const createSupportsAction = (dataForm) => {
         });
         try {
             await axiosClient.post('/soportes/final', dataSupports);
-            return { error: null, verify: true };
+            return { msg: 'soportes creados correctamente', verify: true };
         } catch (error) {
             console.log(error);
-            return { error: 'Error al crear los soportes', verify: false };
+            return { msg: 'Error al crear los soportes', verify: false };
         }
     }
 }
@@ -279,10 +277,10 @@ export const saveDraftSupportsAction = (dataForm) => {
         });
         try {
             await axiosClient.post('/soportes/borrador', dataSupports);
-            return { error: null, verify: true };
+            return { msg: 'borrador de soportes creados correctamente', verify: true };
         } catch (error) {
             console.log(error);
-            return { error: 'Error al crear los soportes', verify: false };
+            return { msg: 'Error al crear los soportes', verify: false };
         }
     }
 }

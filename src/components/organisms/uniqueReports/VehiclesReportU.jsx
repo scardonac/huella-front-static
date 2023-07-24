@@ -19,7 +19,7 @@ import { allowedExtensions } from '../../../helpers';
 import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
 import { SelectController } from '../../molecules/selects/SelectController';
 import { TextInputController } from '../../molecules/inputs/TextInputController';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
 const { Car_Azul } = Illustrations; //Illustrations
@@ -35,22 +35,26 @@ export const VehiclesReportU = () => {
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
 
+    const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
+
+    const defaultValues = {
+        vehicles: [
+            {
+                nameForm: 'Vehículo',
+                flagNameForm: false,
+                typeInput: '',
+                unitConsumption: '',
+                kilometers: '',
+                consumption: '',
+                amountInput: '',
+                attachedFiles: [null],
+                logId: logId,
+            },
+        ]
+    };
+
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
-        defaultValues: {
-            vehicles: [
-                {
-                    nameForm: 'Vehículo',
-                    flagNameForm: false,
-                    typeInput: '',
-                    unitConsumption: '',
-                    kilometers: '',
-                    consumption: '',
-                    amountInput: '',
-                    attachedFiles: [null],
-                    logId: logId,
-                },
-            ]
-        }
+        defaultValues,
     });
     const { fields, append, remove } = useFieldArray({
         control,
@@ -123,20 +127,23 @@ export const VehiclesReportU = () => {
 
     // Función para crear los soportes
     const onSubmit = async (data) => {
-        const { error, verify } = await dispatch(createSupportsAction(data.vehicles));
+        const { msg, verify } = await dispatch(createSupportsAction(data.vehicles));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
     }
 
     // Función para guardar el reporte como borrador
     const actionDraft = async () => {
-        console.log('Guardado como borrador', fields);
-        const { error, verify } = await dispatch(saveDraftSupportsAction(fields));
+        const { msg, verify } = await dispatch(saveDraftSupportsAction(fields));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
     };
 
     // Función para obtener los soportes por logId
     const getSupportsByLogId = async () => {
         if (!logId) return;
-        const { error, verify, data } = await dispatch(getSupportsAction(logId));
-        if (verify) {
+        const { msg, verify, data } = await dispatch(getSupportsAction(logId));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
+        if (verify && data?.length > 0) {
+            reset(defaultValues);
             reset({
                 vehicles: data?.map((vehiculo) => ({
                     // nameForm: vehiculo?.nombre,
@@ -366,7 +373,7 @@ export const VehiclesReportU = () => {
                                 src={InformationIcon}
                             />
                             <div className='bg-primary-green2 bg-no-repeat px-4 py-2 rounded-lg opacity-100 cursor-pointer' onClick={() =>
-                                append({ nameForm: 'Vehículo', flagNameForm: false, typeInput: '', unitConsumption: '', kilometers: '', consumption: '', amountInput: '', attachedFiles: [null] })}>
+                                append(defaultValues.vehicles)}>
                                 <b className='tracking-tighter leading-6 text-primary-80 font-bold text-left text-base text-primary-title1 opacity-100'>
                                     Agregar otro tipo de vehículo
                                 </b>
@@ -374,6 +381,13 @@ export const VehiclesReportU = () => {
                         </div>
                     </div>
                 ))}
+
+                {textAlert && (
+                    <CustomAlert
+                        message={textAlert.msg}
+                        type={textAlert.type}
+                    />
+                )}
 
                 <ButtonGroupReportsU actionDraft={actionDraft} />
 
