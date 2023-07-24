@@ -1,5 +1,6 @@
 //Depencies
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //Components
 import { ButtonGroupReportsU } from '../buttonGroupReportsU/ButtonGroupReportsU';
@@ -15,13 +16,21 @@ import { useAppDispatch } from '../../../redux/store';
 import { resetTooltipCase, setTooltipCase } from '../../../redux/slices/HelpersSlice';
 //Helpers
 import { allowedExtensions } from '../../../helpers';
+import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
+import { SelectController } from '../../molecules/selects/SelectController';
+import { TextInputController } from '../../molecules/inputs/TextInputController';
+import { useEffect } from 'react';
 
 const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
 const { Car_Azul } = Illustrations; //Illustrations
 
 export const VehiclesReportU = () => {
 
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch(); //Inicializamos el dispatcher
+
+    const { state } = useLocation(); //Obtenemos el estado de la ubicación
+
+    const logId = state?.logId; //Obtenemos el id del log
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
@@ -37,7 +46,8 @@ export const VehiclesReportU = () => {
                     kilometers: '',
                     consumption: '',
                     amountInput: '',
-                    attachedFiles: [null]
+                    attachedFiles: [null],
+                    logId: logId,
                 },
             ]
         }
@@ -111,18 +121,44 @@ export const VehiclesReportU = () => {
         dispatch(setTooltipCase({ ...tooltip, position: { x: e.pageX, y: e.pageY } }));
     };
 
-    const onSubmit = data => {
-        console.log('data VehiclesReportU:', data);
-        // reset({
-        //     vehicles: [
-        //         { nameForm: 'Vehículo', flagNameForm: false, typeInput: '', unitConsumption: '', kilometers: '', consumption: '', amountInput: '', attachedFiles: [null] },
-        //     ]
-        // });
+    // Función para crear los soportes
+    const onSubmit = async (data) => {
+        const { error, verify } = await dispatch(createSupportsAction(data.vehicles));
     }
 
-    const actionDraft = () => {
-        console.log('Guardado como borrador');
+    // Función para guardar el reporte como borrador
+    const actionDraft = async () => {
+        console.log('Guardado como borrador', fields);
+        const { error, verify } = await dispatch(saveDraftSupportsAction(fields));
     };
+
+    // Función para obtener los soportes por logId
+    const getSupportsByLogId = async () => {
+        if (!logId) return;
+        const { error, verify, data } = await dispatch(getSupportsAction(logId));
+        if (verify) {
+            reset({
+                vehicles: data?.map((vehiculo) => ({
+                    // nameForm: vehiculo?.nombre,
+                    nameForm: 'Vehículo',
+                    flagNameForm: false,
+                    typeInput: vehiculo?.tipo_insumo,
+                    unitConsumption: vehiculo?.unidad_consumo,
+                    kilometers: vehiculo?.kilometros_recorridos,
+                    consumption: vehiculo?.consumo,
+                    amountInput: vehiculo?.cantidad_insumo,
+                    // attachedFiles: vehiculo?.soportes?.map((soporte) => soporte?.url),
+                    attachedFiles: [null],
+                    logId,
+                }))
+            });
+        }
+    };
+
+    //UseEffect para obtener los soportes por logId
+    useEffect(() => {
+        getSupportsByLogId();
+    }, [logId]);
 
     return (
         <WrapReports
@@ -199,55 +235,30 @@ export const VehiclesReportU = () => {
                                 </div>
                             }
                         />
-                        <Controller
+                        <SelectController
                             control={control}
                             name={`vehicles[${formIndex}].typeInput`}
+                            apiUrl='/insumos/vehiculos'
+                            valueKey='id'
+                            labelKey='nombre'
+                            placeholder='Selecciona un tipo'
                             rules={{ required: "Por favor, selecciona un tipo de vehículo" }}
-                            render={({ field }) =>
-                                <div className='flex flex-col w-2/4'>
-                                    <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                        Tipo de vehículo
-                                    </label>
-                                    <select {...field} className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'>
-                                        <option value="">Selecciona un tipo</option>
-                                        <option value="1">Camioneta 1</option>
-                                        <option value="2">Camioneta 2</option>
-                                        <option value="3">Camioneta 3</option>
-                                        <option value="4">Camioneta 4</option>
-                                    </select>
-                                    {errors.vehicles && errors.vehicles[formIndex]?.typeInput && (
-                                        <CustomAlert
-                                            message={errors.vehicles[formIndex]?.typeInput.message}
-                                            type='error'
-                                        />
-                                    )}
-                                </div>
-                            }
+                            label='Tipo de vehículo'
                         />
-                        <Controller
+                        <SelectController
                             control={control}
                             name={`vehicles[${formIndex}].unitConsumption`}
+                            staticData={[
+                                { id: 1, nombre: 'Kilómetros' },
+                                { id: 2, nombre: 'Horas' },
+                                { id: 3, nombre: 'Toneladas' },
+                                { id: 4, nombre: 'Unidades' },
+                            ]}
+                            valueKey='id'
+                            labelKey='nombre'
+                            placeholder='Selecciona un tipo'
                             rules={{ required: "Por favor, selecciona un tipo de combustible" }}
-                            render={({ field }) =>
-                                <div className='flex flex-col w-2/4'>
-                                    <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                        Tipo de combustible
-                                    </label>
-                                    <select {...field} className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'>
-                                        <option value="">Selecciona un tipo</option>
-                                        <option value="1">Gasolina 1</option>
-                                        <option value="2">Gasolina 2</option>
-                                        <option value="3">Gasolina 3</option>
-                                        <option value="4">Gasolina 4</option>
-                                    </select>
-                                    {errors.vehicles && errors.vehicles[formIndex]?.unitConsumption && (
-                                        <CustomAlert
-                                            message={errors.vehicles[formIndex]?.unitConsumption.message}
-                                            type='error'
-                                        />
-                                    )}
-                                </div>
-                            }
+                            label='Tipo de combustible'
                         />
                         {/* <Controller
                             control={control}
@@ -268,53 +279,22 @@ export const VehiclesReportU = () => {
                                 </div>
                             }
                         /> */}
-                        <Controller
+                        <TextInputController
                             control={control}
                             name={`vehicles[${formIndex}].consumption`}
                             rules={{ required: 'Por favor, ingresa los galones consumidos', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                            render={({ field }) =>
-                                <div className='flex flex-col w-2/4'>
-                                    <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                        Galones consumidos
-                                    </label>
-                                    <input
-                                        {...field}
-                                        className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                        placeholder='Ingresa los galones consumidos'
-                                        type='number'
-                                    />
-                                    {errors.vehicles && errors.vehicles[formIndex]?.consumption && (
-                                        <CustomAlert
-                                            message={errors.vehicles[formIndex]?.consumption.message}
-                                            type='error'
-                                        />
-                                    )}
-                                </div>
-                            }
+                            label='Galones consumidos'
+                            placeholder='Ingresa los galones consumidos'
+                            type='number'
+
                         />
-                        <Controller
+                        <TextInputController
                             control={control}
                             name={`vehicles[${formIndex}].amountInput`}
                             rules={{ required: 'Por favor, ingresa la cantidad de vehículos', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                            render={({ field }) =>
-                                <div className='flex flex-col w-2/4'>
-                                    <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                        Cantidad de vehículos
-                                    </label>
-                                    <input
-                                        {...field}
-                                        className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                        placeholder='Ingresa la cantidad de vehículos'
-                                        type='number'
-                                    />
-                                    {errors.vehicles && errors.vehicles[formIndex]?.amountInput && (
-                                        <CustomAlert
-                                            message={errors.vehicles[formIndex]?.amountInput.message}
-                                            type='error'
-                                        />
-                                    )}
-                                </div>
-                            }
+                            label='Cantidad de vehículos'
+                            placeholder='Ingresa la cantidad de vehículos'
+                            type='number'
                         />
                         <div className='flex w-2/4 text-darkgray'>
                             <img

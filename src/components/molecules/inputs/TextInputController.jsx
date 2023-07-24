@@ -1,33 +1,40 @@
+//Dependencies
+import { Controller } from 'react-hook-form';
 // Components
 import { CustomAlert } from '../customAlert/customAlert';
 
 export const TextInputController = ({
-    disabled = false,
-    errors,
+    control,
+    name,
+    rules = {},
     label,
-    nameRegister,
-    placeholder = 'Ingrese',
-    register,
     type = 'text',
-    validations,
+    placeholder = 'Ingrese',
 }) => {
-
     return (
-        <>
-            <label className='text-f18 text-primary-gris2'>{label}</label>
-            <input
-                className='px-2 py-2 rounded-md border border-dimgray-200'
-                type={type}
-                placeholder={placeholder}
-                disabled={disabled}
-                {...register(nameRegister, validations)}
-            />
-            {errors && errors[nameRegister] && (
-                <CustomAlert
-                    message={errors[nameRegister].message}
-                    type='error'
-                />
+        <Controller
+            control={control}
+            name={name}
+            rules={rules}
+            render={({ field, fieldState: { error } }) => (
+                <div className='flex flex-col w-2/4'>
+                    <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
+                        {label}
+                    </label>
+                    <input
+                        {...field}
+                        className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200 px-3 py-2' // Agregamos padding-left: 3 a este estilo
+                        placeholder={placeholder}
+                        type={type}
+                    />
+                    {error && (
+                        <CustomAlert
+                            message={error.message}
+                            type='error'
+                        />
+                    )}
+                </div>
             )}
-        </>
+        />
     );
-}
+};

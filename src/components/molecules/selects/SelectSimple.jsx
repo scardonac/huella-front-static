@@ -43,10 +43,6 @@ export const SelectSimple = ({
         }
     }, [options]);
 
-    // console.log(nameRegister, 'nameRegister')
-    // console.log(register, 'register')
-    // console.log(list, 'list')
-
     return (
         <>
             {/* <select {...register("Title", { required: true })}>

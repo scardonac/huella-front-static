@@ -205,30 +205,80 @@ export const updateEmissionsAction = (id) => {
     }
 }
 
+// Acción para traer los soportes
+export const getSupportsAction = (id) => {
+    console.log(id, 'id')
+    return async (dispatch) => {
+        try {
+            const { data } = await axiosClient.get(`/soportes/${id}`);
+            console.log(data, 'dataSupports')
+            return { error: null, verify: true, data };
+        } catch (error) {
+            console.log(error);
+            return { error: 'Error al traer los soportes', verify: false, data: null };
+        }
+    }
+}
+
+// Función para crear FormData con archivos adjuntos
+const createFormData = (file) => {
+    const formData = new FormData();
+    formData.append('file', file); // Asegúrate de que el campo 'file' coincida con el nombre esperado en el backend para el archivo adjunto
+    return formData;
+};
+
 // Acción para crear los soportes
 export const createSupportsAction = (dataForm) => {
-    return async (dispatch, getState) => {
-        const { auth: { user_id } } = getState().persistedData;
+    return async (dispatch) => {
         const dataSupports = dataForm.map((form) => {
             return {
                 cantidad_insumo: form?.amountInput ? Number(form.amountInput) : 0,
                 consumo: form?.consumption ? Number(form.consumption) : 0,
-                dias_por_semana: form?.daysWeek ? Number(form.daysWeek) : 0,
-                horas_de_uso: form?.hoursUse ? Number(form.hoursUse) : 0,
-                id: "string",
-                kilometros_recorridos: form?.kilometers ? Number(form.kilometers) : 0,
-                libras_por_unidad: form?.poundsUnit ? Number(form.poundsUnit) : 0,
-                log_id: form?.log_id ? form.log_id : null,
+                dias_por_semana: form?.daysWeek ? form.daysWeek : null,
+                horas_de_uso: form?.hoursUse ? form.hoursUse : null,
+                kilometros_recorridos: form?.kilometers ? form.kilometers : null,
+                libras_por_unidad: form?.poundsUnit ? form.poundsUnit : null,
+                log_id: form?.logId ? form.logId : null,
                 soportes: {
-                    url: form?.attachedFiles ? form?.attachedFiles : null,
+                    url: [""],
+                    // url: [form.attachedFiles && form.attachedFiles.length > 0 ? createFormData(form.attachedFiles[0]) : null],
                 },
-                tipo_insumo: form?.typeInput ? Number(form.typeInput) : 0,
-                unidad_consumo: form?.unitConsumption ? Number(form.unitConsumption) : 0,
-                unique: true
+                tipo_insumo: form?.typeInput ? form?.typeInput : null,
+                unidad_consumo: form?.unitConsumption ? form.unitConsumption : null,
             }
         });
         try {
             await axiosClient.post('/soportes/final', dataSupports);
+            return { error: null, verify: true };
+        } catch (error) {
+            console.log(error);
+            return { error: 'Error al crear los soportes', verify: false };
+        }
+    }
+}
+
+// Acción para guardar un borrador de los soportes
+export const saveDraftSupportsAction = (dataForm) => {
+    return async (dispatch) => {
+        const dataSupports = dataForm.map((form) => {
+            return {
+                cantidad_insumo: form?.amountInput ? Number(form.amountInput) : 0,
+                consumo: form?.consumption ? Number(form.consumption) : 0,
+                dias_por_semana: form?.daysWeek ? form.daysWeek : null,
+                horas_de_uso: form?.hoursUse ? form.hoursUse : null,
+                kilometros_recorridos: form?.kilometers ? form.kilometers : null,
+                libras_por_unidad: form?.poundsUnit ? form.poundsUnit : null,
+                log_id: form?.logId ? form.logId : null,
+                soportes: {
+                    url: [""],
+                    // url: [form.attachedFiles && form.attachedFiles.length > 0 ? createFormData(form.attachedFiles[0]) : null],
+                },
+                tipo_insumo: form?.typeInput ? form?.typeInput : null,
+                unidad_consumo: form?.unitConsumption ? form.unitConsumption : null,
+            }
+        });
+        try {
+            await axiosClient.post('/soportes/borrador', dataSupports);
             return { error: null, verify: true };
         } catch (error) {
             console.log(error);

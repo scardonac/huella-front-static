@@ -41,8 +41,6 @@ export const ReportContainer = () => {
     // Obtenemos el ID del informe de la URL
     const { reportId } = useParams();
 
-    console.log(reportId, 'reportId')
-
     // Buscamos el componente del informe basado en el ID del informe,
     // si no se encuentra una coincidencia, se usa el componente de informe predeterminado
     const ReportComponent = REPORT_COMPONENTS[reportId] || DefaultReport;

@@ -6,8 +6,18 @@ import axiosClient from '../../../config/AxiosClient';
 // Components
 import { CustomAlert } from '../customAlert/customAlert';
 
-export const SelectController = ({ control, name, apiUrl, valueKey, labelKey, placeholder, disabled, staticData }) => {
-
+export const SelectController = ({
+    apiUrl,
+    control,
+    disabled = false,
+    label = 'Seleccione',
+    labelKey,
+    name,
+    placeholder,
+    rules = {},
+    staticData = null,
+    valueKey,
+}) => {
     const [list, setList] = useState([]);
 
     useEffect(() => {
@@ -29,56 +39,51 @@ export const SelectController = ({ control, name, apiUrl, valueKey, labelKey, pl
     }, [apiUrl, staticData]);
 
     return (
-        <Controller
-            control={control}
-            name={name}
-            rules={{ required: "Por favor, selecciona una opción" }}
-            render={({ field, fieldState: { error } }) => (
-                <div className='flex flex-col w-2/4'>
-                    <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                        Tipo de vehículo
-                    </label>
-                    <select
-                        {...field}
-                        className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'
-                        disabled={disabled}
-                    >
-                        <option value='' style={{ display: 'none' }}>{placeholder}</option>
-                        {list.map((item) => (
-                            <option key={item[valueKey]} value={item[valueKey]}>
-                                {item[labelKey]}
+        <div className='flex flex-col w-2/4'>
+            <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
+                {label}
+            </label>
+            <Controller
+                control={control}
+                name={name}
+                rules={rules}
+                render={({ field, fieldState: { error } }) => (
+                    <>
+                        <select
+                            {...field}
+                            className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'
+                            disabled={disabled}
+                        >
+                            <option value='' style={{ display: 'none' }}>
+                                {placeholder}
                             </option>
-                        ))}
-                    </select>
-                    {error && (
-                        <CustomAlert
-                            message={error.message}
-                            type='error'
-                        />
-                    )}
-                </div>
-            )}
-        />
+                            {list.map((item) => (
+                                <option key={item[valueKey]} value={item[valueKey]}>
+                                    {item[labelKey]}
+                                </option>
+                            ))}
+                        </select>
+                        {error && (
+                            <CustomAlert
+                                message={error.message}
+                                type='error'
+                            />
+                        )}
+                    </>
+                )}
+            />
+        </div>
     );
 };
 
 
 
 // Como usarlo en un componente:
-
-{/* <Controller
-  control={control}
-  name='vehicles[${formIndex}].vehicleType'
-  rules={{ required: "Por favor, selecciona un tipo de vehículo" }}
-  render={({ field, fieldState: { error } }) => (
-    <ReusableList
-      control={control}
-      name='vehicles[${formIndex}].vehicleType'
-      apiUrl='/api/vehicleTypes'
-      valueKey='id'
-      labelKey='name'
-      placeholder='Seleccione un tipo'
-      disabled={false}
-    />
-  )}
+{/* <SelectController
+    control={control}
+    name={`vehicles[${formIndex}].typeInput`}
+    apiUrl='/insumos/vehiculos'
+    valueKey='id'
+    labelKey='nombre'
+    placeholder='Selecciona un tipo'
 /> */}
