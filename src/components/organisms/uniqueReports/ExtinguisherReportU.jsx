@@ -1,9 +1,13 @@
 //Depencies
+import { useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //Components
 import { ButtonGroupReportsU } from '../buttonGroupReportsU/ButtonGroupReportsU';
 import { CustomAlert } from '../../molecules/customAlert/customAlert';
+import { SelectController } from '../../molecules/selects/SelectController';
+import { TextInputController } from '../../molecules/inputs/TextInputController';
 import { Tooltip } from '../../molecules/tooltip/Tooltip';
 import { WrapReports } from '../wrapReports/WrapReports'
 //Illustrations & Icons
@@ -15,21 +19,46 @@ import { useAppDispatch } from '../../../redux/store';
 import { resetTooltipCase, setTooltipCase } from '../../../redux/slices/HelpersSlice';
 //Helpers
 import { allowedExtensions } from '../../../helpers';
+//Actions
+import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
 
 const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
 const { extintor_Azul } = Illustrations; //Illustrations
 
 export const ExtinguisherReportU = () => {
 
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch(); //Inicializamos el dispatcher
+
+    const navigate = useNavigate(); //Inicializamos el hook de navegación
+
+    const { state } = useLocation(); //Obtenemos el estado de la ubicación
+
+    const logId = state?.logId; //Obtenemos el id del log
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
 
+    const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
+
+    // Objeto con los valores por defecto de los campos del formulario
+    const defaultValues = {
+        vehicles: [
+            {
+                nameForm: 'Extintores',
+                flagNameForm: false,
+                typeInput: '',
+                poundsUnit: '',
+                amountInput: '',
+                attachedFiles: [null],
+                logId: logId,
+            },
+        ]
+    };
+
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
         defaultValues: {
             extinguisher: [
-                { nameForm: 'Extintores', flagNameForm: false, gasType: '', pounds: '', numberOfExtinguisher: '', attachedFiles: [null] },
+                { nameForm: 'Extintores', flagNameForm: false, typeInput: '', poundsUnit: '', amountInput: '', attachedFiles: [null] },
             ]
         }
     });
@@ -102,11 +131,49 @@ export const ExtinguisherReportU = () => {
         dispatch(setTooltipCase({ ...tooltip, position: { x: e.pageX, y: e.pageY } }));
     };
 
-    const onSubmit = data => console.log(data);
+    // Función para crear los soportes
+    const onSubmit = async (data) => {
+        const { msg, verify } = await dispatch(createSupportsAction(data.vehicles));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
+        navigate(-1)
+    }
 
-    const actionDraft = () => {
-        console.log('Guardado como borrador');
+    // Función para guardar el reporte como borrador
+    const actionDraft = async () => {
+        const { msg, verify } = await dispatch(saveDraftSupportsAction(fields));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
+        navigate(-1)
     };
+
+    // Función para obtener los soportes por logId
+    const getSupportsByLogId = async () => {
+        if (!logId) return;
+        const { msg, verify, data } = await dispatch(getSupportsAction(logId));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
+        if (verify && data?.length > 0) {
+            reset(defaultValues);
+            reset({
+                extinguisher: data?.map((item) => ({
+                    // nameForm: item?.nombre,
+                    nameForm: 'Extintores',
+                    flagNameForm: false,
+                    typeInput: item?.tipo_insumo,
+                    unitConsumption: item?.unidad_consumo,
+                    kilometers: item?.kilometros_recorridos,
+                    consumption: item?.consumo,
+                    amountInput: item?.cantidad_insumo,
+                    // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
+                    attachedFiles: [null],
+                    logId,
+                }))
+            });
+        }
+    };
+
+    //UseEffect para obtener los soportes por logId
+    useEffect(() => {
+        getSupportsByLogId();
+    }, [logId]);
 
     return (
         <WrapReports
@@ -128,7 +195,7 @@ export const ExtinguisherReportU = () => {
                                         {fields[formIndex].flagNameForm
                                             ?
                                             <button
-                                                 className='mr-[6px] bg-primary-green2 bg-no-repeat px-4 py-2 rounded-[10px] opacity-100 cursor-pointer'
+                                                className='mr-[6px] bg-primary-green2 bg-no-repeat px-4 py-2 rounded-[10px] opacity-100 cursor-pointer'
                                                 onClick={() => handleUpdateNameForm(formIndex, field.value)}
                                             >
                                                 <b className='tracking-tighter leading-6 text-primary-80 font-bold text-left text-base text-primary-title1 opacity-100'>
@@ -185,7 +252,7 @@ export const ExtinguisherReportU = () => {
                         />
                         <Controller
                             control={control}
-                            name={`extinguisher[${formIndex}].gasType`}
+                            name={`extinguisher[${formIndex}].typeInput`}
                             rules={{ required: "Por favor, selecciona un tipo de dispositivo" }}
                             render={({ field }) =>
                                 <div className='flex flex-col w-2/4'>
@@ -199,9 +266,9 @@ export const ExtinguisherReportU = () => {
                                         <option value="3">Gas 3</option>
                                         <option value="4">Gas 4</option>
                                     </select>
-                                    {errors.extinguisher && errors.extinguisher[formIndex]?.gasType && (
+                                    {errors.extinguisher && errors.extinguisher[formIndex]?.typeInput && (
                                         <CustomAlert
-                                            message={errors.extinguisher[formIndex]?.gasType.message}
+                                            message={errors.extinguisher[formIndex]?.typeInput.message}
                                             type='error'
                                         />
                                     )}
@@ -210,7 +277,7 @@ export const ExtinguisherReportU = () => {
                         />
                         <Controller
                             control={control}
-                            name={`extinguisher[${formIndex}].pounds`}
+                            name={`extinguisher[${formIndex}].poundsUnit`}
                             rules={{ required: 'Por favor, ingresa la cantidad de libras por unidad', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
                             render={({ field }) =>
                                 <div className='flex flex-col w-2/4'>
@@ -222,9 +289,9 @@ export const ExtinguisherReportU = () => {
                                         className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
                                         type='number'
                                     />
-                                    {errors.extinguisher && errors.extinguisher[formIndex]?.pounds && (
+                                    {errors.extinguisher && errors.extinguisher[formIndex]?.poundsUnit && (
                                         <CustomAlert
-                                            message={errors.extinguisher[formIndex]?.pounds.message}
+                                            message={errors.extinguisher[formIndex]?.poundsUnit.message}
                                             type='error'
                                         />
                                     )}
@@ -233,7 +300,7 @@ export const ExtinguisherReportU = () => {
                         />
                         <Controller
                             control={control}
-                            name={`extinguisher[${formIndex}].numberOfExtinguisher`}
+                            name={`extinguisher[${formIndex}].amountInput`}
                             rules={{ required: 'Por favor, ingresa la cantidad de extintores', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
                             render={({ field }) =>
                                 <div className='flex flex-col w-2/4'>
@@ -245,9 +312,9 @@ export const ExtinguisherReportU = () => {
                                         className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
                                         type='number'
                                     />
-                                    {errors.extinguisher && errors.extinguisher[formIndex]?.numberOfExtinguisher && (
+                                    {errors.extinguisher && errors.extinguisher[formIndex]?.amountInput && (
                                         <CustomAlert
-                                            message={errors.extinguisher[formIndex]?.numberOfExtinguisher.message}
+                                            message={errors.extinguisher[formIndex]?.amountInput.message}
                                             type='error'
                                         />
                                     )}
@@ -323,7 +390,7 @@ export const ExtinguisherReportU = () => {
                                 src={InformationIcon}
                             />
                             <div className='bg-primary-green2 bg-no-repeat px-4 py-2 rounded-lg opacity-100 cursor-pointer' onClick={() =>
-                                append({ nameForm: 'Extintores', flagNameForm: false, gasType: '', pounds: '', attachedFiles: [null] },)}>
+                                append({ nameForm: 'Extintores', flagNameForm: false, typeInput: '', poundsUnit: '', attachedFiles: [null] },)}>
                                 <b className='tracking-tighter leading-6 text-primary-80 font-bold text-left text-base text-primary-title1 opacity-100'>
                                     Agregar otro tipo de extintor
                                 </b>

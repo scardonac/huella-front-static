@@ -236,6 +236,7 @@ export const createSupportsAction = (dataForm) => {
                 horas_de_uso: form?.hoursUse ? form.hoursUse : null,
                 kilometros_recorridos: form?.kilometers ? form.kilometers : null,
                 libras_por_unidad: form?.poundsUnit ? form.poundsUnit : null,
+                id: form?.id ? form.id : null,
                 log_id: form?.logId ? form.logId : null,
                 soportes: {
                     url: [""],
@@ -257,6 +258,7 @@ export const createSupportsAction = (dataForm) => {
 
 // Acción para guardar un borrador de los soportes
 export const saveDraftSupportsAction = (dataForm) => {
+    console.log(dataForm, 'dataForm')
     return async (dispatch) => {
         const dataSupports = dataForm.map((form) => {
             return {
@@ -266,6 +268,7 @@ export const saveDraftSupportsAction = (dataForm) => {
                 horas_de_uso: form?.hoursUse ? form.hoursUse : null,
                 kilometros_recorridos: form?.kilometers ? form.kilometers : null,
                 libras_por_unidad: form?.poundsUnit ? form.poundsUnit : null,
+                id: form?.id ? form.id : null,
                 log_id: form?.logId ? form.logId : null,
                 soportes: {
                     url: [""],
