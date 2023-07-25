@@ -15,17 +15,47 @@ import { useAppDispatch } from '../../../redux/store';
 import { resetTooltipCase, setTooltipCase } from '../../../redux/slices/HelpersSlice';
 //Helpers
 import { allowedExtensions } from '../../../helpers';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
 
 const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
 const { Residuos_Azul } = Illustrations; //Illustrations
 
 export const ResidueRecolectionReportU = () => {
 
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch(); //Inicializamos el dispatcher
+
+    const navigate = useNavigate(); //Inicializamos el hook de navegación
+
+    const { state } = useLocation(); //Obtenemos el estado de la ubicación
+
+    const logId = state?.logId; //Obtenemos el id del log
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
 
+    const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
+    const [flag, setFlag] = useState(true); //Estado local para setear el texto de la alerta
+
+    // Objeto con los valores por defecto de los campos del formulario
+    const defaultValues = {
+        vehicles: [
+            {
+                nameForm: 'Recolección de residuos',
+                flagNameForm: false,
+                typeInput: '',
+                unitConsumption: '',
+                kilometers: '',
+                consumption: '',
+                amountInput: '',
+                id: null,
+                attachedFiles: [null],
+                logId: logId,
+            },
+        ]
+    };
+    // Obtenemos los métodos del hook form
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
         defaultValues: {
             residueRecolection: [
@@ -33,7 +63,8 @@ export const ResidueRecolectionReportU = () => {
             ]
         }
     });
-    const { fields, append, remove } = useFieldArray({
+    // Obtenemos los métodos del hook useFieldArray
+    const { fields } = useFieldArray({
         control,
         name: 'residueRecolection'
     });
@@ -102,11 +133,50 @@ export const ResidueRecolectionReportU = () => {
         dispatch(setTooltipCase({ ...tooltip, position: { x: e.pageX, y: e.pageY } }));
     };
 
-    const onSubmit = data => console.log(data);
+    // Función para crear los soportes
+    const onSubmit = async (data) => {
+        const { msg, verify } = await dispatch(createSupportsAction(data.vehicles));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
+          verify && navigate(-1)
+    }
 
-    const actionDraft = () => {
-        console.log('Guardado como borrador');
+    // Función para guardar el reporte como borrador
+    const actionDraft = async () => {
+        const { msg, verify } = await dispatch(saveDraftSupportsAction(fields));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
+          verify && navigate(-1)
     };
+
+    // Función para obtener los soportes por logId
+    const getSupportsByLogId = async () => {
+        if (!logId) return;
+        const { msg, verify, data } = await dispatch(getSupportsAction(logId));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
+        if (verify && data?.length > 0) {
+            reset(defaultValues);
+            reset({
+                vehicles: data?.map((item) => ({
+                    // nameForm: item?.nombre,
+                    nameForm: 'Vehículo',
+                    flagNameForm: false,
+                    typeInput: item?.tipo_insumo,
+                    unitConsumption: item?.unidad_consumo,
+                    kilometers: item?.kilometros_recorridos,
+                    consumption: item?.consumo,
+                    amountInput: item?.cantidad_insumo,
+                    id: item?.id,
+                    // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
+                    attachedFiles: [null],
+                    logId,
+                }))
+            });
+        }
+    };
+
+    //UseEffect para obtener los soportes por logId
+    useEffect(() => {
+        getSupportsByLogId();
+    }, [logId]);
 
     return (
         <WrapReports
@@ -116,7 +186,7 @@ export const ResidueRecolectionReportU = () => {
             navigateTo={-1}
         >
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col items-center justify-center'>
-                {[...fields].sort().map((_, formIndex) => (
+                {fields.map((_, formIndex) => (
                     <div className='flex flex-col items-center justify-center gap-4 pt-6 w-full' key={formIndex}>
                         <hr className={`w-2/4 border border-gray-400 opacity-100 ${formIndex !== 0 ? null : 'hidden'}`} />
                         <Controller
@@ -207,7 +277,12 @@ export const ResidueRecolectionReportU = () => {
                         </div>
                     </div>
                 ))}
-
+                {textAlert && (
+                    <CustomAlert
+                        message={textAlert.msg}
+                        type={textAlert.type}
+                    />
+                )}
                 <ButtonGroupReportsU actionDraft={actionDraft} />
                 <Tooltip />
             </form>

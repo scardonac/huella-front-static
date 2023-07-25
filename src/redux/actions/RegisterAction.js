@@ -232,10 +232,10 @@ export const createSupportsAction = (dataForm) => {
             return {
                 cantidad_insumo: form?.amountInput ? Number(form.amountInput) : 0,
                 consumo: form?.consumption ? Number(form.consumption) : 0,
-                dias_por_semana: form?.daysWeek ? form.daysWeek : null,
-                horas_de_uso: form?.hoursUse ? form.hoursUse : null,
-                kilometros_recorridos: form?.kilometers ? form.kilometers : null,
-                libras_por_unidad: form?.poundsUnit ? form.poundsUnit : null,
+                dias_por_semana: form?.daysWeek ? Number(form.daysWeek) : null,
+                horas_de_uso: form?.hoursUse ? Number(form.hoursUse) : null,
+                kilometros_recorridos: form?.kilometers ? Number(form.kilometers) : null,
+                libras_por_unidad: form?.poundsUnit ? Number(form.poundsUnit) : null,
                 id: form?.id ? form.id : null,
                 log_id: form?.logId ? form.logId : null,
                 soportes: {
@@ -264,10 +264,10 @@ export const saveDraftSupportsAction = (dataForm) => {
             return {
                 cantidad_insumo: form?.amountInput ? Number(form.amountInput) : 0,
                 consumo: form?.consumption ? Number(form.consumption) : 0,
-                dias_por_semana: form?.daysWeek ? form.daysWeek : null,
-                horas_de_uso: form?.hoursUse ? form.hoursUse : null,
-                kilometros_recorridos: form?.kilometers ? form.kilometers : null,
-                libras_por_unidad: form?.poundsUnit ? form.poundsUnit : null,
+                dias_por_semana: form?.daysWeek ? Number(form.daysWeek) : null,
+                horas_de_uso: form?.hoursUse ? Number(form.hoursUse) : null,
+                kilometros_recorridos: form?.kilometers ? Number(form.kilometers) : null,
+                libras_por_unidad: form?.poundsUnit ? Number(form.poundsUnit) : null,
                 id: form?.id ? form.id : null,
                 log_id: form?.logId ? form.logId : null,
                 soportes: {
