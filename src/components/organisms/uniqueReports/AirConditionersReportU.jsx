@@ -19,6 +19,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
 import { SelectController } from '../../molecules/selects/SelectController';
+import { TextInputController } from '../../molecules/inputs/TextInputController';
 
 const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
 const { aire_Azul } = Illustrations; //Illustrations
@@ -267,51 +268,21 @@ export const AirConditionersReportU = () => {
                                 rules={{ required: "Por favor, selecciona un tipo de gas" }}
                                 label='Tipo de gas refrigerante'
                             />
-                            <Controller
+                            <TextInputController
                                 control={control}
                                 name={`airConditioners[${formIndex}].poundsUnit`}
                                 rules={{ required: 'Por favor, ingresa la cantidad de libras por unidad', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Libras por unidad
-                                        </label>
-                                        <input
-                                            {...field}
-                                            className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                            type='number'
-                                        />
-                                        {errors.airConditioners && errors.airConditioners[formIndex]?.poundsUnit && (
-                                            <CustomAlert
-                                                message={errors.airConditioners[formIndex]?.poundsUnit.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Libras por unidad'
+                                placeholder='Ingresa las libras por unidad'
+                                type='number'
                             />
-                            <Controller
+                            <TextInputController
                                 control={control}
                                 name={`airConditioners[${formIndex}].amountInput`}
                                 rules={{ required: 'Por favor, ingresa la cantidad de aires acondicionados', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Cantidad de aires acondicionados
-                                        </label>
-                                        <input
-                                            {...field}
-                                            className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                            type='number'
-                                        />
-                                        {errors.airConditioners && errors.airConditioners[formIndex]?.amountInput && (
-                                            <CustomAlert
-                                                message={errors.airConditioners[formIndex]?.amountInput.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Cantidad de aires acondicionados'
+                                placeholder='Ingresa la cantidad de aires acondicionados'
+                                type='number'
                             />
                             <div className='flex w-2/4 text-darkgray'>
                                 <img

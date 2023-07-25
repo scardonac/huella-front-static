@@ -15,7 +15,7 @@ import { Illustrations } from '../../../assets/Illustrations/IllustrationProvide
 import { Icons } from '../../../assets/icons/IconProvider';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
-//Actions
+//Slice
 import { resetTooltipCase, setTooltipCase } from '../../../redux/slices/HelpersSlice';
 //Helpers
 import { allowedExtensions } from '../../../helpers';
@@ -268,51 +268,21 @@ export const ExtinguisherReportU = () => {
                                 rules={{ required: "Por favor, selecciona un tipo de gas" }}
                                 label='Tipo de gas'
                             />
-                            <Controller
+                            <TextInputController
                                 control={control}
                                 name={`extinguisher[${formIndex}].poundsUnit`}
                                 rules={{ required: 'Por favor, ingresa la cantidad de libras por unidad', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Libras por unidad
-                                        </label>
-                                        <input
-                                            {...field}
-                                            className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                            type='number'
-                                        />
-                                        {errors.extinguisher && errors.extinguisher[formIndex]?.poundsUnit && (
-                                            <CustomAlert
-                                                message={errors.extinguisher[formIndex]?.poundsUnit.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Libras por unidad'
+                                placeholder='Ingresa las libras por unidad'
+                                type='number'
                             />
-                            <Controller
+                            <TextInputController
                                 control={control}
                                 name={`extinguisher[${formIndex}].amountInput`}
                                 rules={{ required: 'Por favor, ingresa la cantidad de extintores', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Cantidad de extintores
-                                        </label>
-                                        <input
-                                            {...field}
-                                            className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                            type='number'
-                                        />
-                                        {errors.extinguisher && errors.extinguisher[formIndex]?.amountInput && (
-                                            <CustomAlert
-                                                message={errors.extinguisher[formIndex]?.amountInput.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Cantidad de extintores'
+                                placeholder='Ingresa la cantidad de extintores'
+                                type='number'
                             />
                             <div className='flex w-2/4 text-darkgray'>
                                 <img

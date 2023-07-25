@@ -186,8 +186,6 @@ export const VehiclesReportU = () => {
         }, 20);
     };
 
-    console.log(fields, 'fields xxxxxxxxxx')
-
     return (
         <WrapReports
             title='Vehículos'
@@ -297,7 +295,6 @@ export const VehiclesReportU = () => {
                                 label='Galones consumidos'
                                 placeholder='Ingresa los galones consumidos'
                                 type='number'
-
                             />
                             <TextInputController
                                 control={control}

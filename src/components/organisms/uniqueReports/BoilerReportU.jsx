@@ -18,6 +18,8 @@ import { allowedExtensions } from '../../../helpers';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
+import { SelectController } from '../../molecules/selects/SelectController';
+import { TextInputController } from '../../molecules/inputs/TextInputController';
 
 const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
 const { PlantaCombustion_Azul } = Illustrations; //Illustrations
@@ -40,13 +42,12 @@ export const BoilerReportU = () => {
 
     // Objeto con los valores por defecto de los campos del formulario
     const defaultValues = {
-        vehicles: [
+        boilers: [
             {
                 nameForm: 'Horno o caldera',
                 flagNameForm: false,
                 typeInput: '',
                 unitConsumption: '',
-                kilometers: '',
                 consumption: '',
                 amountInput: '',
                 id: null,
@@ -57,11 +58,7 @@ export const BoilerReportU = () => {
     };
     // Obtenemos los métodos del hook form
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
-        defaultValues: {
-            boilers: [
-                { nameForm: 'Horno o caldera', flagNameForm: false, boilerType: '', fuelType: '', gallons: '', numberOfBoiler: '', attachedFiles: [null] },
-            ]
-        }
+        defaultValues
     });
     // Obtenemos los métodos del hook useFieldArray
     const { fields, append, remove } = useFieldArray({
@@ -135,7 +132,7 @@ export const BoilerReportU = () => {
 
     // Función para crear los soportes
     const onSubmit = async (data) => {
-        const { msg, verify } = await dispatch(createSupportsAction(data.vehicles));
+        const { msg, verify } = await dispatch(createSupportsAction(data.boilers));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
         verify && navigate(-1)
     }
@@ -155,13 +152,12 @@ export const BoilerReportU = () => {
         if (verify && data?.length > 0) {
             reset(defaultValues);
             reset({
-                vehicles: data?.map((item) => ({
+                boilers: data?.map((item) => ({
                     // nameForm: item?.nombre,
-                    nameForm: 'Vehículo',
+                    nameForm: 'Horno o caldera',
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     unitConsumption: item?.unidad_consumo,
-                    kilometers: item?.kilometros_recorridos,
                     consumption: item?.consumo,
                     amountInput: item?.cantidad_insumo,
                     id: item?.id,
@@ -264,103 +260,46 @@ export const BoilerReportU = () => {
                                     </div>
                                 }
                             />
-                            <Controller
+                            <SelectController
                                 control={control}
-                                name={`boilers[${formIndex}].boilerType`}
+                                name={`boilers[${formIndex}].typeInput`}
+                                apiUrl='/insumos/hornos'
+                                valueKey='id'
+                                labelKey='nombre'
+                                placeholder='Selecciona un tipo'
                                 rules={{ required: "Por favor, selecciona un tipo de horno o caldera" }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Tipo de horno o caldera
-                                        </label>
-                                        <select {...field} className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'>
-                                            <option value="">Selecciona un tipo</option>
-                                            <option value="1">Horno 1</option>
-                                            <option value="2">Horno 2</option>
-                                            <option value="3">Horno 3</option>
-                                            <option value="4">Horno 4</option>
-                                        </select>
-                                        {errors.boilers && errors.boilers[formIndex]?.boilerType && (
-                                            <CustomAlert
-                                                message={errors.boilers[formIndex]?.boilerType.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Tipo de horno o caldera'
                             />
-                            <Controller
+                            <SelectController
                                 control={control}
-                                name={`boilers[${formIndex}].fuelType`}
+                                name={`boilers[${formIndex}].unitConsumption`}
+                                staticData={[
+                                    { id: 1, nombre: 'Gasolina 1' },
+                                    { id: 2, nombre: 'Gasolina 2' },
+                                    { id: 3, nombre: 'Gasolina 3' },
+                                    { id: 4, nombre: 'Gasolina 4' },
+                                ]}
+                                valueKey='id'
+                                labelKey='nombre'
+                                placeholder='Selecciona un tipo'
                                 rules={{ required: "Por favor, selecciona un tipo de combustible" }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Tipo de combustible
-                                        </label>
-                                        <select {...field} className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'>
-                                            <option value="">Selecciona un tipo</option>
-                                            <option value="1">Gasolina 1</option>
-                                            <option value="2">Gasolina 2</option>
-                                            <option value="3">Gasolina 3</option>
-                                            <option value="4">Gasolina 4</option>
-                                        </select>
-                                        {errors.boilers && errors.boilers[formIndex]?.fuelType && (
-                                            <CustomAlert
-                                                message={errors.boilers[formIndex]?.fuelType.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Tipo de combustible'
                             />
-                            <Controller
+                            <TextInputController
                                 control={control}
-                                name={`boilers[${formIndex}].gallons`}
+                                name={`boilers[${formIndex}].consumption`}
                                 rules={{ required: 'Por favor, ingresa los galones consumidos', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Galones consumidos
-                                        </label>
-                                        <input
-                                            {...field}
-                                            className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                            placeholder='Ingresa los galones consumidos'
-                                            type='number'
-                                        />
-                                        {errors.boilers && errors.boilers[formIndex]?.gallons && (
-                                            <CustomAlert
-                                                message={errors.boilers[formIndex]?.gallons.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Galones consumidos'
+                                placeholder='Ingresa los galones consumidos'
+                                type='number'
                             />
-                            <Controller
+                            <TextInputController
                                 control={control}
-                                name={`boilers[${formIndex}].numberOfBoiler`}
+                                name={`boilers[${formIndex}].amountInput`}
                                 rules={{ required: 'Por favor, ingresa la cantidad de hornos o calderas', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Cantidad de hornos o calderas
-                                        </label>
-                                        <input
-                                            {...field}
-                                            className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                            placeholder='Ingresa la cantidad de hornos o calderas'
-                                            type='number'
-                                        />
-                                        {errors.boilers && errors.boilers[formIndex]?.numberOfBoiler && (
-                                            <CustomAlert
-                                                message={errors.boilers[formIndex]?.numberOfBoiler.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Cantidad de hornos o calderas'
+                                placeholder='Ingresa la cantidad de hornos o calderas'
+                                type='number'
                             />
                             <div className='flex w-2/4 text-darkgray'>
                                 <img
