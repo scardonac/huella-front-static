@@ -23,6 +23,21 @@ steps:
 
 - task: CmdLine@2
   inputs:
+    script: 'npm cache clean --force'
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      rm -rf node_modules
+  displayName: 'rm -rf node_modules'
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      rm -f package-lock.json
+  displayName: 'rm -f package-lock.json'
+- task: CmdLine@2
+  inputs:
     script: |
      npm install
   displayName: 'Instalar dependencias'
