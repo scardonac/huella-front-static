@@ -20,3 +20,8 @@ steps:
   inputs:
     script: 'node -v'
   displayName: 'Version Node'
+
+- task: CmdLine@2
+  inputs:
+    script: 'npm run dev'
+  displayName: 'npm run dev'
