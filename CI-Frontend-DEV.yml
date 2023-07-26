@@ -24,8 +24,12 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      pwd
-      ls -la
+     npm install
+  displayName: 'Instalar dependencias'
+  
+
+- task: CmdLine@2
+  inputs:
+    script: |
       npm -v
-      npm run dev
-  displayName: 'npm run dev'
+  displayName: 'npm   VERSION'
