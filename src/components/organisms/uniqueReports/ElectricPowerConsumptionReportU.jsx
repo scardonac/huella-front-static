@@ -1,9 +1,12 @@
 //Depencies
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //Components
 import { ButtonGroupReportsU } from '../buttonGroupReportsU/ButtonGroupReportsU';
 import { CustomAlert } from '../../molecules/customAlert/customAlert';
+import { TextInputController } from '../../molecules/inputs/TextInputController';
 import { Tooltip } from '../../molecules/tooltip/Tooltip';
 import { WrapReports } from '../wrapReports/WrapReports'
 //Illustrations & Icons
@@ -12,12 +15,11 @@ import { Icons } from '../../../assets/icons/IconProvider';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
 //Actions
+import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
+//Slices
 import { resetTooltipCase, setTooltipCase } from '../../../redux/slices/HelpersSlice';
 //Helpers
 import { allowedExtensions } from '../../../helpers';
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
 
 const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
 const { ConsumoEnergia_Azul } = Illustrations; //Illustrations
@@ -36,18 +38,14 @@ export const ElectricPowerConsumptionReportU = () => {
     const tooltip = useSelector(state => state.helpers.tooltip);
 
     const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
-    const [flag, setFlag] = useState(true); //Estado local para setear el texto de la alerta
 
     // Objeto con los valores por defecto de los campos del formulario
     const defaultValues = {
-        vehicles: [
+        electricPowerConsumption: [
             {
                 nameForm: 'Consumo de energía eléctrica',
                 flagNameForm: false,
                 typeInput: '',
-                unitConsumption: '',
-                kilometers: '',
-                consumption: '',
                 amountInput: '',
                 id: null,
                 attachedFiles: [null],
@@ -59,7 +57,7 @@ export const ElectricPowerConsumptionReportU = () => {
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
         defaultValues: {
             electricPowerConsumption: [
-                { nameForm: 'Consumo de energía eléctrica', flagNameForm: false, valueInTons: '', attachedFiles: [null] },
+                { nameForm: 'Consumo de energía eléctrica', flagNameForm: false, amountInput: '', attachedFiles: [null] },
             ]
         }
     });
@@ -103,21 +101,6 @@ export const ElectricPowerConsumptionReportU = () => {
         dispatch(resetTooltipCase());
     };
 
-    const toggleFlagNameForm = (formIndex) => {
-        const values = getValues();
-        const updatedElectricPowerConsumption = [...values.electricPowerConsumption];
-        updatedElectricPowerConsumption[formIndex].flagNameForm = !updatedElectricPowerConsumption[formIndex].flagNameForm;
-        setValue('electricPowerConsumption', updatedElectricPowerConsumption);
-    };
-
-    const handleUpdateNameForm = (formIndex, value) => {
-        const values = getValues();
-        const updatedElectricPowerConsumption = [...values.electricPowerConsumption];
-        updatedElectricPowerConsumption[formIndex].nameForm = value;
-        setValue('electricPowerConsumption', updatedElectricPowerConsumption);
-        toggleFlagNameForm(formIndex);
-    };
-
     const handleOnMouseEnter = (text) => {
         // Llamamos a la acción setTooltipCase para mostrar el tooltip con el texto deseado
         dispatch(setTooltipCase({ ...tooltip, showTooltip: true, textTooltip: text }));
@@ -135,16 +118,16 @@ export const ElectricPowerConsumptionReportU = () => {
 
     // Función para crear los soportes
     const onSubmit = async (data) => {
-        const { msg, verify } = await dispatch(createSupportsAction(data.vehicles));
+        const { msg, verify } = await dispatch(createSupportsAction(data.electricPowerConsumption));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
-          verify && navigate(-1)
+        verify && navigate(-1)
     }
 
     // Función para guardar el reporte como borrador
     const actionDraft = async () => {
         const { msg, verify } = await dispatch(saveDraftSupportsAction(fields));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
-          verify && navigate(-1)
+        verify && navigate(-1)
     };
 
     // Función para obtener los soportes por logId
@@ -155,14 +138,11 @@ export const ElectricPowerConsumptionReportU = () => {
         if (verify && data?.length > 0) {
             reset(defaultValues);
             reset({
-                vehicles: data?.map((item) => ({
+                electricPowerConsumption: data?.map((item) => ({
                     // nameForm: item?.nombre,
-                    nameForm: 'Vehículo',
+                    nameForm: 'Consumo de energía eléctrica',
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
-                    unitConsumption: item?.unidad_consumo,
-                    kilometers: item?.kilometros_recorridos,
-                    consumption: item?.consumo,
                     amountInput: item?.cantidad_insumo,
                     id: item?.id,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
@@ -189,29 +169,13 @@ export const ElectricPowerConsumptionReportU = () => {
                 {fields.map((_, formIndex) => (
                     <div className='flex flex-col items-center justify-center gap-4 pt-6 w-full' key={formIndex}>
                         <hr className={`w-2/4 border border-gray-400 opacity-100 ${formIndex !== 0 ? null : 'hidden'}`} />
-                        <Controller
+                        <TextInputController
                             control={control}
-                            name={`extinguisher[${formIndex}].valueInTons`}
+                            name={`electricPowerConsumption[${formIndex}].amountInput`}
                             rules={{ required: 'Por favor, ingresa el valor en kw/h', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                            render={({ field }) =>
-                                <div className='flex flex-col w-2/4'>
-                                    <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                        Valor en kw/h
-                                    </label>
-                                    <input
-                                        {...field}
-                                        className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                        placeholder='Ingresa el valor en kw/h'
-                                        type='number'
-                                    />
-                                    {errors.extinguisher && errors.extinguisher[formIndex]?.valueInTons && (
-                                        <CustomAlert
-                                            message={errors.extinguisher[formIndex]?.valueInTons.message}
-                                            type='error'
-                                        />
-                                    )}
-                                </div>
-                            }
+                            label='Valor en kw/h'
+                            placeholder='Ingresa el valor en kw/h'
+                            type='number'
                         />
                         <div className='flex w-2/4 text-darkgray'>
                             <img

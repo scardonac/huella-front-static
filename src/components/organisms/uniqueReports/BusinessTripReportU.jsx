@@ -1,23 +1,24 @@
 //Depencies
+import { useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //Components
 import { ButtonGroupReportsU } from '../buttonGroupReportsU/ButtonGroupReportsU';
 import { CustomAlert } from '../../molecules/customAlert/customAlert';
 import { Tooltip } from '../../molecules/tooltip/Tooltip';
-import { WrapReports } from '../wrapReports/WrapReports'
+import { WrapReports } from '../wrapReports/WrapReports';
 //Illustrations & Icons
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 import { Icons } from '../../../assets/icons/IconProvider';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
 //Actions
+import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
+//Slices
 import { resetTooltipCase, setTooltipCase } from '../../../redux/slices/HelpersSlice';
 //Helpers
 import { allowedExtensions } from '../../../helpers';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
 
 const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
 const { ViajesNegocios_Azul } = Illustrations; //Illustrations

@@ -1,10 +1,13 @@
 //Depencies
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //Components
 import { ButtonGroupReportsU } from '../buttonGroupReportsU/ButtonGroupReportsU';
 import { CustomAlert } from '../../molecules/customAlert/customAlert';
+import { SelectController } from '../../molecules/selects/SelectController';
+import { TextInputController } from '../../molecules/inputs/TextInputController';
 import { Tooltip } from '../../molecules/tooltip/Tooltip';
 import { WrapReports } from '../wrapReports/WrapReports'
 //Illustrations & Icons
@@ -13,13 +16,11 @@ import { Icons } from '../../../assets/icons/IconProvider';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
 //Actions
+import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
+//Slices
 import { resetTooltipCase, setTooltipCase } from '../../../redux/slices/HelpersSlice';
 //Helpers
 import { allowedExtensions } from '../../../helpers';
-import { useEffect, useState } from 'react';
-import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
-import { SelectController } from '../../molecules/selects/SelectController';
-import { TextInputController } from '../../molecules/inputs/TextInputController';
 
 const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
 const { PlantaEnergia_Azul } = Illustrations; //Illustrations
@@ -260,31 +261,6 @@ export const EnergyPlantsReportU = () => {
                                     </div>
                                 }
                             />
-                            {/* <Controller
-                                control={control}
-                                name={`plants[${formIndex}].typeInput`}
-                                rules={{ required: "Por favor, selecciona un tipo de planta" }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Tipo de planta
-                                        </label>
-                                        <select {...field} className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'>
-                                            <option value="">Selecciona un tipo</option>
-                                            <option value="1">Planta de energía 1</option>
-                                            <option value="2">Planta de energía 2</option>
-                                            <option value="3">Planta de energía 3</option>
-                                            <option value="4">Planta de energía 4</option>
-                                        </select>
-                                        {errors.plants && errors.plants[formIndex]?.typeInput && (
-                                            <CustomAlert
-                                                message={errors.plants[formIndex]?.typeInput.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
-                            /> */}
                             <SelectController
                                 control={control}
                                 name={`plants[${formIndex}].typeInput`}

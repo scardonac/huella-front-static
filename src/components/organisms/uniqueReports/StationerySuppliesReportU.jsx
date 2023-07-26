@@ -1,9 +1,13 @@
 //Depencies
+import { useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //Components
 import { ButtonGroupReportsU } from '../buttonGroupReportsU/ButtonGroupReportsU';
 import { CustomAlert } from '../../molecules/customAlert/customAlert';
+import { SelectController } from '../../molecules/selects/SelectController';
+import { TextInputController } from '../../molecules/inputs/TextInputController';
 import { Tooltip } from '../../molecules/tooltip/Tooltip';
 import { WrapReports } from '../wrapReports/WrapReports'
 //Illustrations & Icons
@@ -12,12 +16,11 @@ import { Icons } from '../../../assets/icons/IconProvider';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
 //Actions
+import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
+//Slice
 import { resetTooltipCase, setTooltipCase } from '../../../redux/slices/HelpersSlice';
 //Helpers
 import { allowedExtensions } from '../../../helpers';
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
 
 const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
 const { Papeleria_Azul } = Illustrations; //Illustrations
@@ -40,14 +43,11 @@ export const StationerySuppliesReportU = () => {
 
     // Objeto con los valores por defecto de los campos del formulario
     const defaultValues = {
-        vehicles: [
+        stationerySupplies: [
             {
                 nameForm: 'Suministros de papelería',
                 flagNameForm: false,
                 typeInput: '',
-                unitConsumption: '',
-                kilometers: '',
-                consumption: '',
                 amountInput: '',
                 id: null,
                 attachedFiles: [null],
@@ -57,11 +57,7 @@ export const StationerySuppliesReportU = () => {
     };
     // Obtenemos los métodos del hook form
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
-        defaultValues: {
-            stationerySupplies: [
-                { nameForm: 'Suministros de papelería', flagNameForm: false, supplyType: '', Amount: '', attachedFiles: [null] },
-            ]
-        }
+        defaultValues
     });
     // Obtenemos los métodos del hook useFieldArray
     const { fields, append, remove } = useFieldArray({
@@ -135,7 +131,7 @@ export const StationerySuppliesReportU = () => {
 
     // Función para crear los soportes
     const onSubmit = async (data) => {
-        const { msg, verify } = await dispatch(createSupportsAction(data.vehicles));
+        const { msg, verify } = await dispatch(createSupportsAction(data.stationerySupplies));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
         verify && navigate(-1)
     }
@@ -155,14 +151,11 @@ export const StationerySuppliesReportU = () => {
         if (verify && data?.length > 0) {
             reset(defaultValues);
             reset({
-                vehicles: data?.map((item) => ({
+                stationerySupplies: data?.map((item) => ({
                     // nameForm: item?.nombre,
-                    nameForm: 'Vehículo',
+                    nameForm: 'Suministros de papelería',
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
-                    unitConsumption: item?.unidad_consumo,
-                    kilometers: item?.kilometros_recorridos,
-                    consumption: item?.consumo,
                     amountInput: item?.cantidad_insumo,
                     id: item?.id,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
@@ -263,54 +256,23 @@ export const StationerySuppliesReportU = () => {
                                     </div>
                                 }
                             />
-                            <Controller
+                            <SelectController
                                 control={control}
-                                name={`stationerySupplies[${formIndex}].supplyType`}
+                                name={`stationerySupplies[${formIndex}].typeInput`}
+                                apiUrl='/insumos/vehiculos'
+                                valueKey='id'
+                                labelKey='nombre'
+                                placeholder='Selecciona un tipo'
                                 rules={{ required: "Por favor, selecciona un tipo de suministro" }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Tipo de suministro
-                                        </label>
-                                        <select {...field} className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'>
-                                            <option value="">Selecciona un tipo</option>
-                                            <option value="1">Resma tamaño carta 1</option>
-                                            <option value="2">Resma tamaño carta 2</option>
-                                            <option value="3">Resma tamaño carta 3</option>
-                                            <option value="4">Resma tamaño carta 4</option>
-                                        </select>
-                                        {errors.stationerySupplies && errors.stationerySupplies[formIndex]?.supplyType && (
-                                            <CustomAlert
-                                                message={errors.stationerySupplies[formIndex]?.supplyType.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Tipo de suministro'
                             />
-                            <Controller
+                            <TextInputController
                                 control={control}
-                                name={`stationerySupplies[${formIndex}].Amount`}
+                                name={`stationerySupplies[${formIndex}].amountInput`}
                                 rules={{ required: 'Por favor, ingresa la cantidad', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Cantidad de suministros
-                                        </label>
-                                        <input
-                                            {...field}
-                                            className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                            placeholder='Ingresa la cantidad de suministros'
-                                            type='number'
-                                        />
-                                        {errors.stationerySupplies && errors.stationerySupplies[formIndex]?.Amount && (
-                                            <CustomAlert
-                                                message={errors.stationerySupplies[formIndex]?.Amount.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Cantidad de suministros'
+                                placeholder='Ingresa la cantidad de suministros'
+                                type='number'
                             />
                             <div className='flex w-2/4 text-darkgray'>
                                 <img

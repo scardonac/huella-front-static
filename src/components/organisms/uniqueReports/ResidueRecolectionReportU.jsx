@@ -1,9 +1,12 @@
 //Depencies
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //Components
 import { ButtonGroupReportsU } from '../buttonGroupReportsU/ButtonGroupReportsU';
 import { CustomAlert } from '../../molecules/customAlert/customAlert';
+import { TextInputController } from '../../molecules/inputs/TextInputController';
 import { Tooltip } from '../../molecules/tooltip/Tooltip';
 import { WrapReports } from '../wrapReports/WrapReports'
 //Illustrations & Icons
@@ -12,14 +15,13 @@ import { Icons } from '../../../assets/icons/IconProvider';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
 //Actions
+import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
+//Slice
 import { resetTooltipCase, setTooltipCase } from '../../../redux/slices/HelpersSlice';
 //Helpers
 import { allowedExtensions } from '../../../helpers';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
 
-const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
+const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon } = Icons; //Iconos
 const { Residuos_Azul } = Illustrations; //Illustrations
 
 export const ResidueRecolectionReportU = () => {
@@ -36,18 +38,13 @@ export const ResidueRecolectionReportU = () => {
     const tooltip = useSelector(state => state.helpers.tooltip);
 
     const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
-    const [flag, setFlag] = useState(true); //Estado local para setear el texto de la alerta
 
     // Objeto con los valores por defecto de los campos del formulario
     const defaultValues = {
-        vehicles: [
+        residueRecolection: [
             {
                 nameForm: 'Recolección de residuos',
                 flagNameForm: false,
-                typeInput: '',
-                unitConsumption: '',
-                kilometers: '',
-                consumption: '',
                 amountInput: '',
                 id: null,
                 attachedFiles: [null],
@@ -57,11 +54,7 @@ export const ResidueRecolectionReportU = () => {
     };
     // Obtenemos los métodos del hook form
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
-        defaultValues: {
-            residueRecolection: [
-                { nameForm: 'Recolección de residuos', flagNameForm: false, valueInTons: '', attachedFiles: [null] },
-            ]
-        }
+        defaultValues
     });
     // Obtenemos los métodos del hook useFieldArray
     const { fields } = useFieldArray({
@@ -103,21 +96,6 @@ export const ResidueRecolectionReportU = () => {
         dispatch(resetTooltipCase());
     };
 
-    const toggleFlagNameForm = (formIndex) => {
-        const values = getValues();
-        const updatedResidueRecolection = [...values.residueRecolection];
-        updatedResidueRecolection[formIndex].flagNameForm = !updatedResidueRecolection[formIndex].flagNameForm;
-        setValue('residueRecolection', updatedResidueRecolection);
-    };
-
-    const handleUpdateNameForm = (formIndex, value) => {
-        const values = getValues();
-        const updatedResidueRecolection = [...values.residueRecolection];
-        updatedResidueRecolection[formIndex].nameForm = value;
-        setValue('residueRecolection', updatedResidueRecolection);
-        toggleFlagNameForm(formIndex);
-    };
-
     const handleOnMouseEnter = (text) => {
         // Llamamos a la acción setTooltipCase para mostrar el tooltip con el texto deseado
         dispatch(setTooltipCase({ ...tooltip, showTooltip: true, textTooltip: text }));
@@ -135,16 +113,17 @@ export const ResidueRecolectionReportU = () => {
 
     // Función para crear los soportes
     const onSubmit = async (data) => {
-        const { msg, verify } = await dispatch(createSupportsAction(data.vehicles));
+        console.log(data)
+        const { msg, verify } = await dispatch(createSupportsAction(data.residueRecolection));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
-          verify && navigate(-1)
+        verify && navigate(-1)
     }
 
     // Función para guardar el reporte como borrador
     const actionDraft = async () => {
         const { msg, verify } = await dispatch(saveDraftSupportsAction(fields));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
-          verify && navigate(-1)
+        verify && navigate(-1)
     };
 
     // Función para obtener los soportes por logId
@@ -155,14 +134,10 @@ export const ResidueRecolectionReportU = () => {
         if (verify && data?.length > 0) {
             reset(defaultValues);
             reset({
-                vehicles: data?.map((item) => ({
+                residueRecolection: data?.map((item) => ({
                     // nameForm: item?.nombre,
-                    nameForm: 'Vehículo',
+                    nameForm: 'Recolección de residuos',
                     flagNameForm: false,
-                    typeInput: item?.tipo_insumo,
-                    unitConsumption: item?.unidad_consumo,
-                    kilometers: item?.kilometros_recorridos,
-                    consumption: item?.consumo,
                     amountInput: item?.cantidad_insumo,
                     id: item?.id,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
@@ -189,29 +164,13 @@ export const ResidueRecolectionReportU = () => {
                 {fields.map((_, formIndex) => (
                     <div className='flex flex-col items-center justify-center gap-4 pt-6 w-full' key={formIndex}>
                         <hr className={`w-2/4 border border-gray-400 opacity-100 ${formIndex !== 0 ? null : 'hidden'}`} />
-                        <Controller
+                        <TextInputController
                             control={control}
-                            name={`extinguisher[${formIndex}].valueInTons`}
+                            name={`residueRecolection[${formIndex}].amountInput`}
                             rules={{ required: 'Por favor, ingresa el valor en toneladas', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                            render={({ field }) =>
-                                <div className='flex flex-col w-2/4'>
-                                    <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                        Valor en toneladas
-                                    </label>
-                                    <input
-                                        {...field}
-                                        className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                        placeholder='Ingresa el valor en toneladas'
-                                        type='number'
-                                    />
-                                    {errors.extinguisher && errors.extinguisher[formIndex]?.valueInTons && (
-                                        <CustomAlert
-                                            message={errors.extinguisher[formIndex]?.valueInTons.message}
-                                            type='error'
-                                        />
-                                    )}
-                                </div>
-                            }
+                            label='Valor en toneladas'
+                            placeholder='Ingresa el valor en toneladas'
+                            type='number'
                         />
                         <div className='flex w-2/4 text-darkgray'>
                             <img

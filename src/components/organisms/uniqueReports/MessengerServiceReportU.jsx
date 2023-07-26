@@ -1,9 +1,13 @@
 //Depencies
+import { useEffect, useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //Components
 import { ButtonGroupReportsU } from '../buttonGroupReportsU/ButtonGroupReportsU';
 import { CustomAlert } from '../../molecules/customAlert/customAlert';
+import { SelectController } from '../../molecules/selects/SelectController';
+import { TextInputController } from '../../molecules/inputs/TextInputController';
 import { Tooltip } from '../../molecules/tooltip/Tooltip';
 import { WrapReports } from '../wrapReports/WrapReports'
 //Illustrations & Icons
@@ -12,12 +16,11 @@ import { Icons } from '../../../assets/icons/IconProvider';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
 //Actions
+import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
+//Slice
 import { resetTooltipCase, setTooltipCase } from '../../../redux/slices/HelpersSlice';
 //Helpers
 import { allowedExtensions } from '../../../helpers';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
 
 const { InformationIcon, TrushIcon, AddDocumentBlackIcon, PlusIcon, EditIcon } = Icons; //Iconos
 const { Mensajeria_Azul } = Illustrations; //Illustrations
@@ -40,15 +43,12 @@ export const MessengerServiceReportU = () => {
 
     // Objeto con los valores por defecto de los campos del formulario
     const defaultValues = {
-        vehicles: [
+        messengerService: [
             {
                 nameForm: 'Mensajería',
                 flagNameForm: false,
                 typeInput: '',
-                unitConsumption: '',
                 kilometers: '',
-                consumption: '',
-                amountInput: '',
                 id: null,
                 attachedFiles: [null],
                 logId: logId,
@@ -58,11 +58,7 @@ export const MessengerServiceReportU = () => {
     // Obtenemos los métodos del hook form
 
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
-        defaultValues: {
-            messengerService: [
-                { nameForm: 'Mensajería', flagNameForm: false, deliveryType: '', kmTraveled: '', attachedFiles: [null] },
-            ]
-        }
+        defaultValues
     });
     // Obtenemos los métodos del hook useFieldArray
     const { fields, append, remove } = useFieldArray({
@@ -136,16 +132,16 @@ export const MessengerServiceReportU = () => {
 
     // Función para crear los soportes
     const onSubmit = async (data) => {
-        const { msg, verify } = await dispatch(createSupportsAction(data.vehicles));
+        const { msg, verify } = await dispatch(createSupportsAction(data.messengerService));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
-          verify && navigate(-1)
+        verify && navigate(-1)
     }
 
     // Función para guardar el reporte como borrador
     const actionDraft = async () => {
         const { msg, verify } = await dispatch(saveDraftSupportsAction(fields));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
-          verify && navigate(-1)
+        verify && navigate(-1)
     };
 
     // Función para obtener los soportes por logId
@@ -156,15 +152,12 @@ export const MessengerServiceReportU = () => {
         if (verify && data?.length > 0) {
             reset(defaultValues);
             reset({
-                vehicles: data?.map((item) => ({
+                messengerService: data?.map((item) => ({
                     // nameForm: item?.nombre,
-                    nameForm: 'Vehículo',
+                    nameForm: 'Mensajería',
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
-                    unitConsumption: item?.unidad_consumo,
                     kilometers: item?.kilometros_recorridos,
-                    consumption: item?.consumo,
-                    amountInput: item?.cantidad_insumo,
                     id: item?.id,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
                     attachedFiles: [null],
@@ -265,54 +258,23 @@ export const MessengerServiceReportU = () => {
                                     </div>
                                 }
                             />
-                            <Controller
+                            <SelectController
                                 control={control}
-                                name={`messengerService[${formIndex}].deliveryType`}
+                                name={`messengerService[${formIndex}].typeInput`}
+                                apiUrl='/insumos/vehiculos'
+                                valueKey='id'
+                                labelKey='nombre'
+                                placeholder='Selecciona un tipo'
                                 rules={{ required: "Por favor, selecciona un tipo de entrega" }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Tipo de entrega
-                                        </label>
-                                        <select {...field} className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'>
-                                            <option value="">Selecciona un tipo</option>
-                                            <option value="1">Terrestre 1</option>
-                                            <option value="2">Terrestre 2</option>
-                                            <option value="3">Terrestre 3</option>
-                                            <option value="4">Terrestre 4</option>
-                                        </select>
-                                        {errors.messengerService && errors.messengerService[formIndex]?.deliveryType && (
-                                            <CustomAlert
-                                                message={errors.messengerService[formIndex]?.deliveryType.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Tipo de entrega'
                             />
-                            <Controller
+                            <TextInputController
                                 control={control}
-                                name={`messengerService[${formIndex}].kmTraveled`}
+                                name={`messengerService[${formIndex}].kilometers`}
                                 rules={{ required: 'Por favor, ingresa los Kms recorridos', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Kms recorridos
-                                        </label>
-                                        <input
-                                            {...field}
-                                            className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                            placeholder='Escribe los kms recorridos'
-                                            type='number'
-                                        />
-                                        {errors.messengerService && errors.messengerService[formIndex]?.kmTraveled && (
-                                            <CustomAlert
-                                                message={errors.messengerService[formIndex]?.kmTraveled.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Kms recorridos'
+                                placeholder='Escribe los kms recorridos'
+                                type='number'
                             />
                             <div className='flex w-2/4 text-darkgray'>
                                 <img
@@ -383,7 +345,7 @@ export const MessengerServiceReportU = () => {
                                     src={InformationIcon}
                                 />
                                 <div className='bg-primary-green2 bg-no-repeat px-4 py-2 rounded-lg opacity-100 cursor-pointer' onClick={() =>
-                                      append(defaultValues.messengerService)}>
+                                    append(defaultValues.messengerService)}>
                                     <b className='tracking-tighter leading-6 text-primary-80 font-bold text-left text-base text-primary-title1 opacity-100'>
                                         Agregar otro tipo de entrega
                                     </b>

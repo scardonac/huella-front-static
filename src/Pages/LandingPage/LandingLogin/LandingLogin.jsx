@@ -87,7 +87,7 @@ export const LandingLogin = () => {
                         <b className="fzp absolute top-[0px] left-[calc(50%_-_132px)] text-21xl tracking-[0.4px] leading-[50px] text-darkslategray text-left text-primary-title1">
                             Iniciar sesión
                         </b>
-                        <button className="cursor-pointer [border:none] p-0 bg-[transparent] absolute top-[calc(50%_+_57.5px)] left-[0px] text-base [text-decoration:underline] tracking-[0.08px] leading-[22px] font-sora text-gray-100 text-center inline-block">
+                        <button className="cursor-pointer [border:none] p-0 bg-[transparent] absolute top-[calc(50%_+_97.5px)] left-[0px] text-base [text-decoration:underline] tracking-[0.08px] leading-[22px] font-sora text-gray-100 text-center inline-block">
                             ¿Olvidaste tu contraseña?
                         </button>
                         <button
@@ -103,7 +103,7 @@ export const LandingLogin = () => {
                         </div>
                         {textAlert && (
                             // <div className='mt-10 flex justify-center'>
-                            <div className='mt-10 absolute top-[calc(50%_+_57.5px)] left-[80px]'>
+                            <div className='mt-10 absolute top-[calc(50%_+_7.5px)] left-[0px]'>
                                 <CustomAlert
                                     message={textAlert}
                                     type='error'
