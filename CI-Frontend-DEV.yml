@@ -23,5 +23,8 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'npm run dev'
+    script: |
+      pwd
+      ls -la
+      npm run dev
   displayName: 'npm run dev'
