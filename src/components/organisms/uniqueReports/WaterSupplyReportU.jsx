@@ -121,7 +121,7 @@ export const WaterSupplyReportU = () => {
 
     // Función para guardar el reporte como borrador
     const actionDraft = async () => {
-        const { msg, verify } = await dispatch(saveDraftSupportsAction(fields));
+        const { msg, verify } = await dispatch(saveDraftSupportsAction(getValues().waterSupply));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
         verify && navigate(-1)
     };

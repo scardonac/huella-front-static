@@ -41,15 +41,12 @@ export const BusinessTripReportU = () => {
 
     // Objeto con los valores por defecto de los campos del formulario
     const defaultValues = {
-        vehicles: [
+        businessTrip: [
             {
                 nameForm: 'Viaje de negocio',
                 flagNameForm: false,
                 typeInput: '',
-                unitConsumption: '',
                 kilometers: '',
-                consumption: '',
-                amountInput: '',
                 id: null,
                 attachedFiles: [null],
                 logId: logId,
@@ -58,11 +55,7 @@ export const BusinessTripReportU = () => {
     };
     // Obtenemos los métodos del hook form
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
-        defaultValues: {
-            businessTrip: [
-                { nameForm: 'Viaje de negocio', flagNameForm: false, deliveryType: '', kmTraveled: '', attachedFiles: [null] },
-            ]
-        }
+        defaultValues
     });
     // Obtenemos los métodos del hook useFieldArray
     const { fields, append, remove } = useFieldArray({
@@ -136,14 +129,14 @@ export const BusinessTripReportU = () => {
 
     // Función para crear los soportes
     const onSubmit = async (data) => {
-        const { msg, verify } = await dispatch(createSupportsAction(data.vehicles));
+        const { msg, verify } = await dispatch(createSupportsAction(data.businessTrip));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
         verify && navigate(-1)
     }
 
     // Función para guardar el reporte como borrador
     const actionDraft = async () => {
-        const { msg, verify } = await dispatch(saveDraftSupportsAction(fields));
+        const { msg, verify } = await dispatch(saveDraftSupportsAction(getValues().businessTrip));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
         verify && navigate(-1)
     };
@@ -156,15 +149,12 @@ export const BusinessTripReportU = () => {
         if (verify && data?.length > 0) {
             reset(defaultValues);
             reset({
-                vehicles: data?.map((item) => ({
+                businessTrip: data?.map((item) => ({
                     // nameForm: item?.nombre,
-                    nameForm: 'Vehículo',
+                    nameForm: 'Viaje de negocio',
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
-                    unitConsumption: item?.unidad_consumo,
                     kilometers: item?.kilometros_recorridos,
-                    consumption: item?.consumo,
-                    amountInput: item?.cantidad_insumo,
                     id: item?.id,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
                     attachedFiles: [null],
@@ -267,7 +257,7 @@ export const BusinessTripReportU = () => {
                             />
                             <Controller
                                 control={control}
-                                name={`businessTrip[${formIndex}].deliveryType`}
+                                name={`businessTrip[${formIndex}].typeInput`}
                                 rules={{ required: "Por favor, selecciona un tipo de entrega" }}
                                 render={({ field }) =>
                                     <div className='flex flex-col w-2/4'>
@@ -281,9 +271,9 @@ export const BusinessTripReportU = () => {
                                             <option value="3">Terrestre 3</option>
                                             <option value="4">Terrestre 4</option>
                                         </select>
-                                        {errors.businessTrip && errors.businessTrip[formIndex]?.deliveryType && (
+                                        {errors.businessTrip && errors.businessTrip[formIndex]?.typeInput && (
                                             <CustomAlert
-                                                message={errors.businessTrip[formIndex]?.deliveryType.message}
+                                                message={errors.businessTrip[formIndex]?.typeInput.message}
                                                 type='error'
                                             />
                                         )}
@@ -292,7 +282,7 @@ export const BusinessTripReportU = () => {
                             />
                             <Controller
                                 control={control}
-                                name={`businessTrip[${formIndex}].kmTraveled`}
+                                name={`businessTrip[${formIndex}].kilometers`}
                                 rules={{ required: 'Por favor, ingresa los Kms recorridos', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
                                 render={({ field }) =>
                                     <div className='flex flex-col w-2/4'>
@@ -305,9 +295,9 @@ export const BusinessTripReportU = () => {
                                             placeholder='Ingresa los Kms recorridos'
                                             type='number'
                                         />
-                                        {errors.businessTrip && errors.businessTrip[formIndex]?.kmTraveled && (
+                                        {errors.businessTrip && errors.businessTrip[formIndex]?.kilometers && (
                                             <CustomAlert
-                                                message={errors.businessTrip[formIndex]?.kmTraveled.message}
+                                                message={errors.businessTrip[formIndex]?.kilometers.message}
                                                 type='error'
                                             />
                                         )}

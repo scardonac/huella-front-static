@@ -113,7 +113,6 @@ export const ResidueRecolectionReportU = () => {
 
     // Función para crear los soportes
     const onSubmit = async (data) => {
-        console.log(data)
         const { msg, verify } = await dispatch(createSupportsAction(data.residueRecolection));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
         verify && navigate(-1)
@@ -121,7 +120,7 @@ export const ResidueRecolectionReportU = () => {
 
     // Función para guardar el reporte como borrador
     const actionDraft = async () => {
-        const { msg, verify } = await dispatch(saveDraftSupportsAction(fields));
+        const { msg, verify } = await dispatch(saveDraftSupportsAction(getValues().residueRecolection));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
         verify && navigate(-1)
     };

@@ -141,7 +141,7 @@ export const VehiclesReportU = () => {
 
     // Función para guardar el reporte como borrador
     const actionDraft = async () => {
-        const { msg, verify } = await dispatch(saveDraftSupportsAction(fields));
+        const { msg, verify } = await dispatch(saveDraftSupportsAction(getValues().vehicles));
         msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
         verify && navigate(-1)
     };
