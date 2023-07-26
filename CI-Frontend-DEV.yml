@@ -26,5 +26,6 @@ steps:
     script: |
       pwd
       ls -la
+      npm -v
       npm run dev
   displayName: 'npm run dev'
