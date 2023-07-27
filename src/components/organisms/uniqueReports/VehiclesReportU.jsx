@@ -163,7 +163,6 @@ export const VehiclesReportU = () => {
                     kilometers: item?.kilometros_recorridos,
                     consumption: item?.consumo,
                     amountInput: item?.cantidad_insumo,
-                    id: item?.id,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
                     attachedFiles: [null],
                     logId,

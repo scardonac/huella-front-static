@@ -227,6 +227,7 @@ const createFormData = (file) => {
 
 // Acción para crear los soportes
 export const createSupportsAction = (dataForm) => {
+    console.log(dataForm, 'dataFormCreateSupports')
     return async (dispatch) => {
         const dataSupports = dataForm.map((form) => {
             return {
@@ -236,7 +237,6 @@ export const createSupportsAction = (dataForm) => {
                 horas_de_uso: form?.hoursUse ? Number(form.hoursUse) : null,
                 kilometros_recorridos: form?.kilometers ? Number(form.kilometers) : null,
                 libras_por_unidad: form?.poundsUnit ? Number(form.poundsUnit) : null,
-                id: form?.id ? form.id : null,
                 log_id: form?.logId ? form.logId : null,
                 soportes: {
                     url: [""],

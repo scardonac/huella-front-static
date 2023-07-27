@@ -45,9 +45,7 @@ export const ElectricPowerConsumptionReportU = () => {
             {
                 nameForm: 'Consumo de energía eléctrica',
                 flagNameForm: false,
-                typeInput: '',
                 amountInput: '',
-                id: null,
                 attachedFiles: [null],
                 logId: logId,
             },
@@ -55,11 +53,7 @@ export const ElectricPowerConsumptionReportU = () => {
     };
     // Obtenemos los métodos del hook form
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
-        defaultValues: {
-            electricPowerConsumption: [
-                { nameForm: 'Consumo de energía eléctrica', flagNameForm: false, amountInput: '', attachedFiles: [null] },
-            ]
-        }
+        defaultValues
     });
     // Obtenemos los métodos del hook useFieldArray
     const { fields } = useFieldArray({
@@ -142,9 +136,7 @@ export const ElectricPowerConsumptionReportU = () => {
                     // nameForm: item?.nombre,
                     nameForm: 'Consumo de energía eléctrica',
                     flagNameForm: false,
-                    typeInput: item?.tipo_insumo,
                     amountInput: item?.cantidad_insumo,
-                    id: item?.id,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
                     attachedFiles: [null],
                     logId,

@@ -158,7 +158,6 @@ export const ExtinguisherReportU = () => {
                     typeInput: item?.tipo_insumo,
                     poundsUnit: item?.libras_por_unidad,
                     amountInput: item?.cantidad_insumo,
-                    id: item?.id,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
                     attachedFiles: [null],
                     logId: logId,
