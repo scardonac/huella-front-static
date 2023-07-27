@@ -1,20 +1,23 @@
-// Modal.jsx
-import { Icons } from "../../../assets/icons/IconProvider";
+//Components
 import { ButtonTypeA } from "../../molecules/buttons/buttonTypeA/ButtonTypeA";
+import { CustomAlert } from "../../molecules/customAlert/customAlert";
 import { SelectionCard } from "../selectionCard/SelectionCard";
+//Icons
+import { Icons } from "../../../assets/icons/IconProvider";
 
 const { CloseIcon } = Icons;
 
 export const ModalAddCategories = ({
-        isOpen,
-        closeModal,
-        children,
-        actionButtonFist = null,
-        actionButtonSecond = null,
-        buttons = false,
-        emisiones=[],
-        setEmisiones=null,
-    }) => {
+    actionButtonFist = null,
+    actionButtonSecond = null,
+    buttons = false,
+    children,
+    closeModal,
+    emisiones = [],
+    isOpen,
+    setEmisiones = null,
+    textAlert = null,
+}) => {
 
     return (
         <>
@@ -26,30 +29,38 @@ export const ModalAddCategories = ({
                                 className="w- h-4 cursor-pointer border border-gray-300 rounded-full opacity-50 hover:opacity-100"
                                 alt=""
                                 src={CloseIcon}
-                                onClick={closeModal}
+                                onClick={() => closeModal()}
                             />
                         </div>
                         <ul className='flex flex-col gap-4 mt-3'>
                             {emisiones.map((eDirecta) => (
-                            <div key={eDirecta.id} >
-                                <SelectionCard
-                                icon={eDirecta?.icon}
-                                iconChecked={eDirecta?.iconChecked}
-                                id={eDirecta?.id}
-                                isSelected={eDirecta?.isChecked}
-                                name={eDirecta.name}
-                                setData={setEmisiones}
-                                />
-                            </div>
+                                <div key={eDirecta.id} >
+                                    <SelectionCard
+                                        icon={eDirecta?.icon}
+                                        iconChecked={eDirecta?.iconChecked}
+                                        id={eDirecta?.id}
+                                        isSelected={eDirecta?.isChecked}
+                                        name={eDirecta.name}
+                                        setData={setEmisiones}
+                                    />
+                                </div>
                             ))}
                         </ul>
+                        {textAlert && (
+                            <div className='mt-10 flex justify-center'>
+                                <CustomAlert
+                                    message={textAlert}
+                                    type='error'
+                                />
+                            </div>
+                        )}
                         {buttons && (
                             <div className="flex items-center justify-between mt-5">
                                 <div className="pr-2 w-full">
-                                    <ButtonTypeA text='Cancelar' action={actionButtonFist} width="100%" />
+                                    <ButtonTypeA text='Cancelar' action={() => actionButtonFist()} width="100%" />
                                 </div>
                                 <div className="pl-2 w-full">
-                                    <ButtonTypeA width="100%" text='Subir datos' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={true} action={actionButtonSecond} />
+                                    <ButtonTypeA width="100%" text='Subir datos' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={true} action={() => actionButtonSecond()} />
                                 </div>
                             </div>
                         )}

@@ -9,21 +9,25 @@ import { Illustrations } from '../../../assets/Illustrations/IllustrationProvide
 const { TrushIcon, InformationIcon } = Icons;
 
 export const EmisionesTable = ({
-        handleOpenModal=null,
-        label="Tipo de Emisiones",
-        emisiones=[null],
-        setIdToDelete=null,
-        handleOpenConfirmationModal=null,
-    }) => {
+    handleOpenModal = null,
+    label = "Tipo de Emisiones",
+    emisiones = [],
+    setIdToDelete = null,
+    handleOpenConfirmationModal = null,
+    setTypeId = null,
+}) => {
 
-    const handleCompleteCategoriesSelection=()=>{
+    const handleCompleteCategoriesSelection = () => {
         handleOpenModal()
+        setTypeId(emisiones[0]?.tipo)
     }
 
-    const handleDeleteEmision=(id)=>{
+    const handleDeleteEmision = (id) => {
         setIdToDelete(id)
         handleOpenConfirmationModal()
     }
+
+    console.log('emisiones', emisiones[0]?.log_id)
 
     return (
         <div className='EmisionesTable mt-8'>
@@ -41,50 +45,53 @@ export const EmisionesTable = ({
                         </tr>
                     </thead>
                     <tbody className=" divide-y divide-lightgray-200">
-                        {
-                            emisiones?.map(emision => (
-                                <tr key={emision?.id} className="">
-                                    <td className="px-6 py-4">
-                                        <div className="relative h-[60px] w-[60px]">
-                                            <img
-                                                className="h-full w-full rounded-lg object-cover object-center"
-                                                src={emision?.iconChecked||Illustrations["Add_OtherCategory_Azul"]}
-                                                alt={emision?.nombre}
-                                            />
-                                        </div>
-                                    </td>
-                                    <td className="flex px-6 py-8 text-gray-900">
-                                        <p className="font-medium text-gray-700">{emision?.nombre}</p>
-                                    </td>
-                                    <td className="px-6 py-4 text-center">{emision?.value??"-"}</td>
-                                    <td className="px-6 py-4">
-                                        <StateIndicator state={emision?.status}/>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {emision?
-                                        <Link to={`/app/registros/reporte/${1}`} className="text-[inherit] relative lg:ml-0 cursor-pointer flex items-center">
+                        {emisiones?.map(emision => (
+                            <tr key={emision?.id} className="">
+                                <td className="px-6 py-4">
+                                    <div className="relative h-[60px] w-[60px]">
+                                        <img
+                                            className="h-full w-full rounded-lg object-cover object-center"
+                                            src={Illustrations[emision?.iconChecked] || Illustrations["Add_OtherCategory_Azul"]}
+                                            alt={emision?.nombre}
+                                        />
+                                    </div>
+                                </td>
+                                <td className="flex px-6 py-8 text-gray-900">
+                                    <p className="font-medium text-gray-700">{emision?.nombre}</p>
+                                </td>
+                                <td className="px-6 py-4 text-center">{emision?.value ?? "-"}</td>
+                                <td className="px-6 py-4">
+                                    <StateIndicator state={emision?.status} />
+                                </td>
+                                <td className="px-6 py-4">
+                                    {emision.nombre && (
+                                        <Link
+                                            to={`/app/registros/reporte/${emision.nombre}`}
+                                            state={{ logId: emision.log_id }} // Pasar el ID como parte del estado
+                                            className="text-[inherit] relative lg:ml-0 cursor-pointer flex items-center">
                                             <b className="[text-decoration:underline] tracking-[0.08px] leading-[22px] text-black font-semibold">
                                                 Subir información
                                             </b>
-                                        </Link>:
-                                        <b className="[text-decoration:underline] tracking-[0.08px] leading-[22px] text-gray-400 font-semibold">
-                                                Subir información
-                                        </b>
-                                        }
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <div className="flex justify-center items-center gap-4">
-                                            <a>
-                                                <img src={InformationIcon} />
-                                            </a>
-                                            <a >
-                                                <img className='cursor-pointer' src={TrushIcon} onClick={()=>handleDeleteEmision(emision?.log_id)} />
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))
-                        }
+                                        </Link>
+                                        // <Link to={`/app/registros/reporte/${emision.nombre}`} className="text-[inherit] relative lg:ml-0 cursor-pointer flex items-center">
+                                        //     <b className="[text-decoration:underline] tracking-[0.08px] leading-[22px] text-black font-semibold">
+                                        //         Subir información
+                                        //     </b>
+                                        // </Link>
+                                    )}
+                                </td>
+                                <td className="px-6 py-4">
+                                    <div className="flex justify-center items-center gap-4">
+                                        <a>
+                                            <img src={InformationIcon} />
+                                        </a>
+                                        <a >
+                                            <img className='cursor-pointer' src={TrushIcon} onClick={() => handleDeleteEmision(emision?.log_id)} />
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
@@ -92,7 +99,9 @@ export const EmisionesTable = ({
                 <span
                     className='text-gray-100 font-bold underline underline-offset-4 cursor-pointer'
                     onClick={handleCompleteCategoriesSelection}
-                >+ Agregar otra categoría GEI</span>
+                >
+                    + Agregar otra categoría GEI
+                </span>
             </div>
         </div>
     )

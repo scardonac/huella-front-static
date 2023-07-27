@@ -32,6 +32,12 @@ export const NavigateAppProvider = ({ children }) => {
         setActualPage(actualPage - 1)
     }
 
+    const resetPage = async () => {
+        console.log("resetPage");
+        await setPage(1)
+        setActualPage(1)
+    }
+
     const setPendienteState = async () => {
         console.log("setPendienteState");
         await setStateLS(2)
@@ -52,9 +58,23 @@ export const NavigateAppProvider = ({ children }) => {
 
     const contextValue = useMemo(() => {
         return {
-            actualPage, setActualPage, goNext, goBack,
-            state, setState, stateLS, setPendienteState, setEmptyState,
-            monthsArray, setMonthsArray, mArrayLS, setMArrayLS, updateMonths
+            //States
+            actualPage,
+            state,
+            stateLS,
+            monthsArray,
+            mArrayLS,
+            //Functions
+            goBack,
+            goNext,
+            resetPage,
+            setActualPage,
+            setEmptyState,
+            setMArrayLS,
+            setMonthsArray,
+            setPendienteState,
+            setState,
+            updateMonths,
         };
     }, [actualPage, setActualPage, state, setState, monthsArray, setMonthsArray]);
 

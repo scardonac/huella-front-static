@@ -5,13 +5,13 @@ const initialState = {
     secondStep: {},
     thirdStep: {},
     fourthStep: {},
+    calculations: null,
     centerCurrent: null,
     centers: [],
     directEmissions: [],
     inDirectEmissions: [],
     otherEmissions: [],
     productiveSector: [],
-    calculations: [],
 };
 
 export const registerSlice = createSlice({

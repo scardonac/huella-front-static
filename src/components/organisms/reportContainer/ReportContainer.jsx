@@ -18,20 +18,20 @@ import { WaterSupplyReportU } from "../uniqueReports/WaterSupplyReportU";
 
 // Definimos la correspondencia entre los IDs de los informes y los componentes de los informes
 const REPORT_COMPONENTS = {
-    '1': VehiclesReportU,
-    '2': EnergyPlantsReportU,
-    '3': BoilerReportU,
-    '4': MessengerServiceReportU,
+    'Vehiculos': VehiclesReportU,
+    'Plantas Generadoras de Energia': EnergyPlantsReportU,
+    'Hornos o Calderas': BoilerReportU,
+    'Mensajeria': MessengerServiceReportU,
     '5': BusinessTripReportU,
-    '6': ElectricPowerConsumptionReportU,
-    '7': ResidueRecolectionReportU,
-    '8': WaterSupplyReportU,
-    '9': AirConditionersReportU,
-    '10': StationerySuppliesReportU,
-    '11': TeleworkingEmployeesReportU,
-    '12': ExtinguisherReportU,
-    '13': EquipmentAcquisitionReportU,
-    '14': EnergyConsumptionReportP,
+    'Consumo de Energia': ElectricPowerConsumptionReportU,
+    'Recoleccion de residuos': ResidueRecolectionReportU,
+    'Suministro de agua': WaterSupplyReportU,
+    'Aire Acondicionado': AirConditionersReportU,
+    'Suministros de papeleria': StationerySuppliesReportU,
+    'Empleados de Teletrabajo': TeleworkingEmployeesReportU,
+    'Extintores': ExtinguisherReportU,
+    'Adquisicion de equipos tecnologicos': EquipmentAcquisitionReportU,
+    '6': EnergyConsumptionReportP,
 }
 
 // Definimos un componente de informe predeterminado para los IDs de informe desconocidos

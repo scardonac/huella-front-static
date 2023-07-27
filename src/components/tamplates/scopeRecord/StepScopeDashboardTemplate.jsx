@@ -1,131 +1,98 @@
 //Dependencies
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 //Components
 import { ButtonTypeA } from '../../../components/molecules/buttons/buttonTypeA/ButtonTypeA';
 import { EmisionesTable } from '../../../components/organisms/tables/EmisionesTable';
 import { SedeInfo } from '../../../components/organisms/sedeInfo/SedeInfo';
+import Modal from '../../organisms/modals/Modal';
 //Assets
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 //Data
 import { ModalAddCategories } from '../../organisms/modals/ModalAddCategories';
 import { calculoID, token } from '../../../ConstantsAPI';
-import Modal from '../../organisms/modals/Modal';
 
 import deleteIcon from '../../../assets/Illustrations/Illustration_DeleteElement.svg'
 import axiosClient from '../../../config/AxiosClient';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../../redux/store';
+import { deleteEmissionsAction, updateCalculationAction, updateEmissionsAction } from '../../../redux/actions/RegisterAction';
+import { NavigateAppContext } from '../../../context/NavigateAppContext';
 
 export const StepScopeDashboardTemplate = () => {
+
+  const dispatch = useAppDispatch();
+
+  const { register: { directEmissions, inDirectEmissions, otherEmissions, centerCurrent, calculations } } = useSelector(state => state.persistedData);
+
+  const { resetPage } = useContext(NavigateAppContext);
+
+  const [textAlert, setTextAlert] = useState(null);
+
   // Comportamiento de Modal para confirmacion de delete.
-  const [openConfirmationModal, setOpenConfirmationModal] = useState(false)
-  const handleOpenConfirmationModal = () => setOpenConfirmationModal(true)
-  const handleCloseConfirmationModal = () => setOpenConfirmationModal(false)
+  const [openDeleteModal, setOpenDeleteModal] = useState(false)
   // Comportamiento de Modal para seleccion de categorias.
   const [openModal, setOpenModal] = useState(false)
-  const handleOpenModal = (tipo, selected) => {
-    filterEmisionsToModal(allEmisions, selected, tipo)
+
+  // Función para abrir el modal de añadir nueva categoria.
+  const handleOpenModal = (emissions, selected) => {
+    filterEmisionsToModal(emissions, selected)
     setOpenModal(true)
   }
-  const handleCloseModal = () => setOpenModal(false)
-  // Emisiones del alcance 1.
+  const [typeId, setTypeId] = useState(0) //tipo de emisiones seleccionadas.
   const [idToDelete, setIdToDelete] = useState(null) //Id seleccionado para el delete.
-  const [allEmisions, setAllEmisions] = useState([]) //Estado local de todas las emisiones.
   const [modalEmisions, setModalEmisions] = useState([]) //Estado local para setear las emisiones a mostrar en el modal de añadir nueva categoria.
-  const [emisionesAlcance1, setEmisionesAlcance1] = useState([]) //Estado local de las emisiones del alcance 1.
-  const [emisionesAlcance2, setEmisionesAlcance2] = useState([]) //Estado local de las emisiones del alcance 2.
-  const [emisionesAlcance3, setEmisionesAlcance3] = useState([]) //Estado local de las emisiones del alcance 3.
+  const [emissionsScope, setEmissionsScope] = useState([]); //Estado local para setear las emisiones a mostrar en el modal de añadir nueva categoria.
 
   const handleUpdateEmisions = () => {
-    const emisionesToPut = modalEmisions.filter((emision) => emision?.isChecked).map((emision) => emision?.id)
-    console.log("emisionesToPut: ", emisionesToPut);
-    putSelectedEmisions(token, calculoID, emisionesToPut)
+    const data1 = modalEmisions.filter((emision) => emision?.isChecked).map((emision) => emision.id)
+    const data2 = emissionsScope.filter((emision) => emision?.tipo !== typeId).map((emision) => emision.id)
+    const allEmisions = [...data2, ...data1];
+    const emisionesToPutIds = Array.from(new Set(allEmisions.map((emision) => emision))); // Eliminar duplicados
+    putSelectedEmisions(emisionesToPutIds);
   }
 
-  // Función para actualizar el estado con todas las emisiones.
-  const updateAllEmisions = async () => {
-    try {
-      const respuesta = await axiosClient.get('emisiones');
-      const array = respuesta?.data?.data
-      setAllEmisions(array)
-    } catch (error) {
-      // Manejo de errores
-      console.error(error);
-    }
-  };
 
-  const deleteEmision = async (id = null) => {
-    try {
-      const respuesta = await axiosClient.delete(`/soportes/delete/${id}`);
-
-      // Aquí puedes hacer algo con la respuesta obtenida
-      const response = respuesta?.data
-      console.log("response: ", response);
-      updateSelectedEmisions()
-      handleCloseConfirmationModal()
-    } catch (error) {
-      // Manejo de errores
-      console.error(error);
-    }
-  };
-
-  const confirmDeleteEmision = () => {
-    deleteEmision(token, idToDelete)
+  const confirmDeleteEmision = async () => {
+    const { error, verify } = await dispatch(deleteEmissionsAction(idToDelete));
+    if (error) return setTextAlert(error);
+    verify && setOpenDeleteModal(false), updateSelectedEmisions();
   }
 
-  const updateSelectedEmisions = async (id = calculoID) => {
-    try {
-      const respuesta = await axiosClient.get(`/render/${id}`);
-
-      // Aquí puedes hacer algo con la respuesta obtenida
-      const array = respuesta?.data?.logs_details
-      console.log("getSelectedEmisions: ", array);
-      setEmisionesAlcance1(array?.filter((emision) => emision?.tipo === 1))
-      setEmisionesAlcance2(array?.filter((emision) => emision?.tipo === 2))
-      setEmisionesAlcance3(array?.filter((emision) => emision?.tipo === 3))
-    } catch (error) {
-      // Manejo de errores
-      console.error(error);
-    }
+  const updateSelectedEmisions = async () => {
+    const { data, error, verify } = await dispatch(updateEmissionsAction(calculations.id));
+    if (!verify) return;
+    setEmissionsScope(data.emissions)
   };
 
-  const putSelectedEmisions = async (id = calculoID, array_ = []) => {
-    try {
-      const respuesta = await axiosClient.put('/forms', {
-        "calculo_id": id,
-        "log_array": array_
-      });
-      // Aquí puedes hacer algo con la respuesta obtenida
-      handleCloseModal()
-    } catch (error) {
-      // Manejo de errores
-      console.error(error);
-    }
+  const putSelectedEmisions = async (emisionesToPut) => {
+    const { data, error, verify } = await dispatch(updateCalculationAction(emisionesToPut));
+    if (!verify) return;
+    updateSelectedEmisions()
+    setOpenModal(false)
+
   };
 
-  const filterEmisionsToModal = (all, selected, tipo) => {
-    const newArray = all?.filter((emision) => emision?.tipo === tipo)?.map((emision) => {
+  const filterEmisionsToModal = (emissions, selected) => {
+    const newArray = emissions.map((emision) => {
       const isSelected = selected?.some((selectedEmision) => selectedEmision?.id === emision?.id)
-      if (isSelected) {
-        return {
-          name: emision?.nombre,
-          id: emision?.id,
-          isChecked: true,
-        }
-      } else {
-        return {
-          name: emision?.nombre,
-          id: emision?.id,
-          isChecked: false,
-        }
+      return {
+        ...emision,
+        name: emision?.nombre,
+        id: emision?.id,
+        isChecked: isSelected ? true : false,
       }
     })
-    // console.log(newArray);
     setModalEmisions(newArray)
-  }
+  };
+
 
   useEffect(() => {
-    updateSelectedEmisions();
-    updateAllEmisions();
-  }, [])
+    calculations && updateSelectedEmisions();
+  }, [calculations])
+
+  useEffect(() => {
+    !centerCurrent && resetPage();
+  }, [centerCurrent])
 
   return (
     <div className='StepScopeDashboardPage bg-primary-gris1 min-h-full pt-10'>
@@ -136,45 +103,48 @@ export const StepScopeDashboardTemplate = () => {
         </div>
         <EmisionesTable
           label='Emisiones directas (alcance 1)'
-          emisiones={emisionesAlcance1}
-          handleOpenModal={() => handleOpenModal(1, emisionesAlcance1)}
+          emisiones={emissionsScope.filter((emision) => emision?.tipo === 1)}
+          handleOpenModal={() => handleOpenModal(directEmissions, emissionsScope.filter((emision) => emision?.tipo === 1))}
           setIdToDelete={setIdToDelete}
-          handleOpenConfirmationModal={handleOpenConfirmationModal}
+          handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
+          setTypeId={setTypeId}
         />
         <EmisionesTable
           label='Emisiones indirectas (alcance 2)'
-          emisiones={emisionesAlcance2}
+          emisiones={emissionsScope.filter((emision) => emision?.tipo === 3)}
           navigationActive={true}
-          handleOpenModal={() => handleOpenModal(2, emisionesAlcance2)}
+          handleOpenModal={() => handleOpenModal(inDirectEmissions, emissionsScope.filter((emision) => emision?.tipo === 3))}
           setIdToDelete={setIdToDelete}
-          handleOpenConfirmationModal={handleOpenConfirmationModal}
+          handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
+          setTypeId={setTypeId}
         />
         <EmisionesTable
           label='Otras emisiones indirectas (alcance 3)'
-          emisiones={emisionesAlcance3}
-          handleOpenModal={() => handleOpenModal(3, emisionesAlcance3)}
+          emisiones={emissionsScope.filter((emision) => emision?.tipo === 2)}
+          handleOpenModal={() => handleOpenModal(otherEmissions, emissionsScope.filter((emision) => emision?.tipo === 2))}
           setIdToDelete={setIdToDelete}
-          handleOpenConfirmationModal={handleOpenConfirmationModal}
+          handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
+          setTypeId={setTypeId}
         />
       </div>
-      {openModal ?
+      {openModal && (
         <ModalAddCategories
           isOpen={openModal}
-          closeModal={handleCloseModal}
+          closeModal={() => setOpenModal(false)} // Corregido: pasa la función sin invocarla
           buttons={true}
-          actionButtonFist={handleCloseModal}
+          actionButtonFist={() => setOpenModal(false)} // Corregido: pasa la función sin invocarla
           actionButtonSecond={handleUpdateEmisions}
           emisiones={modalEmisions}
           setEmisiones={setModalEmisions}
-        >
-        </ModalAddCategories>
-        : null}
-      {openConfirmationModal ?
+          textAlert={textAlert}
+        />
+      )}
+      {openDeleteModal && (
         <Modal
-          isOpen={openConfirmationModal}
-          closeModal={handleCloseConfirmationModal}
+          isOpen={openDeleteModal}
+          closeModal={() => setOpenDeleteModal(false)}
           buttons={true}
-          actionButtonFist={handleCloseConfirmationModal}
+          actionButtonFist={() => setOpenDeleteModal(false)}
           actionButtonSecond={confirmDeleteEmision}
           labelButtonSecond='Sí, Eliminar'
         >
@@ -186,7 +156,7 @@ export const StepScopeDashboardTemplate = () => {
             </div>
           </div>}
         </Modal>
-        : null}
+      )}
     </div>
   )
 }

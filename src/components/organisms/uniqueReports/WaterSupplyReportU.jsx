@@ -1,9 +1,12 @@
 //Depencies
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 //Components
 import { ButtonGroupReportsU } from '../buttonGroupReportsU/ButtonGroupReportsU';
 import { CustomAlert } from '../../molecules/customAlert/customAlert';
+import { TextInputController } from '../../molecules/inputs/TextInputController';
 import { Tooltip } from '../../molecules/tooltip/Tooltip';
 import { WrapReports } from '../wrapReports/WrapReports'
 //Illustrations & Icons
@@ -12,6 +15,8 @@ import { Icons } from '../../../assets/icons/IconProvider';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
 //Actions
+import { createSupportsAction, getSupportsAction, saveDraftSupportsAction } from '../../../redux/actions/RegisterAction';
+//Slices
 import { resetTooltipCase, setTooltipCase } from '../../../redux/slices/HelpersSlice';
 //Helpers
 import { allowedExtensions } from '../../../helpers';
@@ -21,19 +26,38 @@ const { ConsumoAgua_Azul } = Illustrations; //Illustrations
 
 export const WaterSupplyReportU = () => {
 
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch(); //Inicializamos el dispatcher
+
+    const navigate = useNavigate(); //Inicializamos el hook de navegación
+
+    const { state } = useLocation(); //Obtenemos el estado de la ubicación
+
+    const logId = state?.logId; //Obtenemos el id del log
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
 
+    const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
+
+    // Objeto con los valores por defecto de los campos del formulario
+    const defaultValues = {
+        waterSupply: [
+            {
+                nameForm: 'Suministro de agua',
+                flagNameForm: false,
+                typeInput: '',
+                amountInput: '',
+                attachedFiles: [null],
+                logId: logId,
+            },
+        ]
+    };
+    // Obtenemos los métodos del hook form
     const { control, handleSubmit, reset, clearErrors, setValue, setError, getValues, formState: { errors } } = useForm({
-        defaultValues: {
-            waterSupply: [
-                { nameForm: 'Suministro de agua', flagNameForm: false, valueInCubicMeters: '', attachedFiles: [null] },
-            ]
-        }
+        defaultValues
     });
-    const { fields, append, remove } = useFieldArray({
+    // Obtenemos los métodos del hook useFieldArray
+    const { fields } = useFieldArray({
         control,
         name: 'waterSupply'
     });
@@ -72,21 +96,6 @@ export const WaterSupplyReportU = () => {
         dispatch(resetTooltipCase());
     };
 
-    const toggleFlagNameForm = (formIndex) => {
-        const values = getValues();
-        const updatedWaterSupply = [...values.waterSupply];
-        updatedWaterSupply[formIndex].flagNameForm = !updatedWaterSupply[formIndex].flagNameForm;
-        setValue('waterSupply', updatedWaterSupply);
-    };
-
-    const handleUpdateNameForm = (formIndex, value) => {
-        const values = getValues();
-        const updatedWaterSupply = [...values.waterSupply];
-        updatedWaterSupply[formIndex].nameForm = value;
-        setValue('waterSupply', updatedWaterSupply);
-        toggleFlagNameForm(formIndex);
-    };
-
     const handleOnMouseEnter = (text) => {
         // Llamamos a la acción setTooltipCase para mostrar el tooltip con el texto deseado
         dispatch(setTooltipCase({ ...tooltip, showTooltip: true, textTooltip: text }));
@@ -102,11 +111,46 @@ export const WaterSupplyReportU = () => {
         dispatch(setTooltipCase({ ...tooltip, position: { x: e.pageX, y: e.pageY } }));
     };
 
-    const onSubmit = data => console.log(data);
+    // Función para crear los soportes
+    const onSubmit = async (data) => {
+        const { msg, verify } = await dispatch(createSupportsAction(data.waterSupply));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
+        verify && navigate(-1)
+    }
 
-    const actionDraft = () => {
-        console.log('Guardado como borrador');
+    // Función para guardar el reporte como borrador
+    const actionDraft = async () => {
+        const { msg, verify } = await dispatch(saveDraftSupportsAction(getValues().waterSupply));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
+        verify && navigate(-1)
     };
+
+    // Función para obtener los soportes por logId
+    const getSupportsByLogId = async () => {
+        if (!logId) return;
+        const { msg, verify, data } = await dispatch(getSupportsAction(logId));
+        msg && setTextAlert({ msg, type: verify ? 'success' : 'error' });
+        if (verify && data?.length > 0) {
+            reset(defaultValues);
+            reset({
+                waterSupply: data?.map((item) => ({
+                    // nameForm: item?.nombre,
+                    nameForm: 'Suministro de agua',
+                    flagNameForm: false,
+                    typeInput: item?.tipo_insumo,
+                    amountInput: item?.cantidad_insumo,
+                    // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
+                    attachedFiles: [null],
+                    logId,
+                }))
+            });
+        }
+    };
+
+    //UseEffect para obtener los soportes por logId
+    useEffect(() => {
+        getSupportsByLogId();
+    }, [logId]);
 
     return (
         <WrapReports
@@ -116,32 +160,16 @@ export const WaterSupplyReportU = () => {
             navigateTo={-1}
         >
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col items-center justify-center'>
-                {[...fields].sort().map((_, formIndex) => (
+                {fields.map((_, formIndex) => (
                     <div className='flex flex-col items-center justify-center gap-4 pt-6 w-full' key={formIndex}>
                         <hr className={`w-2/4 border border-gray-400 opacity-100 ${formIndex !== 0 ? null : 'hidden'}`} />
-                        <Controller
+                        <TextInputController
                             control={control}
-                            name={`extinguisher[${formIndex}].valueInCubicMeters`}
+                            name={`waterSupply[${formIndex}].amountInput`}
                             rules={{ required: 'Por favor, ingresa el valor en metros cúbicos (m3)', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                            render={({ field }) =>
-                                <div className='flex flex-col w-2/4'>
-                                    <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                        Valor en metros cúbicos (m3)
-                                    </label>
-                                    <input
-                                        {...field}
-                                        className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                        placeholder='Ingresa el valor en metros cúbicos (m3)'
-                                        type='number'
-                                    />
-                                    {errors.extinguisher && errors.extinguisher[formIndex]?.valueInCubicMeters && (
-                                        <CustomAlert
-                                            message={errors.extinguisher[formIndex]?.valueInCubicMeters.message}
-                                            type='error'
-                                        />
-                                    )}
-                                </div>
-                            }
+                            label='Valor en metros cúbicos (m3)'
+                            placeholder='Ingresa el valor en metros cúbicos (m3)'
+                            type='number'
                         />
                         <div className='flex w-2/4 text-darkgray'>
                             <img
@@ -207,7 +235,12 @@ export const WaterSupplyReportU = () => {
                         </div>
                     </div>
                 ))}
-
+                {textAlert && (
+                    <CustomAlert
+                        message={textAlert.msg}
+                        type={textAlert.type}
+                    />
+                )}
                 <ButtonGroupReportsU actionDraft={actionDraft} />
                 <Tooltip />
             </form>

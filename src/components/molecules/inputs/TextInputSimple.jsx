@@ -16,7 +16,7 @@ export const TextInputSimple = ({
         <>
             <label className='text-f18 text-primary-gris2'>{label}</label>
             <input
-                className='px-2 py-2 rounded-md border border-dimgray-200'
+                className='rounded-md border border-dimgray-200 px-3 py-2'
                 type={type}
                 placeholder={placeholder}
                 disabled={disabled}
