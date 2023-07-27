@@ -1,9 +1,10 @@
 
 // Dependencias
+import DoughnutChart from "../../molecules/graficaTorta/DoughnutChart";
 import { Link } from "react-router-dom";
-import { Imagenes } from "../../../assets/Images/wImagenProvider";
+// import { Imagenes } from "../../../assets/Images/wImagenProvider";
 // Components
-const { Grupo2592 } = Imagenes;
+// const { Grupo2592 } = Imagenes;
 
 const CardResultGraphicCategories = ({ dataGraph }) => {
   return (
@@ -14,8 +15,9 @@ const CardResultGraphicCategories = ({ dataGraph }) => {
             Toneladas de CO2 equivalente por categoría
           </h4>
         </div>
-        <div className="flex items-center justify-center mt-4">
-          <img className="w-96 h-96" alt="" src={Grupo2592} />
+        <div className="flex items-center justify-center mt-4 w-full h-[430px]">
+          {/* <img className="w-96 h-96" alt="" src={Grupo2592} /> */}
+          <DoughnutChart/>
         </div>
       </div>
 

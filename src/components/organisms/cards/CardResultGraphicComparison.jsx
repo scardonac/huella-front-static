@@ -1,3 +1,4 @@
+import BarChartHorizontal from '../../molecules/graficaHorizontal/BarChartHorizontal'
 //Assets
 import { Imagenes } from "../../../assets/Images/wImagenProvider";
 // Components
@@ -10,7 +11,7 @@ const CardResultGraphicComparison = ({ dataGraph }) => {
 
       <div className="w-full sm:w-[40%] p-4">
         {/* Contenido de la primera caja */}
-        <div className="ml-10 mt-4 mb-4 w-full text-[inherit] tracking-[0.09px] font-bold font-inherit text-darkslategray-100">
+        <div className="ml-10 mt-0 mb-4 w-full text-[inherit] tracking-[0.09px] font-bold font-inherit text-darkslategray-100">
           <h4>
             Comparación de alcances
           </h4>
@@ -35,41 +36,12 @@ const CardResultGraphicComparison = ({ dataGraph }) => {
           </div>
         ))}
       </div>
-      <div className="w-full sm:w-[60%] p-4 relative mt-[68px]">
-        <img
-          className="w-full h-auto"
-          alt=""
-          src={Grupo2561}
-        />
+      <div className="w-full sm:w-[60%] p-4 relative mt-[5px]">
+          <BarChartHorizontal/>
         <div className="flex justify-between mt-2">
-          <div className="relative text-center">
-            <div>0</div>
-            {/* <div className="border-r-[1px] border-dashed border-lightgray-200 h-full absolute left-1/2"></div> */}
-          </div>
-          <div className="relative text-center">
-            <div>10</div>
-            {/* <div className="border-r-[1px] border-dashed border-lightgray-200 h-full absolute left-1/2"></div> */}
-          </div>
-          <div className="relative text-center">
-            <div>20</div>
-            {/* <div className="border-r-[1px] border-dashed border-lightgray-200 h-full absolute left-1/2"></div> */}
-          </div>
-          <div className="relative text-center">
-            <div>30</div>
-            {/* <div className="border-r-[1px] border-dashed border-lightgray-200 h-full absolute left-1/2"></div> */}
-          </div>
-          <div className="relative text-center">
-            <div>40</div>
-            {/* <div className="border-r-[1px] border-dashed border-lightgray-200 h-full absolute left-1/2"></div> */}
-          </div>
-          <div className="relative text-center">
-            <div>50</div>
-            {/* <div className="border-r-[1px] border-dashed border-lightgray-200 h-full absolute left-1/2"></div> */}
-          </div>
-          {/* Repite para cada indicador */}
-        </div>
         <div className="text-start mt-1">
           tCO2 eq
+        </div>
         </div>
       </div>
 
