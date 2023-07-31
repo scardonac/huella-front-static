@@ -21,37 +21,31 @@ export const NavigateAppProvider = ({ children }) => {
     const [mArrayLS, setMArrayLS] = useLocalStorage('months', [...initialConsumoEnergiaArray]);
 
     const goNext = async () => {
-        console.log("goNext");
         await setPage(actualPage + 1)
         setActualPage(actualPage + 1)
     }
 
     const goBack = async () => {
-        console.log("goBack");
         await setPage(actualPage - 1)
         setActualPage(actualPage - 1)
     }
 
     const resetPage = async () => {
-        console.log("resetPage");
         await setPage(1)
         setActualPage(1)
     }
 
     const setPendienteState = async () => {
-        console.log("setPendienteState");
         await setStateLS(2)
         setState(2)
     }
 
     const setEmptyState = async () => {
-        console.log("setEmptyState");
         await setStateLS(1)
         setState(1)
     }
 
     const updateMonths = async (Arr) => {
-        console.log("updateMonths");
         await setMArrayLS(Arr)
         setMonthsArray(Arr)
     }

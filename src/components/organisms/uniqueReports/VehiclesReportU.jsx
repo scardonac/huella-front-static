@@ -276,10 +276,9 @@ export const VehiclesReportU = () => {
                                 control={control}
                                 name={`vehicles[${formIndex}].unitConsumption`}
                                 staticData={[
-                                    { id: 1, nombre: 'Kilómetros' },
-                                    { id: 2, nombre: 'Horas' },
-                                    { id: 3, nombre: 'Toneladas' },
-                                    { id: 4, nombre: 'Unidades' },
+                                    { id: 1, nombre: 'Galones 1' },
+                                    { id: 2, nombre: 'Galones 2' },
+                                    { id: 3, nombre: 'Galones 3' },
                                 ]}
                                 valueKey='id'
                                 labelKey='nombre'

@@ -58,7 +58,6 @@ export const createCenterAction = (dataForm) => {
 
         try {
             const { data: { data } } = await axiosClient.post('/centros', dataCenter);
-            console.log(data, 'dataCreateCenter')
             // Despachar una acción con el resultado
             dispatch(getCenterCurrentCase(data)); // Actualizar el centro actual
             dispatch(getCentersAction()); // Actualizar los centros
@@ -130,7 +129,6 @@ export const createCalculationAction = (dataFourthStep) => {
                 ...thirdStep.categories,
                 ...dataFourthStep.categories
             ]
-            console.log(firstStep, 'firstStep')
 
             let dataCalculation = {
                 calculo: {
@@ -227,7 +225,6 @@ const createFormData = (file) => {
 
 // Acción para crear los soportes
 export const createSupportsAction = (dataForm) => {
-    console.log(dataForm, 'dataFormCreateSupports')
     return async (dispatch) => {
         const dataSupports = dataForm.map((form) => {
             return {
@@ -258,7 +255,6 @@ export const createSupportsAction = (dataForm) => {
 
 // Acción para guardar un borrador de los soportes
 export const saveDraftSupportsAction = (dataForm) => {
-    console.log(dataForm, 'dataForm')
     return async (dispatch) => {
         const dataSupports = dataForm.map((form) => {
             return {

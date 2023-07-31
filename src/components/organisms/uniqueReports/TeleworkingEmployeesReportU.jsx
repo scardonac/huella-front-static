@@ -43,7 +43,7 @@ export const TeleworkingEmployeesReportU = () => {
         ]
     };
     // Obtenemos los métodos del hook form
-    const { control, handleSubmit, reset, formState: { errors } } = useForm({
+    const { control, handleSubmit, reset, getValues, formState: { errors } } = useForm({
         defaultValues
     });
     // Obtenemos los métodos del hook useFieldArray

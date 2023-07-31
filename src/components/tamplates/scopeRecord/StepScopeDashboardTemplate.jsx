@@ -102,30 +102,35 @@ export const StepScopeDashboardTemplate = () => {
           <ButtonTypeA text='Medir huella de carbono' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={false} action={null} />
         </div>
         <EmisionesTable
-          label='Emisiones directas (alcance 1)'
           emisiones={emissionsScope.filter((emision) => emision?.tipo === 1)}
+          handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
           handleOpenModal={() => handleOpenModal(directEmissions, emissionsScope.filter((emision) => emision?.tipo === 1))}
+          label='Emisiones directas (alcance 1)'
           setIdToDelete={setIdToDelete}
-          handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
           setTypeId={setTypeId}
         />
         <EmisionesTable
-          label='Emisiones indirectas (alcance 2)'
           emisiones={emissionsScope.filter((emision) => emision?.tipo === 3)}
-          navigationActive={true}
-          handleOpenModal={() => handleOpenModal(inDirectEmissions, emissionsScope.filter((emision) => emision?.tipo === 3))}
-          setIdToDelete={setIdToDelete}
           handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
+          handleOpenModal={() => handleOpenModal(inDirectEmissions, emissionsScope.filter((emision) => emision?.tipo === 3))}
+          label='Emisiones indirectas (alcance 2)'
+          setIdToDelete={setIdToDelete}
           setTypeId={setTypeId}
         />
         <EmisionesTable
+          emisiones={emissionsScope.filter((emision) => emision?.tipo === 2)}
+          handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
+          handleOpenModal={() => handleOpenModal(otherEmissions, emissionsScope.filter((emision) => emision?.tipo === 2))}
           label='Otras emisiones indirectas (alcance 3)'
+          setIdToDelete={setIdToDelete}
+          setTypeId={setTypeId}
+        />
+         {/* label='Otras emisiones indirectas (alcance 3)'
           emisiones={emissionsScope.filter((emision) => emision?.tipo === 2)}
           handleOpenModal={() => handleOpenModal(otherEmissions, emissionsScope.filter((emision) => emision?.tipo === 2))}
           setIdToDelete={setIdToDelete}
           handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
-          setTypeId={setTypeId}
-        />
+          setTypeId={setTypeId} */}
       </div>
       {openModal && (
         <ModalAddCategories

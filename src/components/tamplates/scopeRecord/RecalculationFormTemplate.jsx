@@ -117,8 +117,6 @@ export const RecalculationFormTemplate = () => {
         if (productiveSector.length > 0) setDataSectors(productiveSector)
     }, [productiveSector])
 
-    console.log(dataForm, 'dataForm')
-
     return (
         <div className='RecalculationFormTemplate bg-primary-gris1 min-h-full'>
             <StepIndicator step={1} />
