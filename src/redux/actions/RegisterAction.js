@@ -228,6 +228,7 @@ export const createSupportsAction = (dataForm) => {
     return async (dispatch) => {
         const dataSupports = dataForm.map((form) => {
             return {
+                nombre: form?.nameForm ? form.nameForm : null,
                 cantidad_insumo: form?.amountInput ? Number(form.amountInput) : 0,
                 consumo: form?.consumption ? Number(form.consumption) : 0,
                 dias_por_semana: form?.daysWeek ? Number(form.daysWeek) : null,
@@ -258,6 +259,7 @@ export const saveDraftSupportsAction = (dataForm) => {
     return async (dispatch) => {
         const dataSupports = dataForm.map((form) => {
             return {
+                nombre: form?.nameForm ? form.nameForm : null,
                 cantidad_insumo: form?.amountInput ? Number(form.amountInput) : 0,
                 consumo: form?.consumption ? Number(form.consumption) : 0,
                 dias_por_semana: form?.daysWeek ? Number(form.daysWeek) : null,

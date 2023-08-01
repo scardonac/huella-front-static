@@ -152,8 +152,7 @@ export const MessengerServiceReportU = () => {
             reset(defaultValues);
             reset({
                 messengerService: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Mensajería',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     kilometers: item?.kilometros_recorridos,

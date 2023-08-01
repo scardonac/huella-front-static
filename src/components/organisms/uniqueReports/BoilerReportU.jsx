@@ -153,8 +153,7 @@ export const BoilerReportU = () => {
             reset(defaultValues);
             reset({
                 boilers: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Horno o caldera',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     unitConsumption: item?.unidad_consumo,

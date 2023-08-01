@@ -134,8 +134,6 @@ export const WaterSupplyReportU = () => {
             reset(defaultValues);
             reset({
                 waterSupply: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Suministro de agua',
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     amountInput: item?.cantidad_insumo,

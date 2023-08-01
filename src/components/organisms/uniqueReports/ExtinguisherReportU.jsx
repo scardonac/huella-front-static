@@ -152,8 +152,7 @@ export const ExtinguisherReportU = () => {
             reset(defaultValues);
             reset({
                 extinguisher: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Extintores',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     poundsUnit: item?.libras_por_unidad,

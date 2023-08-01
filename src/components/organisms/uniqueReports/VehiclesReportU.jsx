@@ -155,8 +155,7 @@ export const VehiclesReportU = () => {
             reset(defaultValues);
             reset({
                 vehicles: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Vehículo',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     unitConsumption: item?.unidad_consumo,
@@ -381,33 +380,6 @@ export const VehiclesReportU = () => {
                         </div>
                     ))
                 )}
-                {/* {fields.map((_, formIndex) => (
-                    <div className='flex flex-col items-center justify-center gap-4 pt-6 w-full' key={formIndex}>|
-                        <TextInputController
-                            control={control}
-                            name={`vehicles[${formIndex}].amountInput`}
-                            rules={{ required: 'Por favor, ingresa la cantidad de vehículos', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                            label='Cantidad de vehículos'
-                            placeholder='Ingresa la cantidad de vehículos'
-                            type='number'
-                        />
-                        <h1>hola {formIndex} {fields[formIndex].nameForm}</h1>
-                        <button type='button' onClick={() => remove(formIndex)}>Eliminar</button>
-                        <button type='button' onClick={() => append({
-                            nameForm: `Vehículo ss`,
-                            flagNameForm: false,
-                            typeInput: '',
-                            unitConsumption: '',
-                            kilometers: '',
-                            consumption: '',
-                            amountInput: '',
-                            id: null,
-                            attachedFiles: [null],
-                            logId: logId,
-                        },)}>Agregar</button>
-                    </div>
-                ))} */}
-
                 {textAlert && (
                     <CustomAlert
                         message={textAlert.msg}

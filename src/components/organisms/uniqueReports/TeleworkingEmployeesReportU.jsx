@@ -75,8 +75,6 @@ export const TeleworkingEmployeesReportU = () => {
             reset(defaultValues);
             reset({
                 teleworkingEmployees: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Empleados en teletrabajo',
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     hoursUse: item?.horas_de_uso,

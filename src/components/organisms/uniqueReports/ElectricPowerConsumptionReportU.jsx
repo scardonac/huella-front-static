@@ -133,8 +133,6 @@ export const ElectricPowerConsumptionReportU = () => {
             reset(defaultValues);
             reset({
                 electricPowerConsumption: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Consumo de energía eléctrica',
                     flagNameForm: false,
                     amountInput: item?.cantidad_insumo,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),

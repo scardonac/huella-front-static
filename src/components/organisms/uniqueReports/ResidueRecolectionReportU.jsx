@@ -133,8 +133,6 @@ export const ResidueRecolectionReportU = () => {
             reset(defaultValues);
             reset({
                 residueRecolection: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Recolección de residuos',
                     flagNameForm: false,
                     amountInput: item?.cantidad_insumo,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),

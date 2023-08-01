@@ -153,8 +153,7 @@ export const EnergyPlantsReportU = () => {
             reset(defaultValues);
             reset({
                 plants: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Plantas generadoras de energía',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     unitConsumption: item?.unidad_consumo,

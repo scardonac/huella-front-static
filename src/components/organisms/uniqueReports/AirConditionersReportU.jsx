@@ -152,8 +152,7 @@ export const AirConditionersReportU = () => {
             reset(defaultValues);
             reset({
                 airConditioners: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Aires acondicionados',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     poundsUnit: item?.libras_por_unidad,

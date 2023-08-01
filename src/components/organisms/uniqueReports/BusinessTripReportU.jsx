@@ -149,8 +149,7 @@ export const BusinessTripReportU = () => {
             reset(defaultValues);
             reset({
                 businessTrip: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Viaje de negocio',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     kilometers: item?.kilometros_recorridos,

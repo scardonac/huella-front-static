@@ -151,8 +151,7 @@ export const StationerySuppliesReportU = () => {
             reset(defaultValues);
             reset({
                 stationerySupplies: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Suministros de papelería',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     amountInput: item?.cantidad_insumo,

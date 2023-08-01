@@ -151,8 +151,7 @@ export const EquipmentAcquisitionReportU = () => {
             reset(defaultValues);
             reset({
                 equipmentAcquisition: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Adquisición de equipos tecnológicos',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     amountInput: item?.cantidad_insumo,
