@@ -36,6 +36,8 @@ export const ResidueRecolectionReportU = () => {
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { firstStep, centerCurrent } } = useSelector(state => state.persistedData);
 
     const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
 
@@ -45,7 +47,7 @@ export const ResidueRecolectionReportU = () => {
             {
                 nameForm: 'Recolección de residuos',
                 flagNameForm: false,
-                amountInput: '',
+                consumption: '',
                 attachedFiles: [null],
                 logId: logId,
             },
@@ -134,7 +136,7 @@ export const ResidueRecolectionReportU = () => {
             reset({
                 residueRecolection: data?.map((item) => ({
                     flagNameForm: false,
-                    amountInput: item?.cantidad_insumo,
+                    consumption: item?.consumo,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
                     attachedFiles: [null],
                     logId,
@@ -151,7 +153,7 @@ export const ResidueRecolectionReportU = () => {
     return (
         <WrapReports
             title='Recolección de residuos'
-            subTitle='Sier centro de control - 01/01/2023 - 31/12/2023'
+            subTitle={`${centerCurrent?.nombre} - ${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`}
             icon={Residuos_Azul}
             navigateTo={-1}
         >
@@ -161,7 +163,7 @@ export const ResidueRecolectionReportU = () => {
                         <hr className={`w-2/4 border border-gray-400 opacity-100 ${formIndex !== 0 ? null : 'hidden'}`} />
                         <TextInputController
                             control={control}
-                            name={`residueRecolection[${formIndex}].amountInput`}
+                            name={`residueRecolection[${formIndex}].consumption`}
                             rules={{ required: 'Por favor, ingresa el valor en toneladas', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
                             label='Valor en toneladas'
                             placeholder='Ingresa el valor en toneladas'

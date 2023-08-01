@@ -22,7 +22,8 @@ export const StepScopeDashboardTemplate = () => {
 
   const dispatch = useAppDispatch();
 
-  const { register: { directEmissions, inDirectEmissions, otherEmissions, centerCurrent, calculations } } = useSelector(state => state.persistedData);
+  // Obtenemos el estado del registro del store de Redux
+  const { register: { directEmissions, inDirectEmissions, otherEmissions, firstStep, centerCurrent, calculations } } = useSelector(state => state.persistedData);
 
   const { resetPage } = useContext(NavigateAppContext);
 
@@ -98,7 +99,7 @@ export const StepScopeDashboardTemplate = () => {
     <div className='StepScopeDashboardPage bg-primary-gris1 min-h-full pt-10'>
       <div className='ContenedorCompleto w-[90%] max-w-[1400px] min-w-[900px] mb-12 mx-auto'>
         <div className='flex justify-between'>
-          <SedeInfo icon={Illustrations["office_Azul"]} />
+          <SedeInfo icon={Illustrations["office_Azul"]} name={centerCurrent?.nombre} subName={`${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`} />
           <ButtonTypeA text='Medir huella de carbono' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={false} action={null} />
         </div>
         <EmisionesTable
@@ -110,27 +111,21 @@ export const StepScopeDashboardTemplate = () => {
           setTypeId={setTypeId}
         />
         <EmisionesTable
-          emisiones={emissionsScope.filter((emision) => emision?.tipo === 3)}
+          emisiones={emissionsScope.filter((emision) => emision?.tipo === 2)}
           handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
-          handleOpenModal={() => handleOpenModal(inDirectEmissions, emissionsScope.filter((emision) => emision?.tipo === 3))}
+          handleOpenModal={() => handleOpenModal(otherEmissions, emissionsScope.filter((emision) => emision?.tipo === 2))}
           label='Emisiones indirectas (alcance 2)'
           setIdToDelete={setIdToDelete}
           setTypeId={setTypeId}
         />
         <EmisionesTable
-          emisiones={emissionsScope.filter((emision) => emision?.tipo === 2)}
+          emisiones={emissionsScope.filter((emision) => emision?.tipo === 3)}
           handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
-          handleOpenModal={() => handleOpenModal(otherEmissions, emissionsScope.filter((emision) => emision?.tipo === 2))}
+          handleOpenModal={() => handleOpenModal(inDirectEmissions, emissionsScope.filter((emision) => emision?.tipo === 3))}
           label='Otras emisiones indirectas (alcance 3)'
           setIdToDelete={setIdToDelete}
           setTypeId={setTypeId}
         />
-         {/* label='Otras emisiones indirectas (alcance 3)'
-          emisiones={emissionsScope.filter((emision) => emision?.tipo === 2)}
-          handleOpenModal={() => handleOpenModal(otherEmissions, emissionsScope.filter((emision) => emision?.tipo === 2))}
-          setIdToDelete={setIdToDelete}
-          handleOpenConfirmationModal={() => setOpenDeleteModal(true)}
-          setTypeId={setTypeId} */}
       </div>
       {openModal && (
         <ModalAddCategories

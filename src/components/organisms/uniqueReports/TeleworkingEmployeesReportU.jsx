@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 //Components
 import { ButtonGroupReportsU } from '../buttonGroupReportsU/ButtonGroupReportsU';
 import { CustomAlert } from '../../molecules/customAlert/customAlert';
@@ -23,6 +24,9 @@ export const TeleworkingEmployeesReportU = () => {
     const navigate = useNavigate(); //Inicializamos el hook de navegación
 
     const { state } = useLocation(); //Obtenemos el estado de la ubicación
+
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { firstStep, centerCurrent } } = useSelector(state => state.persistedData);
 
     const logId = state?.logId; //Obtenemos el id del log
 
@@ -76,7 +80,6 @@ export const TeleworkingEmployeesReportU = () => {
             reset({
                 teleworkingEmployees: data?.map((item) => ({
                     flagNameForm: false,
-                    typeInput: item?.tipo_insumo,
                     hoursUse: item?.horas_de_uso,
                     daysWeek: item?.dias_por_semana,
                     amountInput: item?.cantidad_insumo,
@@ -96,7 +99,7 @@ export const TeleworkingEmployeesReportU = () => {
     return (
         <WrapReports
             title='Empleados en teletrabajo'
-            subTitle='Sier centro de control - 01/01/2023 - 31/12/2023'
+            subTitle={`${centerCurrent?.nombre} - ${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`}
             icon={HomeOffice_Azul}
             navigateTo={-1}
         >

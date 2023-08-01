@@ -37,6 +37,8 @@ export const EquipmentAcquisitionReportU = () => {
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { firstStep, centerCurrent } } = useSelector(state => state.persistedData);
 
     const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
     const [flag, setFlag] = useState(true); //Estado local para setear el texto de la alerta
@@ -180,7 +182,7 @@ export const EquipmentAcquisitionReportU = () => {
     return (
         <WrapReports
             title='Adquisición de equipos tecnológicos'
-            subTitle='Sier centro de control - 01/01/2023 - 31/12/2023'
+            subTitle={`${centerCurrent?.nombre} - ${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`}
             icon={AdquisicionTech_Azul}
             navigateTo={-1}
         >
@@ -257,7 +259,7 @@ export const EquipmentAcquisitionReportU = () => {
                             <SelectController
                                 control={control}
                                 name={`equipmentAcquisition[${formIndex}].typeInput`}
-                                apiUrl='/insumos/vehiculos'
+                                apiUrl='/insumos/dispositivos'
                                 valueKey='id'
                                 labelKey='nombre'
                                 placeholder='Selecciona un tipo'

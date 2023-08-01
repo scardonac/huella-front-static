@@ -241,7 +241,7 @@ export const createSupportsAction = (dataForm) => {
                     // url: [form.attachedFiles && form.attachedFiles.length > 0 ? createFormData(form.attachedFiles[0]) : null],
                 },
                 tipo_insumo: form?.typeInput ? form?.typeInput : null,
-                unidad_consumo: form?.unitConsumption ? form.unitConsumption : null,
+                tipo_combustible: form?.unitConsumption ? form.unitConsumption : null,
             }
         });
         try {
@@ -273,7 +273,7 @@ export const saveDraftSupportsAction = (dataForm) => {
                     // url: [form.attachedFiles && form.attachedFiles.length > 0 ? createFormData(form.attachedFiles[0]) : null],
                 },
                 tipo_insumo: form?.typeInput ? form?.typeInput : null,
-                unidad_consumo: form?.unitConsumption ? form.unitConsumption : null,
+                tipo_combustible: form?.unitConsumption ? form.unitConsumption : null,
             }
         });
         try {

@@ -37,6 +37,8 @@ export const VehiclesReportU = () => {
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { firstStep, centerCurrent } } = useSelector(state => state.persistedData);
 
     const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
     const [flag, setFlag] = useState(true); //Estado local para setear el texto de la alerta
@@ -158,7 +160,7 @@ export const VehiclesReportU = () => {
                     nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
-                    unitConsumption: item?.unidad_consumo,
+                    unitConsumption: item?.tipo_combustible,
                     kilometers: item?.kilometros_recorridos,
                     consumption: item?.consumo,
                     amountInput: item?.cantidad_insumo,
@@ -187,7 +189,7 @@ export const VehiclesReportU = () => {
     return (
         <WrapReports
             title='Vehículos'
-            subTitle='Sier centro de control - 01/01/2023 - 31/12/2023'
+            subTitle={`${centerCurrent?.nombre} - ${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`}
             icon={Car_Azul}
             navigateTo={-1}
         >
@@ -274,11 +276,7 @@ export const VehiclesReportU = () => {
                             <SelectController
                                 control={control}
                                 name={`vehicles[${formIndex}].unitConsumption`}
-                                staticData={[
-                                    { id: 1, nombre: 'Galones 1' },
-                                    { id: 2, nombre: 'Galones 2' },
-                                    { id: 3, nombre: 'Galones 3' },
-                                ]}
+                                apiUrl='/combustibles/vehiculos'
                                 valueKey='id'
                                 labelKey='nombre'
                                 placeholder='Selecciona un tipo'

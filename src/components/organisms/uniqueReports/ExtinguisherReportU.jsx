@@ -37,6 +37,8 @@ export const ExtinguisherReportU = () => {
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { firstStep, centerCurrent } } = useSelector(state => state.persistedData);
 
     const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
     const [flag, setFlag] = useState(true); //Estado local para setear el texto de la alerta
@@ -48,7 +50,7 @@ export const ExtinguisherReportU = () => {
             {
                 nameForm: 'Extintores',
                 flagNameForm: false,
-                typeInput: '',
+                unitConsumption: '',
                 poundsUnit: '',
                 amountInput: '',
                 attachedFiles: [null],
@@ -154,7 +156,7 @@ export const ExtinguisherReportU = () => {
                 extinguisher: data?.map((item) => ({
                     nameForm: item?.nombre,
                     flagNameForm: false,
-                    typeInput: item?.tipo_insumo,
+                    unitConsumption: item?.tipo_combustible,
                     poundsUnit: item?.libras_por_unidad,
                     amountInput: item?.cantidad_insumo,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
@@ -182,7 +184,7 @@ export const ExtinguisherReportU = () => {
     return (
         <WrapReports
             title='Extintores'
-            subTitle='Sier centro de control - 01/01/2023 - 31/12/2023'
+            subTitle={`${centerCurrent?.nombre} - ${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`}
             icon={extintor_Azul}
             navigateTo={-1}
         >
@@ -258,8 +260,8 @@ export const ExtinguisherReportU = () => {
                             />
                             <SelectController
                                 control={control}
-                                name={`extinguisher[${formIndex}].typeInput`}
-                                apiUrl='/insumos/gases'
+                                name={`extinguisher[${formIndex}].unitConsumption`}
+                                apiUrl='/combustibles/extintores'
                                 valueKey='id'
                                 labelKey='nombre'
                                 placeholder='Selecciona un tipo'

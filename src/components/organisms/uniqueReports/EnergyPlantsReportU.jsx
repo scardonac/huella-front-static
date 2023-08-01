@@ -37,6 +37,8 @@ export const EnergyPlantsReportU = () => {
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { firstStep, centerCurrent } } = useSelector(state => state.persistedData);
 
     const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
     const [flag, setFlag] = useState(true); //Estado local para setear el texto de la alerta
@@ -156,7 +158,7 @@ export const EnergyPlantsReportU = () => {
                     nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
-                    unitConsumption: item?.unidad_consumo,
+                    unitConsumption: item?.tipo_combustible,
                     consumption: item?.consumo,
                     amountInput: item?.cantidad_insumo,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
@@ -184,7 +186,7 @@ export const EnergyPlantsReportU = () => {
     return (
         <WrapReports
             title='Plantas generadoras de energía'
-            subTitle='Sier centro de control - 01/01/2023 - 31/12/2023'
+            subTitle={`${centerCurrent?.nombre} - ${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`}
             icon={PlantaEnergia_Azul}
             navigateTo={-1}
         >
@@ -266,17 +268,12 @@ export const EnergyPlantsReportU = () => {
                                 labelKey='nombre'
                                 placeholder='Selecciona un tipo'
                                 rules={{ required: "Por favor, selecciona un tipo de planta" }}
-                                label='Tipo de vehículo'
+                                label='Tipo de planta'
                             />
                             <SelectController
                                 control={control}
                                 name={`plants[${formIndex}].unitConsumption`}
-                                staticData={[
-                                    { id: 1, nombre: 'Gasolina 1' },
-                                    { id: 2, nombre: 'Gasolina 2' },
-                                    { id: 3, nombre: 'Gasolina 3' },
-                                    { id: 4, nombre: 'Gasolina 4' },
-                                ]}
+                                apiUrl='/combustibles/plantas'
                                 valueKey='id'
                                 labelKey='nombre'
                                 placeholder='Selecciona un tipo'

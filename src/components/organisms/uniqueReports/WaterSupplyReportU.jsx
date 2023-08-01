@@ -36,6 +36,8 @@ export const WaterSupplyReportU = () => {
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { firstStep, centerCurrent } } = useSelector(state => state.persistedData);
 
     const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
 
@@ -45,8 +47,7 @@ export const WaterSupplyReportU = () => {
             {
                 nameForm: 'Suministro de agua',
                 flagNameForm: false,
-                typeInput: '',
-                amountInput: '',
+                consumption: '',
                 attachedFiles: [null],
                 logId: logId,
             },
@@ -135,8 +136,7 @@ export const WaterSupplyReportU = () => {
             reset({
                 waterSupply: data?.map((item) => ({
                     flagNameForm: false,
-                    typeInput: item?.tipo_insumo,
-                    amountInput: item?.cantidad_insumo,
+                    consumption: item?.consumo,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
                     attachedFiles: [null],
                     logId,
@@ -153,7 +153,7 @@ export const WaterSupplyReportU = () => {
     return (
         <WrapReports
             title='Suministro de agua'
-            subTitle='Sier centro de control - 01/01/2023 - 31/12/2023'
+            subTitle={`${centerCurrent?.nombre} - ${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`}
             icon={ConsumoAgua_Azul}
             navigateTo={-1}
         >
@@ -163,7 +163,7 @@ export const WaterSupplyReportU = () => {
                         <hr className={`w-2/4 border border-gray-400 opacity-100 ${formIndex !== 0 ? null : 'hidden'}`} />
                         <TextInputController
                             control={control}
-                            name={`waterSupply[${formIndex}].amountInput`}
+                            name={`waterSupply[${formIndex}].consumption`}
                             rules={{ required: 'Por favor, ingresa el valor en metros cúbicos (m3)', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
                             label='Valor en metros cúbicos (m3)'
                             placeholder='Ingresa el valor en metros cúbicos (m3)'
