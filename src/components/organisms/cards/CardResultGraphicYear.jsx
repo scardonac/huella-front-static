@@ -11,17 +11,6 @@ export default function CardResultGraphicYear() {
                     Emisiones por año
                 </h3>
                 <div className="absolute w-[calc(100%_-_79.97px)] right-[39.3px] bottom-[29.36px] left-[40.67px] h-[303.64px] text-sm">
-
-                    <div className="absolute h-[calc(100%_-_38px)] top-[10.03px] bottom-[29.78px] left-[25.19px] box-border w-0.5 border-r-[1px] border-solid border-black" />
-                    <div className="absolute bottom-[28.78px] left-[26.19px] box-border w-[6.63px] h-0.5 border-t-[1px] border-solid border-black" />
-                    <div className="absolute bottom-[59.5px] left-[26.19px] box-border w-[6.63px] h-0.5 border-t-[1px] border-solid border-black" />
-                    <div className="absolute top-[calc(50%_+_57.59px)] left-[26.19px] box-border w-[6.63px] h-0.5 border-t-[1px] border-solid border-black" />
-                    <div className="absolute top-[calc(50%_+_24.86px)] left-[26.19px] box-border w-[6.63px] h-0.5 border-t-[1px] border-solid border-black" />
-                    <div className="absolute top-[calc(50%_-_8.87px)] left-[26.19px] box-border w-[6.63px] h-0.5 border-t-[1px] border-solid border-black" />
-                    <div className="absolute top-[calc(50%_-_41.6px)] left-[26.19px] box-border w-[6.63px] h-0.5 border-t-[1px] border-solid border-black" />
-                    <div className="absolute top-[calc(50%_-_75.33px)] left-[26.19px] box-border w-[6.63px] h-0.5 border-t-[1px] border-solid border-black" />
-                    <div className="absolute top-[43.76px] left-[26.19px] box-border w-[6.63px] h-0.5 border-t-[1px] border-solid border-black" />
-                    <div className="absolute top-[10px] left-[26.19px] box-border w-[6.63px] h-0.5 border-t-[1px] border-solid border-black" />
                     <BarChart/>
                 </div>
             </div>
