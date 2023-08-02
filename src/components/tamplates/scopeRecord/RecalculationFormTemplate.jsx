@@ -38,7 +38,7 @@ export const RecalculationFormTemplate = () => {
     const [dataSectors, setDataSectors] = useState([])
     const [defaultValues] = useState({
         address: "",
-        center: "0",
+        center: "",
         city: "",
         country: "",
         customName: "",
@@ -64,12 +64,14 @@ export const RecalculationFormTemplate = () => {
     const dataForm = watch();
 
     const onSubmit = async () => {
-        dispatch(updateFirstStepCase(dataForm));
-        if (centerCurrent) return goNext();
-        const { error, verify } = await dispatch(createCenterAction(dataForm));
-        if (error) return setTextAlert(error);
-        if (verify) return goNext();
+        dispatch(updateFirstStepCase(dataForm)); // Actualizar el slice con los datos del formulario
+        if (centerCurrent) return goNext(); // Validar si el usuario ya seleccionó un centro de trabajo
+        const { error, verify } = await dispatch(createCenterAction(dataForm)); // Crear un nuevo centro de trabajo
+        if (error) return setTextAlert(error); // Validar si hubo un error al crear el centro de trabajo
+        // if (verify) return dispatch(updateFirstStepCase({})); // Validar si el centro de trabajo se creó correctamente
+        if (verify) return goNext(); // Validar si el centro de trabajo se creó correctamente
     };
+
     useEffect(() => {
         if (centerCurrent) {
             setCenterSelected(centerCurrent)
@@ -99,7 +101,7 @@ export const RecalculationFormTemplate = () => {
 
     useEffect(() => {
         // Validar si hay datos en el registro para mostrarlos en el formulario
-        if (Object.keys(firstStep).length > 0) reset(firstStep)
+        if (Object.keys(firstStep).length > 0 && !centerCurrent) reset(firstStep)
     }, [firstStep])
 
     useEffect(() => {
@@ -131,6 +133,7 @@ export const RecalculationFormTemplate = () => {
                             nameRegister='startDate'
                             errors={errors}
                             validations={{ required: 'La fecha es requerida' }}
+                            disabled={dataForm.center === ''}
                         />
                     </div>
                     <div className='w-1/2 flex flex-col'>
@@ -141,6 +144,7 @@ export const RecalculationFormTemplate = () => {
                             nameRegister='endDate'
                             errors={errors}
                             validations={{ required: 'La fecha es requerida' }}
+                            disabled={dataForm.center === ''}
                         />
                     </div>
                 </div>

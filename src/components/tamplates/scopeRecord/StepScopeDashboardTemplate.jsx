@@ -1,26 +1,29 @@
 //Dependencies
 import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 //Components
 import { ButtonTypeA } from '../../../components/molecules/buttons/buttonTypeA/ButtonTypeA';
 import { EmisionesTable } from '../../../components/organisms/tables/EmisionesTable';
+import { ModalAddCategories } from '../../organisms/modals/ModalAddCategories';
 import { SedeInfo } from '../../../components/organisms/sedeInfo/SedeInfo';
 import Modal from '../../organisms/modals/Modal';
 //Assets
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
-//Data
-import { ModalAddCategories } from '../../organisms/modals/ModalAddCategories';
-import { calculoID, token } from '../../../ConstantsAPI';
-
-import deleteIcon from '../../../assets/Illustrations/Illustration_DeleteElement.svg'
-import axiosClient from '../../../config/AxiosClient';
-import { useSelector } from 'react-redux';
-import { useAppDispatch } from '../../../redux/store';
-import { deleteEmissionsAction, updateCalculationAction, updateEmissionsAction } from '../../../redux/actions/RegisterAction';
+//Context
 import { NavigateAppContext } from '../../../context/NavigateAppContext';
+//Redux
+import { useAppDispatch } from '../../../redux/store';
+//Actions
+import { deleteEmissionsAction, updateCalculationAction, updateEmissionsAction } from '../../../redux/actions/RegisterAction';
+
+const { office_Azul, DeleteElement } = Illustrations; //Illustrations
 
 export const StepScopeDashboardTemplate = () => {
 
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch(); // Dispatch de acciones de Redux
+
+  const navigate = useNavigate(); //Inicializamos el hook de navegación
 
   // Obtenemos el estado del registro del store de Redux
   const { register: { directEmissions, inDirectEmissions, otherEmissions, firstStep, centerCurrent, calculations } } = useSelector(state => state.persistedData);
@@ -95,12 +98,17 @@ export const StepScopeDashboardTemplate = () => {
     !centerCurrent && resetPage();
   }, [centerCurrent])
 
+  const handleNavigate = () => {
+    // navigate(`/app/resultados/empresa/${empresaId}`)
+    navigate(`/app/resultados/empresa/1`)
+  }
+
   return (
     <div className='StepScopeDashboardPage bg-primary-gris1 min-h-full pt-10'>
       <div className='ContenedorCompleto w-[90%] max-w-[1400px] min-w-[900px] mb-12 mx-auto'>
         <div className='flex justify-between'>
-          <SedeInfo icon={Illustrations["office_Azul"]} name={centerCurrent?.nombre} subName={`${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`} />
-          <ButtonTypeA text='Medir huella de carbono' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={false} action={null} />
+          <SedeInfo icon={office_Azul} name={centerCurrent?.nombre} subName={`${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`} />
+          <ButtonTypeA text='Medir huella de carbono' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={false} action={() => handleNavigate()} />
         </div>
         <EmisionesTable
           emisiones={emissionsScope.filter((emision) => emision?.tipo === 1)}
@@ -149,7 +157,7 @@ export const StepScopeDashboardTemplate = () => {
           labelButtonSecond='Sí, Eliminar'
         >
           {<div className='h-[250px] flex gap-6'>
-            <img className='w-[185px] ' src={deleteIcon} alt="delete icon" />
+            <img className='w-[185px] ' src={DeleteElement} alt="delete icon" />
             <div className='w-3/5 flex flex-col justify-center gap-4'>
               <h3 className='text-[28px] font-bold text-[#202626]'>¿Eliminar información?</h3>
               <p className='text-[20px]'>Estás a punto de eliminar este elemento, ¿deseas continuar con el proceso?</p>

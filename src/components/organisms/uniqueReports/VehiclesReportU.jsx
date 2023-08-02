@@ -360,7 +360,7 @@ export const VehiclesReportU = () => {
                                     src={PlusIcon}
                                     onClick={() => addFile(formIndex)}
                                 />
-                                <button onClick={() => addFile(formIndex)}>Agregar otro soporte</button>
+                                <button type='button' onClick={() => addFile(formIndex)}>Agregar otro soporte</button>
                             </div>
                             <div className={`flex items-center w-2/4 text-darkgray ${formIndex !== fields.length - 1 ? 'hidden' : null}`}>
                                 <img
