@@ -1,5 +1,6 @@
 //Dependencies
-import { Link, useNavigate, } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 //Components
 import CardResultDetail from '../../../components/organisms/cards/CardResultDetail'
 import CardResultGraphicCategories from '../../../components/organisms/cards/CardResultGraphicCategories'
@@ -19,6 +20,17 @@ const { ImgOficinaazul } = Imagenes; //Iconos
 export const PageCompanyResults = () => {
 
     const navigate = useNavigate();
+
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { centerCurrent, firstStep } } = useSelector(state => state.persistedData);
+
+    // Obtenemos la data del reporte seleccionado
+    // const { state } = useParams();
+    const location = useLocation();
+    const state = location.state;
+    const { calculo_details, partial_results } = state;
+
+    console.log(partial_results.Results, 'dataRender')
 
     return (
         <div className="PageCompanyResults flex flex-col items-center bg-whitesmoke-100 w-full min-h-screen text-left text-base text-gray-100 font-sora pb-16">
@@ -41,10 +53,10 @@ export const PageCompanyResults = () => {
                     <img className="w-16 h-16" alt="" src={ImgOficinaazul} />
                     <div className="ml-4">
                         <h4 className="text-xl tracking-[0.1px] leading-[27px] font-bold font-inherit text-darkslategray-200">
-                            Sier centro de control
+                            {centerCurrent?.nombre}
                         </h4>
                         <p className="text-lg tracking-[0.09px] text-dimgray-200">
-                            01/01/2022 - 31/12/2022
+                            {firstStep?.startDate?.replace(/-/g, "/")} - {firstStep?.endDate?.replace(/-/g, "/")}
                         </p>
                     </div>
                 </div>
@@ -75,7 +87,7 @@ export const PageCompanyResults = () => {
                         Total de emisiones
                     </p>
                     <h2 className="mt-4 text-center text-21xl tracking-[0.22px] leading-[38px] font-bold font-inherit">
-                        66,93
+                        {calculo_details.valor}
                     </h2>
                     <p className="mt-4 text-center text-base tracking-[0.08px] leading-[22px] font-bold">
                         Ton CO2eq
@@ -85,19 +97,19 @@ export const PageCompanyResults = () => {
                 <CardResultDetail
                     title="Emisiones directas"
                     subtitle="Alcance 1"
-                    cantCo2="24,45"
+                    cantCo2={partial_results.Results[1]}
                     companyDetailId="1"
                 />
                 <CardResultDetail
                     title="Emisiones indirectas"
                     subtitle="Alcance 2"
-                    cantCo2="0,30"
+                    cantCo2={partial_results.Results[2]}
                     companyDetailId="2"
                 />
                 <CardResultDetail
                     title="Otras Emisiones indirectas"
                     subtitle="Alcance 3"
-                    cantCo2="42,18"
+                    cantCo2={partial_results.Results[3]}
                     companyDetailId="3"
                 />
 

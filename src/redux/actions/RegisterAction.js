@@ -193,8 +193,6 @@ export const updateEmissionsAction = (id) => {
             const newDataDirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 1), emisionesDirectasIcons); // Mapear las emisiones directas
             const newDataIndirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 3), emisionesIndirectasIcons); // Mapear las emisiones indirectas
             const newDataOtherEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 2), otrasEmisionesIndirectasIcons); // Mapear las otras emisiones
-            // const newDataIndirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 2), emisionesIndirectasIcons); // Mapear las emisiones indirectas
-            // const newDataOtherEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 3), otrasEmisionesIndirectasIcons); // Mapear las otras emisiones
             return { error: null, verify: true, data: { ...data, emissions: [...newDataDirectEmissions, ...newDataIndirectEmissions, ...newDataOtherEmissions] } };
         } catch (error) {
             console.log(error);

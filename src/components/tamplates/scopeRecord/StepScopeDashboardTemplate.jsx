@@ -46,6 +46,7 @@ export const StepScopeDashboardTemplate = () => {
   const [idToDelete, setIdToDelete] = useState(null) //Id seleccionado para el delete.
   const [modalEmisions, setModalEmisions] = useState([]) //Estado local para setear las emisiones a mostrar en el modal de añadir nueva categoria.
   const [emissionsScope, setEmissionsScope] = useState([]); //Estado local para setear las emisiones a mostrar en el modal de añadir nueva categoria.
+  const [dataRender, setDataRender] = useState(null); //Estado local para setear la respuesta total de la consulta de la API render.
 
   const handleUpdateEmisions = () => {
     const data1 = modalEmisions.filter((emision) => emision?.isChecked).map((emision) => emision.id)
@@ -57,19 +58,21 @@ export const StepScopeDashboardTemplate = () => {
 
 
   const confirmDeleteEmision = async () => {
-    const { error, verify } = await dispatch(deleteEmissionsAction(idToDelete));
+    const { error, verify } = await dispatch(deleteEmissionsAction(idToDelete)); //Eliminamos la emision seleccionada.
     if (error) return setTextAlert(error);
     verify && setOpenDeleteModal(false), updateSelectedEmisions();
   }
 
   const updateSelectedEmisions = async () => {
-    const { data, error, verify } = await dispatch(updateEmissionsAction(calculations.id));
+    const { data, error, verify } = await dispatch(updateEmissionsAction(calculations.id)); //Actualizamos las emisiones seleccionadas.
     if (!verify) return;
+    console.log(data, 'data')
     setEmissionsScope(data.emissions)
+    setDataRender(data)
   };
 
   const putSelectedEmisions = async (emisionesToPut) => {
-    const { data, error, verify } = await dispatch(updateCalculationAction(emisionesToPut));
+    const { data, error, verify } = await dispatch(updateCalculationAction(emisionesToPut)); //Actualizamos las emisiones seleccionadas.
     if (!verify) return;
     updateSelectedEmisions()
     setOpenModal(false)
@@ -98,9 +101,14 @@ export const StepScopeDashboardTemplate = () => {
     !centerCurrent && resetPage();
   }, [centerCurrent])
 
-  const handleNavigate = () => {
-    // navigate(`/app/resultados/empresa/${empresaId}`)
-    navigate(`/app/resultados/empresa/1`)
+  const handleNavigate = (empresaId, state) => {
+
+    const url = `/app/resultados/empresa/${empresaId}`;
+    // const state = { dataRender };
+
+    // Utiliza el hook useNavigate para realizar la navegación a la URL deseada
+    // y pasar el estado como parte de la navegación.
+    navigate(url, {state});
   }
 
   return (
@@ -108,7 +116,7 @@ export const StepScopeDashboardTemplate = () => {
       <div className='ContenedorCompleto w-[90%] max-w-[1400px] min-w-[900px] mb-12 mx-auto'>
         <div className='flex justify-between'>
           <SedeInfo icon={office_Azul} name={centerCurrent?.nombre} subName={`${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`} />
-          <ButtonTypeA text='Medir huella de carbono' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={false} action={() => handleNavigate()} />
+          <ButtonTypeA text='Medir huella de carbono' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={false} action={() => handleNavigate(centerCurrent?.nombre, dataRender)} />
         </div>
         <EmisionesTable
           emisiones={emissionsScope.filter((emision) => emision?.tipo === 1)}
