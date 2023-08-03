@@ -1,5 +1,5 @@
-// import { Bar } from "react-chartjs-2";
-import {BarController} from "chart.js"
+import { Bar } from "react-chartjs-2";
+// import {BarController} from "chart.js"
     import {
         Chart as ChartJS,
         CategoryScale,
@@ -59,5 +59,5 @@ var misoptions = {
 };
 
     export default function BarChart() {
-        return <BarController data={midata} options={misoptions}/>
+        return <Bar data={midata} options={misoptions}/>
     }

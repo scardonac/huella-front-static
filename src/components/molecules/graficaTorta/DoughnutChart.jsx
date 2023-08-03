@@ -1,7 +1,7 @@
 import React from "react";
 import { Chart as ChartJS, ArcElement,Tooltip, Legend } from "chart.js";
-// import { Doughnut } from "react-chartjs-2";
-import {DoughnutController} from "chart.js"
+import { Doughnut } from "react-chartjs-2";
+// import {DoughnutController} from "chart.js"
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -40,5 +40,5 @@ var data = {
 };
 
 export default function DoughnutChart() {
-    return <DoughnutController data={data} options={options} />
+    return <Doughnut data={data} options={options} />
 }
