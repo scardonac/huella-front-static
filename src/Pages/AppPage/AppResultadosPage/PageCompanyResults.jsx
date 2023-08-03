@@ -25,12 +25,11 @@ export const PageCompanyResults = () => {
     const { register: { centerCurrent, firstStep } } = useSelector(state => state.persistedData);
 
     // Obtenemos la data del reporte seleccionado
-    // const { state } = useParams();
     const location = useLocation();
-    const state = location.state;
-    const { calculo_details, partial_results } = state;
 
-    console.log(partial_results.Results, 'dataRender')
+    const state = location.state;
+
+    const { calculo_details, partial_results } = state;
 
     return (
         <div className="PageCompanyResults flex flex-col items-center bg-whitesmoke-100 w-full min-h-screen text-left text-base text-gray-100 font-sora pb-16">
