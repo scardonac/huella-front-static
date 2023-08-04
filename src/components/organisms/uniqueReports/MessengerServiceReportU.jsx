@@ -37,6 +37,8 @@ export const MessengerServiceReportU = () => {
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { firstStep, centerCurrent } } = useSelector(state => state.persistedData);
 
     const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
     const [flag, setFlag] = useState(true); //Estado local para setear el texto de la alerta
@@ -48,7 +50,7 @@ export const MessengerServiceReportU = () => {
                 nameForm: 'Mensajería',
                 flagNameForm: false,
                 typeInput: '',
-                kilometers: '',
+                amountInput: '',
                 attachedFiles: [null],
                 logId: logId,
             },
@@ -152,11 +154,10 @@ export const MessengerServiceReportU = () => {
             reset(defaultValues);
             reset({
                 messengerService: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Mensajería',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
-                    kilometers: item?.kilometros_recorridos,
+                    amountInput: item?.cantidad_insumo,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
                     attachedFiles: [null],
                     logId,
@@ -182,7 +183,7 @@ export const MessengerServiceReportU = () => {
     return (
         <WrapReports
             title='Mensajería'
-            subTitle='Sier centro de control - 01/01/2023 - 31/12/2023'
+            subTitle={`${centerCurrent?.nombre} - ${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`}
             icon={Mensajeria_Azul}
             navigateTo={-1}
         >
@@ -259,7 +260,7 @@ export const MessengerServiceReportU = () => {
                             <SelectController
                                 control={control}
                                 name={`messengerService[${formIndex}].typeInput`}
-                                apiUrl='/insumos/vehiculos'
+                                apiUrl='/insumos/entregas'
                                 valueKey='id'
                                 labelKey='nombre'
                                 placeholder='Selecciona un tipo'
@@ -268,7 +269,7 @@ export const MessengerServiceReportU = () => {
                             />
                             <TextInputController
                                 control={control}
-                                name={`messengerService[${formIndex}].kilometers`}
+                                name={`messengerService[${formIndex}].amountInput`}
                                 rules={{ required: 'Por favor, ingresa los Kms recorridos', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
                                 label='Kms recorridos'
                                 placeholder='Escribe los kms recorridos'

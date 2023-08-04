@@ -10,7 +10,6 @@ export const LogingAction = (user, navigate) => {
     return async (dispatch) => {
         try {
             const { data: { data } } = await axiosClient.post('/login', user);
-            console.log(JSON.parse(data.info))
             const { user_id, nombre: username, empresa: company } = JSON.parse(data.info);
             localStorage.setItem('token', data.token);
             dispatch(loginCase({ user_id, username, company }));

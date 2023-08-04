@@ -1,5 +1,6 @@
 //Dependencies
-import { Link, useNavigate, } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 //Components
 import CardResultDetail from '../../../components/organisms/cards/CardResultDetail'
 import CardResultGraphicCategories from '../../../components/organisms/cards/CardResultGraphicCategories'
@@ -19,6 +20,16 @@ const { ImgOficinaazul } = Imagenes; //Iconos
 export const PageCompanyResults = () => {
 
     const navigate = useNavigate();
+
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { centerCurrent, firstStep } } = useSelector(state => state.persistedData);
+
+    // Obtenemos la data del reporte seleccionado
+    const location = useLocation();
+
+    const state = location.state;
+
+    const { calculo_details, partial_results } = state;
 
     return (
         <div className="PageCompanyResults flex flex-col items-center bg-whitesmoke-100 w-full min-h-screen text-left text-base text-gray-100 font-sora pb-16">
@@ -41,10 +52,10 @@ export const PageCompanyResults = () => {
                     <img className="w-16 h-16" alt="" src={ImgOficinaazul} />
                     <div className="ml-4">
                         <h4 className="text-xl tracking-[0.1px] leading-[27px] font-bold font-inherit text-darkslategray-200">
-                            Sier centro de control
+                            {centerCurrent?.nombre}
                         </h4>
                         <p className="text-lg tracking-[0.09px] text-dimgray-200">
-                            01/01/2022 - 31/12/2022
+                            {firstStep?.startDate?.replace(/-/g, "/")} - {firstStep?.endDate?.replace(/-/g, "/")}
                         </p>
                     </div>
                 </div>
@@ -64,40 +75,48 @@ export const PageCompanyResults = () => {
                     Empleados
                 </p>
                 <p className="ml-2 text-lg tracking-[0.09px] font-bold text-darkslategray-200">
-                    130
+                    {centerCurrent?.numero_de_empleados}
                 </p>
             </div>
 
             <div className="TotalEmisiones grid grid-cols-12 gap-4 bg-whitesmoke-100 w-90 text-left text-base text-gray-100 font-sora mt-3">
 
-                <div className="h-[216px] col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 bg-darkslategray-100 rounded-3xs text-lg text-white p-4">
-                    <p className="mt-7 text-center tracking-[0.09px] font-bold">
-                        Total de emisiones
-                    </p>
-                    <h2 className="mt-4 text-center text-21xl tracking-[0.22px] leading-[38px] font-bold font-inherit">
-                        66,93
-                    </h2>
-                    <p className="mt-4 text-center text-base tracking-[0.08px] leading-[22px] font-bold">
-                        Ton CO2eq
-                    </p>
-                </div>
+                {/* <div className="relative h-[216px] items-center col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 bg-darkslategray-100 text-white rounded-3xs shadow-[0px_10px_10px_rgba(0,_0,_0,_0.05)] p-4 flex flex-col justify-between">
+                    <div>
+                        <p className={`mt-7 text-center text-lg tracking-[0.09px] font-bold`}>
+                            Total de emisiones
+                        </p>
+                        <h3 className={`mt-4 text-center text-f28 tracking-[0.12px] font-bold font-inherit text-white`}>
+                            {calculo_details.valor}
+                        </h3>
+                        <p className={`mt-4 text-center text-sm tracking-[0.07px] font-bold`}>
+                            Ton CO2eq
+                        </p>
+                    </div>
+                </div> */}
 
+                <CardResultDetail
+                    title="Total de emisiones"
+                    cantCo2={calculo_details.valor}
+                    companyDetailId="1"
+                    bg="bg-darkslategray-100"
+                />
                 <CardResultDetail
                     title="Emisiones directas"
                     subtitle="Alcance 1"
-                    cantCo2="24,45"
+                    cantCo2={partial_results.Results[1]}
                     companyDetailId="1"
                 />
                 <CardResultDetail
                     title="Emisiones indirectas"
                     subtitle="Alcance 2"
-                    cantCo2="0,30"
+                    cantCo2={partial_results.Results[2]}
                     companyDetailId="2"
                 />
                 <CardResultDetail
                     title="Otras Emisiones indirectas"
                     subtitle="Alcance 3"
-                    cantCo2="42,18"
+                    cantCo2={partial_results.Results[3]}
                     companyDetailId="3"
                 />
 

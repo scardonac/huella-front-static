@@ -58,7 +58,6 @@ export const createCenterAction = (dataForm) => {
 
         try {
             const { data: { data } } = await axiosClient.post('/centros', dataCenter);
-            console.log(data, 'dataCreateCenter')
             // Despachar una acción con el resultado
             dispatch(getCenterCurrentCase(data)); // Actualizar el centro actual
             dispatch(getCentersAction()); // Actualizar los centros
@@ -130,7 +129,6 @@ export const createCalculationAction = (dataFourthStep) => {
                 ...thirdStep.categories,
                 ...dataFourthStep.categories
             ]
-            console.log(firstStep, 'firstStep')
 
             let dataCalculation = {
                 calculo: {
@@ -195,8 +193,6 @@ export const updateEmissionsAction = (id) => {
             const newDataDirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 1), emisionesDirectasIcons); // Mapear las emisiones directas
             const newDataIndirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 3), emisionesIndirectasIcons); // Mapear las emisiones indirectas
             const newDataOtherEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 2), otrasEmisionesIndirectasIcons); // Mapear las otras emisiones
-            // const newDataIndirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 2), emisionesIndirectasIcons); // Mapear las emisiones indirectas
-            // const newDataOtherEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 3), otrasEmisionesIndirectasIcons); // Mapear las otras emisiones
             return { error: null, verify: true, data: { ...data, emissions: [...newDataDirectEmissions, ...newDataIndirectEmissions, ...newDataOtherEmissions] } };
         } catch (error) {
             console.log(error);
@@ -227,10 +223,10 @@ const createFormData = (file) => {
 
 // Acción para crear los soportes
 export const createSupportsAction = (dataForm) => {
-    console.log(dataForm, 'dataFormCreateSupports')
     return async (dispatch) => {
         const dataSupports = dataForm.map((form) => {
             return {
+                nombre: form?.nameForm ? form.nameForm : null,
                 cantidad_insumo: form?.amountInput ? Number(form.amountInput) : 0,
                 consumo: form?.consumption ? Number(form.consumption) : 0,
                 dias_por_semana: form?.daysWeek ? Number(form.daysWeek) : null,
@@ -243,7 +239,7 @@ export const createSupportsAction = (dataForm) => {
                     // url: [form.attachedFiles && form.attachedFiles.length > 0 ? createFormData(form.attachedFiles[0]) : null],
                 },
                 tipo_insumo: form?.typeInput ? form?.typeInput : null,
-                unidad_consumo: form?.unitConsumption ? form.unitConsumption : null,
+                tipo_combustible: form?.unitConsumption ? form.unitConsumption : null,
             }
         });
         try {
@@ -258,10 +254,10 @@ export const createSupportsAction = (dataForm) => {
 
 // Acción para guardar un borrador de los soportes
 export const saveDraftSupportsAction = (dataForm) => {
-    console.log(dataForm, 'dataForm')
     return async (dispatch) => {
         const dataSupports = dataForm.map((form) => {
             return {
+                nombre: form?.nameForm ? form.nameForm : null,
                 cantidad_insumo: form?.amountInput ? Number(form.amountInput) : 0,
                 consumo: form?.consumption ? Number(form.consumption) : 0,
                 dias_por_semana: form?.daysWeek ? Number(form.daysWeek) : null,
@@ -275,7 +271,7 @@ export const saveDraftSupportsAction = (dataForm) => {
                     // url: [form.attachedFiles && form.attachedFiles.length > 0 ? createFormData(form.attachedFiles[0]) : null],
                 },
                 tipo_insumo: form?.typeInput ? form?.typeInput : null,
-                unidad_consumo: form?.unitConsumption ? form.unitConsumption : null,
+                tipo_combustible: form?.unitConsumption ? form.unitConsumption : null,
             }
         });
         try {

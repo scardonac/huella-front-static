@@ -22,7 +22,7 @@ const REPORT_COMPONENTS = {
     'Plantas Generadoras de Energia': EnergyPlantsReportU,
     'Hornos o Calderas': BoilerReportU,
     'Mensajeria': MessengerServiceReportU,
-    '5': BusinessTripReportU,
+    'Viajes de negocios': BusinessTripReportU,
     'Consumo de Energia': ElectricPowerConsumptionReportU,
     'Recoleccion de residuos': ResidueRecolectionReportU,
     'Suministro de agua': WaterSupplyReportU,

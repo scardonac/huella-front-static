@@ -37,6 +37,8 @@ export const StationerySuppliesReportU = () => {
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { firstStep, centerCurrent } } = useSelector(state => state.persistedData);
 
     const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
     const [flag, setFlag] = useState(true); //Estado local para setear el texto de la alerta
@@ -151,8 +153,7 @@ export const StationerySuppliesReportU = () => {
             reset(defaultValues);
             reset({
                 stationerySupplies: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Suministros de papelería',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
                     amountInput: item?.cantidad_insumo,
@@ -180,7 +181,7 @@ export const StationerySuppliesReportU = () => {
     return (
         <WrapReports
             title='Suministros de papelería'
-            subTitle='Sier centro de control - 01/01/2023 - 31/12/2023'
+            subTitle={`${centerCurrent?.nombre} - ${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`}
             icon={Papeleria_Azul}
             navigateTo={-1}
         >
@@ -257,7 +258,7 @@ export const StationerySuppliesReportU = () => {
                             <SelectController
                                 control={control}
                                 name={`stationerySupplies[${formIndex}].typeInput`}
-                                apiUrl='/insumos/vehiculos'
+                                apiUrl='/insumos/papeleria'
                                 valueKey='id'
                                 labelKey='nombre'
                                 placeholder='Selecciona un tipo'

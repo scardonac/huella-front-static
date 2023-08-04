@@ -9,11 +9,11 @@ import { Illustrations } from '../../../assets/Illustrations/IllustrationProvide
 const { TrushIcon, InformationIcon } = Icons;
 
 export const EmisionesTable = ({
+    emisiones = [],
+    handleOpenConfirmationModal = null,
     handleOpenModal = null,
     label = "Tipo de Emisiones",
-    emisiones = [],
     setIdToDelete = null,
-    handleOpenConfirmationModal = null,
     setTypeId = null,
 }) => {
 
@@ -26,8 +26,6 @@ export const EmisionesTable = ({
         setIdToDelete(id)
         handleOpenConfirmationModal()
     }
-
-    console.log('emisiones', emisiones[0]?.log_id)
 
     return (
         <div className='EmisionesTable mt-8'>
@@ -73,11 +71,6 @@ export const EmisionesTable = ({
                                                 Subir información
                                             </b>
                                         </Link>
-                                        // <Link to={`/app/registros/reporte/${emision.nombre}`} className="text-[inherit] relative lg:ml-0 cursor-pointer flex items-center">
-                                        //     <b className="[text-decoration:underline] tracking-[0.08px] leading-[22px] text-black font-semibold">
-                                        //         Subir información
-                                        //     </b>
-                                        // </Link>
                                     )}
                                 </td>
                                 <td className="px-6 py-4">

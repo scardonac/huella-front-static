@@ -1,5 +1,5 @@
-// import { Line } from "react-chartjs-2";
-import {Line} from "chart.js"
+import { Line } from "react-chartjs-2";
+// import {Line} from "chart.js"
     import {
         Chart as ChartJS,
         CategoryScale,

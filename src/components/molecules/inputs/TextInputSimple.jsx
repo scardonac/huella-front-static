@@ -4,6 +4,7 @@ import { CustomAlert } from '../customAlert/customAlert';
 export const TextInputSimple = ({
     disabled = false,
     errors,
+    hadleOnEnter = () => { },
     label,
     nameRegister,
     placeholder = 'Ingrese',
@@ -21,6 +22,12 @@ export const TextInputSimple = ({
                 placeholder={placeholder}
                 disabled={disabled}
                 {...register(nameRegister, validations)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        hadleOnEnter();
+                    }
+                }}
             />
             {errors && errors[nameRegister] && (
                 <CustomAlert

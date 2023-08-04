@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 //Components
 import { ButtonGroupReportsU } from '../buttonGroupReportsU/ButtonGroupReportsU';
 import { CustomAlert } from '../../molecules/customAlert/customAlert';
+import { SelectController } from '../../molecules/selects/SelectController';
+import { TextInputController } from '../../molecules/inputs/TextInputController';
 import { Tooltip } from '../../molecules/tooltip/Tooltip';
 import { WrapReports } from '../wrapReports/WrapReports';
 //Illustrations & Icons
@@ -31,6 +33,9 @@ export const BusinessTripReportU = () => {
 
     const { state } = useLocation(); //Obtenemos el estado de la ubicación
 
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { firstStep, centerCurrent } } = useSelector(state => state.persistedData);
+
     const logId = state?.logId; //Obtenemos el id del log
 
     // Obtenemos el estado del tooltip del store de Redux
@@ -46,7 +51,7 @@ export const BusinessTripReportU = () => {
                 nameForm: 'Viaje de negocio',
                 flagNameForm: false,
                 typeInput: '',
-                kilometers: '',
+                amountInput: '',
                 attachedFiles: [null],
                 logId: logId,
             },
@@ -149,11 +154,10 @@ export const BusinessTripReportU = () => {
             reset(defaultValues);
             reset({
                 businessTrip: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Viaje de negocio',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
-                    kilometers: item?.kilometros_recorridos,
+                    amountInput: item?.cantidad_insumo,
                     // attachedFiles: item?.soportes?.map((soporte) => soporte?.url),
                     attachedFiles: [null],
                     logId,
@@ -178,8 +182,8 @@ export const BusinessTripReportU = () => {
 
     return (
         <WrapReports
-            title='Viaje de negocio'
-            subTitle='Sier centro de control - 01/01/2023 - 31/12/2023'
+            title='Viaje de negocios'
+            subTitle={`${centerCurrent?.nombre} - ${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`}
             icon={ViajesNegocios_Azul}
             navigateTo={-1}
         >
@@ -253,54 +257,23 @@ export const BusinessTripReportU = () => {
                                     </div>
                                 }
                             />
-                            <Controller
+                            <SelectController
                                 control={control}
                                 name={`businessTrip[${formIndex}].typeInput`}
+                                apiUrl='/insumos/viajes'
+                                valueKey='id'
+                                labelKey='nombre'
+                                placeholder='Selecciona un tipo'
                                 rules={{ required: "Por favor, selecciona un tipo de entrega" }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Tipo de entrega
-                                        </label>
-                                        <select {...field} className='mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md'>
-                                            <option value="">Selecciona un tipo</option>
-                                            <option value="1">Terrestre 1</option>
-                                            <option value="2">Terrestre 2</option>
-                                            <option value="3">Terrestre 3</option>
-                                            <option value="4">Terrestre 4</option>
-                                        </select>
-                                        {errors.businessTrip && errors.businessTrip[formIndex]?.typeInput && (
-                                            <CustomAlert
-                                                message={errors.businessTrip[formIndex]?.typeInput.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Tipo de entreg'
                             />
-                            <Controller
+                            <TextInputController
                                 control={control}
-                                name={`businessTrip[${formIndex}].kilometers`}
+                                name={`businessTrip[${formIndex}].amountInput`}
                                 rules={{ required: 'Por favor, ingresa los Kms recorridos', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                                render={({ field }) =>
-                                    <div className='flex flex-col w-2/4'>
-                                        <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
-                                            Kms recorridos
-                                        </label>
-                                        <input
-                                            {...field}
-                                            className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200'
-                                            placeholder='Ingresa los Kms recorridos'
-                                            type='number'
-                                        />
-                                        {errors.businessTrip && errors.businessTrip[formIndex]?.kilometers && (
-                                            <CustomAlert
-                                                message={errors.businessTrip[formIndex]?.kilometers.message}
-                                                type='error'
-                                            />
-                                        )}
-                                    </div>
-                                }
+                                label='Kms recorridos'
+                                placeholder='Ingresa los Kms recorridos'
+                                type='number'
                             />
                             <div className='flex w-2/4 text-darkgray'>
                                 <img

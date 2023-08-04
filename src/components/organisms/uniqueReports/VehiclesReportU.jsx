@@ -37,6 +37,8 @@ export const VehiclesReportU = () => {
 
     // Obtenemos el estado del tooltip del store de Redux
     const tooltip = useSelector(state => state.helpers.tooltip);
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { firstStep, centerCurrent } } = useSelector(state => state.persistedData);
 
     const [textAlert, setTextAlert] = useState(null); //Estado local para setear el texto de la alerta
     const [flag, setFlag] = useState(true); //Estado local para setear el texto de la alerta
@@ -155,11 +157,10 @@ export const VehiclesReportU = () => {
             reset(defaultValues);
             reset({
                 vehicles: data?.map((item) => ({
-                    // nameForm: item?.nombre,
-                    nameForm: 'Vehículo',
+                    nameForm: item?.nombre,
                     flagNameForm: false,
                     typeInput: item?.tipo_insumo,
-                    unitConsumption: item?.unidad_consumo,
+                    unitConsumption: item?.tipo_combustible,
                     kilometers: item?.kilometros_recorridos,
                     consumption: item?.consumo,
                     amountInput: item?.cantidad_insumo,
@@ -188,7 +189,7 @@ export const VehiclesReportU = () => {
     return (
         <WrapReports
             title='Vehículos'
-            subTitle='Sier centro de control - 01/01/2023 - 31/12/2023'
+            subTitle={`${centerCurrent?.nombre} - ${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`}
             icon={Car_Azul}
             navigateTo={-1}
         >
@@ -275,12 +276,7 @@ export const VehiclesReportU = () => {
                             <SelectController
                                 control={control}
                                 name={`vehicles[${formIndex}].unitConsumption`}
-                                staticData={[
-                                    { id: 1, nombre: 'Kilómetros' },
-                                    { id: 2, nombre: 'Horas' },
-                                    { id: 3, nombre: 'Toneladas' },
-                                    { id: 4, nombre: 'Unidades' },
-                                ]}
+                                apiUrl='/combustibles/vehiculos'
                                 valueKey='id'
                                 labelKey='nombre'
                                 placeholder='Selecciona un tipo'
@@ -364,7 +360,7 @@ export const VehiclesReportU = () => {
                                     src={PlusIcon}
                                     onClick={() => addFile(formIndex)}
                                 />
-                                <button onClick={() => addFile(formIndex)}>Agregar otro soporte</button>
+                                <button type='button' onClick={() => addFile(formIndex)}>Agregar otro soporte</button>
                             </div>
                             <div className={`flex items-center w-2/4 text-darkgray ${formIndex !== fields.length - 1 ? 'hidden' : null}`}>
                                 <img
@@ -382,33 +378,6 @@ export const VehiclesReportU = () => {
                         </div>
                     ))
                 )}
-                {/* {fields.map((_, formIndex) => (
-                    <div className='flex flex-col items-center justify-center gap-4 pt-6 w-full' key={formIndex}>|
-                        <TextInputController
-                            control={control}
-                            name={`vehicles[${formIndex}].amountInput`}
-                            rules={{ required: 'Por favor, ingresa la cantidad de vehículos', pattern: { value: /^[0-9]+$/, message: 'Por favor, ingresa solo números positivos' } }}
-                            label='Cantidad de vehículos'
-                            placeholder='Ingresa la cantidad de vehículos'
-                            type='number'
-                        />
-                        <h1>hola {formIndex} {fields[formIndex].nameForm}</h1>
-                        <button type='button' onClick={() => remove(formIndex)}>Eliminar</button>
-                        <button type='button' onClick={() => append({
-                            nameForm: `Vehículo ss`,
-                            flagNameForm: false,
-                            typeInput: '',
-                            unitConsumption: '',
-                            kilometers: '',
-                            consumption: '',
-                            amountInput: '',
-                            id: null,
-                            attachedFiles: [null],
-                            logId: logId,
-                        },)}>Agregar</button>
-                    </div>
-                ))} */}
-
                 {textAlert && (
                     <CustomAlert
                         message={textAlert.msg}

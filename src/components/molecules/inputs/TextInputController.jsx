@@ -5,11 +5,12 @@ import { CustomAlert } from '../customAlert/customAlert';
 
 export const TextInputController = ({
     control,
-    name,
-    rules = {},
+    hadleOnEnter = () => { },
     label,
-    type = 'text',
+    name,
     placeholder = 'Ingrese',
+    rules = {},
+    type = 'text',
 }) => {
     return (
         <Controller
@@ -26,6 +27,12 @@ export const TextInputController = ({
                         className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200 px-3 py-2' // Agregamos padding-left: 3 a este estilo
                         placeholder={placeholder}
                         type={type}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+                                hadleOnEnter();
+                            }
+                        }}
                     />
                     {error && (
                         <CustomAlert
