@@ -104,7 +104,6 @@ export const StepScopeDashboardTemplate = () => {
   const handleNavigate = (empresaId, state) => {
 
     const url = `/app/resultados/empresa/${empresaId}`;
-    // const state = { dataRender };
 
     // Utiliza el hook useNavigate para realizar la navegación a la URL deseada
     // y pasar el estado como parte de la navegación.

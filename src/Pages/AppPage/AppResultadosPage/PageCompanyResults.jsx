@@ -75,24 +75,32 @@ export const PageCompanyResults = () => {
                     Empleados
                 </p>
                 <p className="ml-2 text-lg tracking-[0.09px] font-bold text-darkslategray-200">
-                    130
+                    {centerCurrent?.numero_de_empleados}
                 </p>
             </div>
 
             <div className="TotalEmisiones grid grid-cols-12 gap-4 bg-whitesmoke-100 w-90 text-left text-base text-gray-100 font-sora mt-3">
 
-                <div className="h-[216px] col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 bg-darkslategray-100 rounded-3xs text-lg text-white p-4">
-                    <p className="mt-7 text-center tracking-[0.09px] font-bold">
-                        Total de emisiones
-                    </p>
-                    <h2 className="mt-4 text-center text-21xl tracking-[0.22px] leading-[38px] font-bold font-inherit">
-                        {calculo_details.valor}
-                    </h2>
-                    <p className="mt-4 text-center text-base tracking-[0.08px] leading-[22px] font-bold">
-                        Ton CO2eq
-                    </p>
-                </div>
+                {/* <div className="relative h-[216px] items-center col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 bg-darkslategray-100 text-white rounded-3xs shadow-[0px_10px_10px_rgba(0,_0,_0,_0.05)] p-4 flex flex-col justify-between">
+                    <div>
+                        <p className={`mt-7 text-center text-lg tracking-[0.09px] font-bold`}>
+                            Total de emisiones
+                        </p>
+                        <h3 className={`mt-4 text-center text-f28 tracking-[0.12px] font-bold font-inherit text-white`}>
+                            {calculo_details.valor}
+                        </h3>
+                        <p className={`mt-4 text-center text-sm tracking-[0.07px] font-bold`}>
+                            Ton CO2eq
+                        </p>
+                    </div>
+                </div> */}
 
+                <CardResultDetail
+                    title="Total de emisiones"
+                    cantCo2={calculo_details.valor}
+                    companyDetailId="1"
+                    bg="bg-darkslategray-100"
+                />
                 <CardResultDetail
                     title="Emisiones directas"
                     subtitle="Alcance 1"
