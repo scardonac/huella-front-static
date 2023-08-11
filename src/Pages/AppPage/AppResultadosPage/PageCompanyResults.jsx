@@ -19,7 +19,7 @@ const { ImgOficinaazul } = Imagenes; //Iconos
 
 export const PageCompanyResults = () => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // hook para navegar entre páginas
 
     // Obtenemos el estado del registro del store de Redux
     const { register: { centerCurrent, firstStep } } = useSelector(state => state.persistedData);

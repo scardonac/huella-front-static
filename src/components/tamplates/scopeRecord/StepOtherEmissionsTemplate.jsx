@@ -23,15 +23,15 @@ import { createCalculationAction } from '../../../redux/actions/RegisterAction';
 
 export const StepOtherEmissionsTemplate = () => {
 
-  const nav = useNavigate();
-  const dispatch = useAppDispatch();
-  const { goNext } = useContext(NavigateAppContext);
+  const nav = useNavigate(); // hook para navegar entre páginas
+  const dispatch = useAppDispatch(); // hook para ejecutar acciones de redux
 
+  const { goNext } = useContext(NavigateAppContext); // hook para navegar entre páginas
 
-  const { register: { fourthStep, otherEmissions } } = useSelector(state => state.persistedData);
+  const { register: { fourthStep, otherEmissions } } = useSelector(state => state.persistedData); // selector para obtener los datos del registro
 
-  const [dataOtrasEmisionesIndirectas, setDataOtrasEmisionesIndirectas] = useState([])
-  const [textAlert, setTextAlert] = useState(null)
+  const [dataOtrasEmisionesIndirectas, setDataOtrasEmisionesIndirectas] = useState([]) // estado para almacenar las emisiones indirectas
+  const [textAlert, setTextAlert] = useState(null) // estado para mostrar mensajes de error
 
   const [defaultValues] = useState({
     categories: [],

@@ -23,7 +23,7 @@ export const StepScopeDashboardTemplate = () => {
 
   const dispatch = useAppDispatch(); // Dispatch de acciones de Redux
 
-  const navigate = useNavigate(); //Inicializamos el hook de navegación
+  const navigate = useNavigate(); // hook para navegar entre páginas //Inicializamos el hook de navegación
 
   // Obtenemos el estado del registro del store de Redux
   const { register: { directEmissions, inDirectEmissions, otherEmissions, firstStep, centerCurrent, calculations } } = useSelector(state => state.persistedData);

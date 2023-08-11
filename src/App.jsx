@@ -29,6 +29,7 @@ export const App = () => {
             <Route path={paths.PRECIOS} element={<LandingPrecios />} />
             <Route path={paths.CONTACT} element={<LandingContact />} />
             <Route path={paths.LOGIN} element={<LandingLogin />} />
+            <Route path={paths.RECOVERPASSWORD} element={<LandingLogin />} />
             <Route path={paths.APP} element={<AppPageLayout />}>
               <Route path={paths.APPHOME} element={<HomePage />} />
               <Route path={paths.APPREGISTROS} element={<ScopeRecordPage />} />

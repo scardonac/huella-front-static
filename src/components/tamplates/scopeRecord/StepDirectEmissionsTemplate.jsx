@@ -20,14 +20,14 @@ import { useSelector } from 'react-redux';
 import { getEmissionsAction } from '../../../redux/actions/RegisterAction';
 export const StepDirectEmissionsTemplate = () => {
 
-  const nav = useNavigate()
-  const dispatch = useAppDispatch();
-  const { goNext } = useContext(NavigateAppContext)
+  const nav = useNavigate() // hook para navegar entre páginas
+  const dispatch = useAppDispatch(); // hook para ejecutar acciones de redux
 
-  const { register: { secondStep, directEmissions } } = useSelector(state => state.persistedData);
+  const { goNext } = useContext(NavigateAppContext) // hook para navegar entre páginas
 
-  const [dataEmisiones, setDataEmisiones] = useState([])
+  const { register: { secondStep, directEmissions } } = useSelector(state => state.persistedData); // selector para obtener los datos del registro
 
+  const [dataEmisiones, setDataEmisiones] = useState([]) // estado para almacenar las emisiones directas
 
   const [defaultValues] = useState({
     categories: [],

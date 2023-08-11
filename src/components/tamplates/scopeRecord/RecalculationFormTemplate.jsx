@@ -27,11 +27,12 @@ import { getCenterCurrentCase, updateFirstStepCase } from '../../../redux/slices
 
 export const RecalculationFormTemplate = () => {
 
-    const nav = useNavigate();
-    const dispatch = useAppDispatch();
-    const { goNext } = useContext(NavigateAppContext);
+    const nav = useNavigate(); // hook para navegar entre páginas
+    const dispatch = useAppDispatch(); // hook para ejecutar acciones de redux
 
-    const { register: { firstStep, centers, productiveSector, centerCurrent } } = useSelector(state => state.persistedData);
+    const { goNext } = useContext(NavigateAppContext); // hook para navegar entre páginas
+
+    const { register: { firstStep, centers, productiveSector, centerCurrent } } = useSelector(state => state.persistedData); // selector para obtener los datos del registro
 
     const [centerSelected, setCenterSelected] = useState(null);
     const [textAlert, setTextAlert] = useState(null);

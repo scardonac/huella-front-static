@@ -7,10 +7,14 @@ import { LandingFooter } from '../../../components/organisms/footer/LandingFoote
 import { LandingHeader } from '../../../components/organisms/header/LandingHeader';
 
 import { Imagenes } from "../../../assets/Images/wImagenProvider";
+import { useLocation } from 'react-router';
+import { useEffect } from 'react';
 // Components
-const { ImgBannerContact, Huella, Doctora, Reunion, Mecanico, Trabajador, Elipse210, Trazado17916, Trazado17917, Grupo2403, Grupo2409, Botella, Elipse218, Trazado17926, Elipse219, Grupo2411} = Imagenes;
+const { ImgBannerContact, Huella, Doctora, Reunion, Mecanico, Trabajador, Elipse210, Trazado17916, Trazado17917, Grupo2403, Grupo2409, Botella, Elipse218, Trazado17926, Elipse219, Grupo2411 } = Imagenes;
 
 export const LandingContact = () => {
+
+  const { state } = useLocation(); //Obtenemos el estado de la ubicación
 
   const {
     register: registerContact,
@@ -21,6 +25,17 @@ export const LandingContact = () => {
   const onSubmitContact = (data, e) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    if (state) {
+      const { scroll } = state;
+      // Desplázate a la posición del punto medio
+      window.scrollTo({
+        top: scroll,
+        behavior: 'smooth', // Agrega un desplazamiento suave
+      });
+    }
+  }, []);
 
   return (
     <div className="LandingContact bg-white cursor-pointer text-left text-lg text-darkslategray font-sora flex flex-col items-center">

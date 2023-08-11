@@ -14,7 +14,7 @@ const { extintor_VFuerte, PlantaEnergia_VFuerte } = Illustrations; //Iconos
 
 export const PageCompanyDetailResults = () => {
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // hook para navegar entre páginas
 
   const headers = [
     "Combustible",

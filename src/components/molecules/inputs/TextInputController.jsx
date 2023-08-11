@@ -11,6 +11,9 @@ export const TextInputController = ({
     placeholder = 'Ingrese',
     rules = {},
     type = 'text',
+    styleDiv = 'flex flex-col w-2/4',
+    styleLabel = 'text-left text-gray-600 font-normal leading-6 text-base opacity-100',
+    styleInput = 'bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200 px-3 py-2'
 }) => {
     return (
         <Controller
@@ -18,13 +21,13 @@ export const TextInputController = ({
             name={name}
             rules={rules}
             render={({ field, fieldState: { error } }) => (
-                <div className='flex flex-col w-2/4'>
-                    <label className='text-left text-gray-600 font-normal leading-6 text-base opacity-100'>
+                <div className={styleDiv}>
+                    <label className={styleLabel}>
                         {label}
                     </label>
                     <input
                         {...field}
-                        className='bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200 px-3 py-2' // Agregamos padding-left: 3 a este estilo
+                        className={styleInput}
                         placeholder={placeholder}
                         type={type}
                         onKeyDown={(e) => {

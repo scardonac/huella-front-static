@@ -28,7 +28,7 @@ export const ElectricPowerConsumptionReportU = () => {
 
     const dispatch = useAppDispatch(); //Inicializamos el dispatcher
 
-    const navigate = useNavigate(); //Inicializamos el hook de navegación
+    const navigate = useNavigate(); // hook para navegar entre páginas //Inicializamos el hook de navegación
 
     const { state } = useLocation(); //Obtenemos el estado de la ubicación
 

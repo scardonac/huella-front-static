@@ -16,7 +16,7 @@ export const LogingAction = (user, navigate) => {
             return { error: null, verify: true };
         } catch (error) {
             console.log(error);
-            return { error: 'Usuario o contraseña incorrectos', verify: false };
+            return { error: 'Correo o contraseña inválidos, intenta nuevamente', verify: false };
         }
     }
 
