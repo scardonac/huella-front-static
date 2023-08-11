@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { paths } from "../../../routes/paths";
 //Components
 import { FormLogIn } from '../../../components/tamplates/login/FormLogIn';
-import { FormForgotPassword } from '../../../components/tamplates/login/FormForgotPassword';
+import { FormRecoveryPassword } from '../../../components/tamplates/login/FormForgotPassword';
 import { LandingHeader } from '../../../components/organisms/header/LandingHeader';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
@@ -98,7 +98,7 @@ export const LandingLogin = () => {
                         />
                     )}
                     {(tab === 2 || 3) && (
-                        <FormForgotPassword
+                        <FormRecoveryPassword
                             control={control}
                             handleSubmit={handleSubmit}
                             onSubmit={onSubmit}

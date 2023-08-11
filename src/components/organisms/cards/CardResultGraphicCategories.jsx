@@ -2,7 +2,7 @@
 // Dependencias
 import DoughnutChart from "../../molecules/graficaTorta/DoughnutChart";
 import { Link } from "react-router-dom";
-// import { Imagenes } from "../../../assets/Images/wImagenProvider";
+// import { Imagenes } from "../../../assets/Images/ImagenProvider";
 // Components
 // const { Grupo2592 } = Imagenes;
 

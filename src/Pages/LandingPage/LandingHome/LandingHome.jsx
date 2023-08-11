@@ -9,7 +9,7 @@ import { LandingHeader } from '../../../components/organisms/header/LandingHeade
 import CardGoals from '../../../components/organisms/cards/CardGoals';
 //Assets
 import { Animation } from "../../../assets/animations/AnimationsProvider";
-import { Imagenes } from "../../../assets/Images/wImagenProvider";
+import { Imagenes } from "../../../assets/Images/ImagenProvider";
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 // Components
 const {AnimacionHuella} = Animation;

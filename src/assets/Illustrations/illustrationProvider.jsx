@@ -85,6 +85,7 @@ import SectorResiduos_Azul from '../../assets/Illustrations/Illustration_SectorR
 import SectorResiduos_Default from '../../assets/Illustrations/Illustration_SectorResiduos_Default.svg'
 import SectorResiduos_VFuerte from '../../assets/Illustrations/Illustration_SectorResiduos_VFuerte.svg'
 import SectorResiduos_VSuave from '../../assets/Illustrations/Illustration_SectorResiduos_VSuave.svg'
+import SendEmail from '../../assets/Illustrations/Illustration_SendEmail.svg'
 import Temperature from '../Illustrations/illustration-pweb-temperature.svg'
 import Transporte_Azul from '../../assets/Illustrations/Illustration_Transporte_Azul.svg'
 import Transporte_Default from '../../assets/Illustrations/Illustration_Transporte_Default.svg'
@@ -98,6 +99,7 @@ import ViajesNegocios_Azul from '../../assets/Illustrations/illustration_ViajesN
 import ViajesNegocios_Default from '../../assets/Illustrations/illustration_ViajesNegocios_Default.svg'
 import ViajesNegocios_VFuerte from '../../assets/Illustrations/illustration_ViajesNegocios_VFuerte.svg'
 import ViajesNegocios_VSuave from '../../assets/Illustrations/illustration_ViajesNegocios_VSuave.svg'
+
 
 export const Illustrations = {
     Add_OtherCategory_Azul,
@@ -187,6 +189,7 @@ export const Illustrations = {
     SectorResiduos_Default,
     SectorResiduos_VFuerte,
     SectorResiduos_VSuave,
+    SendEmail,
     Temperature,
     Transporte_Azul,
     Transporte_Default,

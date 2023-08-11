@@ -1,6 +1,6 @@
 import BarChart2 from "../../molecules/graficaBarras2/Barchart2";
 //Assets
-// import { Imagenes } from "../../../assets/Images/wImagenProvider";
+// import { Imagenes } from "../../../assets/Images/ImagenProvider";
 // Components
 // const { Grupo2573, Trazado19073 } = Imagenes;
 

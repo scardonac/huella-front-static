@@ -1,6 +1,6 @@
 
 //Assets
-import { Imagenes } from "../../../assets/Images/wImagenProvider";
+import { Imagenes } from "../../../assets/Images/ImagenProvider";
 // Components
 const { Grupo2923, Grupo2905 } = Imagenes;
 import { Contact } from '../landingComponents/landingHomeComponents/Contact'

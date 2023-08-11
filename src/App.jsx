@@ -8,6 +8,7 @@ import { LandingContact } from './Pages/LandingPage/LandingContact/LandingContac
 import { LandingHome } from './Pages/LandingPage/LandingHome/LandingHome';
 import { LandingLogin } from './Pages/LandingPage/LandingLogin/LandingLogin'
 import { LandingPrecios } from './Pages/LandingPage/LandingPrecios/LandingPrecios'
+import { LandingRecoverPassword } from './Pages/LandingPage/LandingRecoverPassword/LandingRecoverPassword';
 import { ReportContainer } from './components/organisms/reportContainer/ReportContainer';
 import { ScopeRecordPage } from './pages/AppPage/AppScopeRecordPage/ScopeRecordPage';
 //Context
@@ -18,6 +19,7 @@ import { paths } from '../src/routes/paths.js'
 import { AppPageResults, PageCompanyResults, PageCompanyDetailResults } from './Pages/AppPage/AppResultadosPage';
 //Css
 import './App.css'
+import { CompletionRecoverPassword } from './Pages/LandingPage/LandingRecoverPassword/CompletionRecoverPassword';
 
 export const App = () => {
   return (
@@ -29,7 +31,8 @@ export const App = () => {
             <Route path={paths.PRECIOS} element={<LandingPrecios />} />
             <Route path={paths.CONTACT} element={<LandingContact />} />
             <Route path={paths.LOGIN} element={<LandingLogin />} />
-            <Route path={paths.RECOVERPASSWORD} element={<LandingLogin />} />
+            <Route path={paths.RECOVERPASSWORD} element={<LandingRecoverPassword />} />
+            <Route path={paths.RECOVERPASSWORDCOMPLETION} element={<CompletionRecoverPassword />} />
             <Route path={paths.APP} element={<AppPageLayout />}>
               <Route path={paths.APPHOME} element={<HomePage />} />
               <Route path={paths.APPREGISTROS} element={<ScopeRecordPage />} />

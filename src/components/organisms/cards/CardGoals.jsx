@@ -1,8 +1,9 @@
-import { Imagenes } from "../../../assets/Images/wImagenProvider";
+//Assets
+import { Imagenes } from "../../../assets/Images/ImagenProvider";
 import { Illustrations } from "../../../assets/Illustrations/IllustrationProvider"
 
-const { Balance, Planet, Temperature } = Illustrations;
-const { Goalshome } = Imagenes;
+const { Balance, Planet, Temperature } = Illustrations; // importa las imágenes
+const { Goalshome } = Imagenes; // importa las imágenes
 
 export default function CardGoals() {
     return (

@@ -6,7 +6,7 @@ import { FormLanding } from '../../../components/organisms/landingComponents/lan
 import { LandingFooter } from '../../../components/organisms/footer/LandingFooter';
 import { LandingHeader } from '../../../components/organisms/header/LandingHeader';
 
-import { Imagenes } from "../../../assets/Images/wImagenProvider";
+import { Imagenes } from "../../../assets/Images/ImagenProvider";
 import { useLocation } from 'react-router';
 import { useEffect } from 'react';
 // Components

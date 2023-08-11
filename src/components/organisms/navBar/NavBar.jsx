@@ -6,7 +6,7 @@ import { SectionComponent } from '../sectionComponent/SectionComponent'
 //Data
 import { secciones } from '../../../Backend'
 //Assets
-import { Imagenes } from "../../../assets/Images/wImagenProvider";
+import { Imagenes } from "../../../assets/Images/ImagenProvider";
 // Components
 const { Grupo2522 } = Imagenes;
 //Styles

@@ -34,6 +34,7 @@ import Grupo2830 from "./grupo-2830@2x.png"
 import Grupo2905 from "./grupo-2905.svg"
 import Grupo2923 from "./grupo-2923.svg"
 import ImgBanner from "./img-banner-login2@2x.png"
+import ImgBannerRecoverPassword from "./img_RecuperarContraseña.jpg"
 import Img2Banner2 from "./img-banner22@2x.png"
 import ImgBannerContact from "./img-pweb-bannercontact@2x.png"
 import ImgOficinaazul from "./imgoficinaazul.svg"
@@ -49,8 +50,8 @@ import Trazado17926 from "./trazado-17926.svg"
 import Trazado19073 from "./trazado-19073.svg"
 import Trazado62621 from "./trazado-62621.svg"
 import Elipse219 from "./elipse-219.svg"
-
-
+import SuccessfulRegistration from "./img_back_registroExitoso.png"
+import Logo_carbonlytics_principal from "./Logo_carbonlytics_principal.svg"
 
 export const Imagenes = {
     Botella,
@@ -88,6 +89,7 @@ export const Imagenes = {
     Huella,
     Img2Banner2,
     ImgBanner,
+    ImgBannerRecoverPassword,
     ImgBannerContact,
     ImgOficinaazul,
     Logocarbonlytic,
@@ -104,4 +106,6 @@ export const Imagenes = {
     Trazado62621,
     Trazado6826,
     Trazado6827,
+    SuccessfulRegistration, 
+    Logo_carbonlytics_principal, 
 }

@@ -3,7 +3,7 @@ import { CustomAlert } from "../../molecules/customAlert/customAlert"
 import { SuccessfulMailing } from "./SuccessfulMailing"
 import { TextInputController } from "../../molecules/inputs/TextInputController"
 
-export const FormRecoveryPassword = ({
+export const FormForgotPassword = ({
     control,
     handleSubmit,
     onSubmit,

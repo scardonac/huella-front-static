@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import TableResults from '../../../components/organisms/tables/TableResults';
 //Assets
 import { Icons } from '../../../assets/icons/IconProvider';
-import { Imagenes } from '../../../assets//Images/wImagenProvider';
+import { Imagenes } from '../../../assets//Images/ImagenProvider';
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 
 const { BackArrowIcon } = Icons; //Iconos

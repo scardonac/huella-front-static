@@ -1,7 +1,7 @@
 // TODO: Card Result Congratulations Graphic component
 
 //Assets
-import { Imagenes } from "../../../assets/Images/wImagenProvider";
+import { Imagenes } from "../../../assets/Images/ImagenProvider";
 // Components
 const { Grupo2572 } = Imagenes;
 

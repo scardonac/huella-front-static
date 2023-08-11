@@ -1,6 +1,6 @@
 import BarChartHorizontal from '../../molecules/graficaHorizontal/BarChartHorizontal'
 //Assets
-import { Imagenes } from "../../../assets/Images/wImagenProvider";
+import { Imagenes } from "../../../assets/Images/ImagenProvider";
 // Components
 const { Grupo2561 } = Imagenes;
 

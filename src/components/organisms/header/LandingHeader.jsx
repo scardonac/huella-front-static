@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom'
 //Routes
 import { paths } from '../../../routes/paths'
 //Assets
-import { Imagenes } from "../../../assets/Images/wImagenProvider";
+import { Imagenes } from "../../../assets/Images/ImagenProvider";
 // Components
 const { Grupo2522 } = Imagenes;
 

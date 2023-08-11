@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 //Routes
 import { paths } from "../../../routes/paths";
 //Components
-import { FormLogIn } from '../../../components/tamplates/login/FormLogIn';
-import { FormForgotPassword } from '../../../components/tamplates/login/FormForgotPassword';
+import { CompletionForgotPassword } from '../../../components/tamplates/login/CompletionForgotPassword';
+import { FormRecoverPassword } from '../../../components/tamplates/login/FormRecoverPassword';
 import { LandingHeader } from '../../../components/organisms/header/LandingHeader';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
@@ -15,9 +15,9 @@ import { LogingAction } from '../../../redux/actions/AuthAction';
 //Assets
 import { Imagenes } from "../../../assets/Images/ImagenProvider";
 
-const { ImgBanner, Logocarbonlytic } = Imagenes; // importa las imágenes
+const { ImgBannerRecoverPassword, Logocarbonlytic } = Imagenes; // importa las imágenes
 
-export const LandingLogin = () => {
+export const LandingRecoverPassword = () => {
 
     const navigate = useNavigate(); // hook para navegar entre páginas
     const dispatch = useAppDispatch(); // hook para ejecutar acciones de redux
@@ -26,8 +26,8 @@ export const LandingLogin = () => {
     const [tab, setTab] = useState(1); // estado para cambiar entre pestañas
 
     const defaultValues = {
-        email: '',
         password: '',
+        passwordConfirm: '',
     };
 
     const {
@@ -56,7 +56,7 @@ export const LandingLogin = () => {
         // error && setTextAlert(error); // si hay un error, muestra el mensaje
         // verify && navigate(paths.APPHOME); // si el usuario está autenticado, redirige a la página de inicio
         console.log('Recuperar contraseña', user)
-        setTab(3)
+        navigate(paths.RECOVERPASSWORDCOMPLETION)
     }
 
     const onLogIn = async () => {
@@ -66,10 +66,10 @@ export const LandingLogin = () => {
             contraseña: dataForm.password,
             // otros datos del usuario
         };
-
-        const { error, verify } = await dispatch(LogingAction(user, navigate)); // envía la acción de login con el usuario autenticado
-        error && setTextAlert(error); // si hay un error, muestra el mensaje
-        verify && navigate(paths.APPHOME); // si el usuario está autenticado, redirige a la página de inicio
+        navigate(paths.RECOVERPASSWORDCOMPLETION)
+        // const { error, verify } = await dispatch(LogingAction(user, navigate)); // envía la acción de login con el usuario autenticado
+        // error && setTextAlert(error); // si hay un error, muestra el mensaje
+        // verify && navigate(paths.APPHOME); // si el usuario está autenticado, redirige a la página de inicio
     }
 
     useEffect(() => {
@@ -79,17 +79,17 @@ export const LandingLogin = () => {
     }, [tab])
 
     return (
-        <div className="LandingLogin w-full flex flex-col bg-white">
+        <div className="LandingRecoverPassword w-full flex flex-col bg-white">
             <LandingHeader />
             <div className='flex gap-2'>
                 <img
                     className="w-1/2 h-screen object-cover"
                     alt=""
-                    src={ImgBanner}
+                    src={ImgBannerRecoverPassword}
                 />
                 <div className='w-1/2 mt-14 flex flex-col justify-center items-center gap-12'>
                     {tab === 1 && (
-                        <FormLogIn
+                        <FormRecoverPassword
                             control={control}
                             handleSubmit={handleSubmit}
                             onSubmit={onSubmit}
@@ -97,8 +97,8 @@ export const LandingLogin = () => {
                             textAlert={textAlert}
                         />
                     )}
-                    {(tab === 2 || 3) && (
-                        <FormForgotPassword
+                    {tab === 2 && (
+                        <CompletionForgotPassword
                             control={control}
                             handleSubmit={handleSubmit}
                             onSubmit={onSubmit}
@@ -110,7 +110,7 @@ export const LandingLogin = () => {
                 </div>
             </div>
             <img
-                className="absolute bottom-[53.99px] left-[44px] w-[184.33px] h-[29.86px]"
+                className="absolute bottom-[43.99px] left-[70px] w-[184.33px] h-[29.86px]"
                 alt=""
                 src={Logocarbonlytic}
             />

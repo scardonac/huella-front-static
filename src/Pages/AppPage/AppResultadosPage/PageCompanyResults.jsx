@@ -12,7 +12,7 @@ import CardReultCongratulationsGraphic from '../../../components/organisms/cards
 import { dataGraph, dataGraphDos } from '../../../Backend'
 //Assets
 import { Icons } from '../../../assets/icons/IconProvider'
-import { Imagenes } from '../../../assets//Images/wImagenProvider'
+import { Imagenes } from '../../../assets//Images/ImagenProvider'
 
 const { BackArrowIcon } = Icons; //Iconos
 const { ImgOficinaazul } = Imagenes; //Iconos
