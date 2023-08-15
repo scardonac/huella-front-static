@@ -32,9 +32,15 @@ export const LandingHeader = () => {
                 <button
                     onClick={() => navigate(paths.LOGIN)}
                     className={`text-primary-white1 text-f16 border px-4 py-2 rounded-lg border-primary-white1 ${pathname === "/login" ? " font-bold text-primary-green2" : ""}`}
-                >Iniciar sesión
+                >
+                    Iniciar sesión
                 </button>
-                <button className='text-primary-title1 font-bold text-f16 border px-4 py-2 rounded-lg bg-primary-green2'>Regístrate</button>
+                <button
+                    onClick={() => navigate(paths.REGISTER)}
+                    className='text-primary-title1 font-bold text-f16 border px-4 py-2 rounded-lg bg-primary-green2'
+                >
+                    Regístrate
+                </button>
             </div>
         </nav>
     )

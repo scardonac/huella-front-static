@@ -22,8 +22,8 @@ export const ModalAddCategories = ({
     return (
         <>
             {isOpen && (
-                <div className="fixed inset-0 flex items-center justify-center z-50 bg-[#20262666] font-Sora ">
-                    <div className="bg-[#F7F9F7] w-2/5  rounded-lg p-8 ">
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-midnightBlue font-Sora ">
+                    <div className="bg-blancoMisty w-2/5  rounded-lg p-8 ">
                         <div className="flex justify-end">
                             <img
                                 className="w- h-4 cursor-pointer border border-gray-300 rounded-full opacity-50 hover:opacity-100"

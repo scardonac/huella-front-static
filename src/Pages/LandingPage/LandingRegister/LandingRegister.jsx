@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 //Routes
 import { paths } from "../../../routes/paths";
 //Components
-import { FormLogIn } from '../../../components/tamplates/login/FormLogIn';
+import { FormRegister } from '../../../components/tamplates/login/FormRegister';
 import { FormForgotPassword } from '../../../components/tamplates/login/FormForgotPassword';
 import { LandingHeader } from '../../../components/organisms/header/LandingHeader';
 //Redux
@@ -79,42 +79,20 @@ export const LandingRegister = () => {
     }, [tab])
 
     return (
-        <div className="LandingRegister w-full flex flex-col bg-white">
+        <div className="LandingRegister w-full h-auto flex flex-col bg-blancoMisty">
             <LandingHeader />
-            <div className='flex gap-2'>
-                <img
-                    className="w-1/2 h-screen object-cover"
-                    alt=""
-                    src={ImgBanner}
-                />
-                <div className='w-1/2 mt-14 flex flex-col justify-center items-center gap-12'>
-                    {/* {tab === 1 && (
-                        <FormLogIn
-                            control={control}
-                            handleSubmit={handleSubmit}
-                            onSubmit={onSubmit}
-                            setTab={setTab}
-                            textAlert={textAlert}
-                        />
-                    )}
-                    {(tab === 2 || 3) && (
-                        <FormForgotPassword
-                            control={control}
-                            handleSubmit={handleSubmit}
-                            onSubmit={onSubmit}
-                            setTab={setTab}
-                            tab={tab}
-                            textAlert={textAlert}
-                        />
-                    )} */}
+            <div className="flex flex-col items-center justify-center w-full h-full p-5">
+                <div className='flex w-1/2 justify-center items-center bg-white border-2 border-primary-80 rounded-3xs p-4 mt-20 opacity-100'>
+                    <FormRegister
+                        control={control}
+                        handleSubmit={handleSubmit}
+                        onSubmit={onSubmit}
+                        setTab={setTab}
+                        textAlert={textAlert}
+                        watch={watch}
+                    />
                 </div>
             </div>
-            <img
-                className="absolute bottom-[53.99px] left-[44px] w-[184.33px] h-[29.86px]"
-                alt=""
-                src={Logocarbonlytic}
-            />
         </div>
-
     );
 };

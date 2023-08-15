@@ -17,7 +17,7 @@ const Modal = ({
     return (
         <>
             {isOpen && (
-                <div className="fixed inset-0 flex items-center justify-center z-50 bg-[#20262666] font-Sora">
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-midnightBlue font-Sora">
                     <div className="bg-white w-2/5 h-[380px] rounded-lg p-8">
                         <div className="flex justify-end">
                             <img
