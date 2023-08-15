@@ -1,25 +1,46 @@
+//Dependencies
+import { useState } from "react";
 //Components
 import { CustomAlert } from "../../molecules/customAlert/customAlert"
+import { RulesPassword } from "../../molecules/rulesPassword/RulesPassword";
 import { TextInputController } from "../../molecules/inputs/TextInputController"
 
 export const FormRecoverPassword = ({
     control,
     handleSubmit,
     onSubmit,
-    setTab,
     textAlert,
+    watch,
 }) => {
 
-    const rules = {
-        required: 'Por favor, ingresa tu nueva contraseña',
-        minLength: { value: 12, message: 'La contraseña debe tener al menos 12 caracteres' },
-        validate: {
-            hasNumber: value => /^(?=.*[0-9])/.test(value) || 'Debe contener al menos un número',
-            hasUppercase: value => /^(?=.*[A-Z])/.test(value) || 'Debe contener al menos una mayúscula',
-            hasLowercase: value => /^(?=.*[a-z])/.test(value) || 'Debe contener al menos una minúscula',
-            hasSpecialChar: value => /^(?=.*[\W_])/.test(value) || 'Debe contener al menos un carácter especial (%-#)'
-        }
-    };
+    const [flagCorrectPassword, setFlagCorrectPassword] = useState(false); // bandera para habilitar el input confirmPassword
+
+    const password = watch('password'); // obtiene el valor del input password
+    const confirmPassword = watch('confirmPassword'); // obtiene el valor del input confirmPassword
+
+    // Protocolo de contraseña
+    const arrayRules = [
+        {
+            text: 'Mínimo 12 caracteres',
+            valid: password.length >= 12
+        },
+        {
+            text: 'Un número (0-9)',
+            valid: /^(?=.*[0-9])/.test(password)
+        },
+        {
+            text: 'Una mayúscula (A-Z)',
+            valid: /^(?=.*[A-Z])/.test(password)
+        },
+        {
+            text: 'Una minúscula (a-z)',
+            valid: /^(?=.*[a-z])/.test(password)
+        },
+        {
+            text: 'Un caracter especial o símbolo (%-#)',
+            valid: /^(?=.*[\W_])/.test(password)
+        },
+    ]
 
     return (
         <>
@@ -29,25 +50,26 @@ export const FormRecoverPassword = ({
             <form onSubmit={handleSubmit(onSubmit)} className="FormLanding mx-auto">
                 <TextInputController
                     control={control}
-                    name={'password'}
-                    rules={rules}
+                    estrict={false}
                     label='Nueva contraseña'
+                    name={'password'}
                     placeholder='Escribe la contraseña'
-                    type='password'
                     styleDiv='w-full'
-                    styleLabel='text-lg tracking-[0.09px] font-sora text-gray-100 text-left'
                     styleInput='bg-white w-full rounded-8xs box-border h-[37px] border-[0.5px] border-solid border-primary-gris3 pl-4'
+                    styleLabel='text-lg tracking-[0.09px] font-sora text-gray-100 text-left'
+                    type='password'
                 />
                 <TextInputController
                     control={control}
-                    name={'passwordConfirm'}
-                    rules={rules}
+                    disabled={!flagCorrectPassword}
+                    estrict={false}
                     label='Confirmar contraseña'
+                    name={'confirmPassword'}
                     placeholder='Escribe la contraseña'
-                    type='password'
                     styleDiv='w-full mt-6'
-                    styleLabel='text-lg tracking-[0.09px] font-sora text-gray-100 text-left'
                     styleInput='bg-white w-full rounded-8xs box-border h-[37px] border-[0.5px] border-solid border-primary-gris3 pl-4'
+                    styleLabel='text-lg tracking-[0.09px] font-sora text-gray-100 text-left'
+                    type='password'
                 />
                 {textAlert && (
                     <div className='mt-4'>
@@ -67,6 +89,27 @@ export const FormRecoverPassword = ({
                         </b>
                     </button>
                 </div>
+
+                <div className="mt-4 text-left bg-honeydew bg-no-repeat bg-padding-box bg-cover bg-center border-2 border-primary-80 rounded-3xs p-4 opacity-100">
+                    <b className="font-bold text-base leading-[22px] tracking-[0.07px] text-primary-title2 text-left opacity-100">
+                        Hagamos que tu cuenta sea segura
+                    </b>
+
+                    <div className="mt-3 mb-3">
+                        <RulesPassword
+                            arrayRules={arrayRules}
+                            confirmPassword={confirmPassword}
+                            flagCorrectPassword={flagCorrectPassword}
+                            password={password}
+                            setFlagCorrectPassword={setFlagCorrectPassword}
+                        />
+                    </div>
+
+                    <b className="font-bold text-base leading-[22px] tracking-[0.07px] text-dimgray-200 text-left underline opacity-100 cursor-pointer">
+                        Más sugerencias para tu contraseña
+                    </b>
+                </div>
+
             </form>
         </>
     )

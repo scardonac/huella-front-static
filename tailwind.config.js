@@ -44,6 +44,7 @@ export default {
           buttonBg1: "#f7f9f7",
           buttonBg2: "#fe5000",
           yellow1: "#F2DE00",
+          error1: "#FF1A1A",
         },
         hover: {
           buttonBg1: "#FFFFFF",

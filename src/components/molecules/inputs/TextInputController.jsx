@@ -10,15 +10,17 @@ const { ViewPassword, HidePassword } = Icons; //Iconos
 
 export const TextInputController = ({
     control,
+    disabled = false,
+    estrict = true,
     hadleOnEnter = () => { },
     label,
     name,
     placeholder = 'Ingrese',
     rules = {},
-    type = 'text',
     styleDiv = 'flex flex-col w-2/4',
+    styleInput = 'bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200 px-3 py-2',
     styleLabel = 'text-left text-gray-600 font-normal leading-6 text-base opacity-100',
-    styleInput = 'bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200 px-3 py-2'
+    type = 'text',
 }) => {
 
     const [showPassword, setShowPassword] = useState(false);
@@ -34,9 +36,10 @@ export const TextInputController = ({
                     <div className="relative">
                         <input
                             {...field}
-                            className={styleInput}
+                            className={`${styleInput} ${error && 'border-red-500'} ${disabled && 'bg-zinc-200'}`}
                             placeholder={placeholder}
                             type={showPassword ? 'text' : type}
+                            disabled={disabled}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
@@ -54,7 +57,7 @@ export const TextInputController = ({
 
                         )}
                     </div>
-                    {error && <CustomAlert message={error.message} type="error" />}
+                    {(error && estrict) && <CustomAlert message={error.message} type="error" />}
                 </div>
             )}
         />

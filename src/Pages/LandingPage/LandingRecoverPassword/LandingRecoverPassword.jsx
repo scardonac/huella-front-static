@@ -1,13 +1,13 @@
 //Dependencies
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-//Routes
-import { paths } from "../../../routes/paths";
+import { useNavigate } from 'react-router-dom';
 //Components
 import { CompletionForgotPassword } from '../../../components/tamplates/login/CompletionForgotPassword';
 import { FormRecoverPassword } from '../../../components/tamplates/login/FormRecoverPassword';
 import { LandingHeader } from '../../../components/organisms/header/LandingHeader';
+//Routes
+import { paths } from "../../../routes/paths";
 //Redux
 import { useAppDispatch } from '../../../redux/store';
 //Actions
@@ -20,17 +20,16 @@ const { ImgBannerRecoverPassword, Logocarbonlytic } = Imagenes; // importa las i
 export const LandingRecoverPassword = () => {
 
     const navigate = useNavigate(); // hook para navegar entre páginas
-    const dispatch = useAppDispatch(); // hook para ejecutar acciones de redux
 
     const [textAlert, setTextAlert] = useState(null); // estado para mostrar mensajes de error
     const [tab, setTab] = useState(1); // estado para cambiar entre pestañas
 
-    const defaultValues = {
+    const defaultValues = { // valores por defecto del formulario
         password: '',
         passwordConfirm: '',
     };
 
-    const {
+    const { // hook para controlar el formulario
         clearErrors,
         control,
         formState: { },
@@ -39,7 +38,7 @@ export const LandingRecoverPassword = () => {
         watch,
     } = useForm({ defaultValues });
 
-    const dataForm = watch();
+    const dataForm = watch(); // obtiene los datos del formulario
 
     // función para enviar el formulario
     const onSubmit = async () => {
@@ -93,8 +92,8 @@ export const LandingRecoverPassword = () => {
                             control={control}
                             handleSubmit={handleSubmit}
                             onSubmit={onSubmit}
-                            setTab={setTab}
                             textAlert={textAlert}
+                            watch={watch}
                         />
                     )}
                     {tab === 2 && (
