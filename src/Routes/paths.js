@@ -13,4 +13,5 @@ export const paths = {
     PRECIOS: "/precios",
     RECOVERPASSWORD: "/recover-password",
     RECOVERPASSWORDCOMPLETION: "/recover-password-completion",
+    REGISTER: "/register",
 }

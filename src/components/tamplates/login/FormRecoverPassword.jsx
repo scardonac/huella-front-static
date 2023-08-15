@@ -99,7 +99,6 @@ export const FormRecoverPassword = ({
                         <RulesPassword
                             arrayRules={arrayRules}
                             confirmPassword={confirmPassword}
-                            flagCorrectPassword={flagCorrectPassword}
                             password={password}
                             setFlagCorrectPassword={setFlagCorrectPassword}
                         />
