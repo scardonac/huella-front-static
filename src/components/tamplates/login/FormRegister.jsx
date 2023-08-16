@@ -5,6 +5,9 @@ import { CustomAlert } from "../../molecules/customAlert/customAlert"
 import { TextInputController } from "../../molecules/inputs/TextInputController"
 import { Controller } from "react-hook-form";
 import { RulesPassword } from "../../molecules/rulesPassword/RulesPassword";
+//Data
+import { arrayRulesPassword } from "../../../Data";
+import CheckboxController from "../../molecules/checkbox/CheckboxController";
 
 export const FormRegister = ({
     control,
@@ -19,30 +22,6 @@ export const FormRegister = ({
 
     const password = watch('password'); // obtiene el valor del input password
     const confirmPassword = watch('confirmPassword'); // obtiene el valor del input confirmPassword
-
-    // Protocolo de contraseña
-    const arrayRules = [
-        {
-            text: 'Mínimo 12 caracteres',
-            valid: password.length >= 12
-        },
-        {
-            text: 'Un número (0-9)',
-            valid: /^(?=.*[0-9])/.test(password)
-        },
-        {
-            text: 'Una mayúscula (A-Z)',
-            valid: /^(?=.*[A-Z])/.test(password)
-        },
-        {
-            text: 'Una minúscula (a-z)',
-            valid: /^(?=.*[a-z])/.test(password)
-        },
-        {
-            text: 'Un caracter especial o símbolo (%-#)',
-            valid: /^(?=.*[\W_])/.test(password)
-        },
-    ]
 
     const recaptchaRef = useRef();
 
@@ -205,7 +184,7 @@ export const FormRegister = ({
 
                 <div className="mt-3 mb-3">
                     <RulesPassword
-                        arrayRules={arrayRules}
+                        arrayRulesPassword={arrayRulesPassword(password)}
                         confirmPassword={confirmPassword}
                         password={password}
                         setFlagCorrectPassword={setFlagCorrectPassword}
@@ -230,7 +209,7 @@ export const FormRegister = ({
                     sitekey="Your client site key"
                 />
             </div>
-            <div className="flex justify-center items-center w-full mt-3">
+            {/* <div className="flex justify-center items-center w-full mt-3">
                 <Controller
                     name="checkbox"
                     control={control}
@@ -245,6 +224,12 @@ export const FormRegister = ({
                             <span className="text-base leading-[26px] font-sora tracking-[0.08px] text-forestGray opacity-100" >Acepta el uso de datos personales y acuerdos de confidencialidad</span>
                         </label>
                     )}
+                />
+            </div> */}
+
+            <div className="flex justify-center items-center w-4/5 mt-3">
+                <CheckboxController
+                    control={control}
                 />
             </div>
 

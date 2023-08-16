@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const RulesPassword = ({
-    arrayRules,
+    arrayRulesPassword,
     confirmPassword,
     password,
     setFlagCorrectPassword,
@@ -15,7 +15,7 @@ export const RulesPassword = ({
     // valida las reglas de la contraseña
     useEffect(() => {
         // valida que todas las reglas de la contraseña sean correctas
-        const passwordCorrectAll = arrayRules.every((rule) => validatePassword(rule.valid));
+        const passwordCorrectAll = arrayRulesPassword.every((rule) => validatePassword(rule.valid));
 
         if (passwordCorrectAll) { // si todas las reglas son correctas, muestra el mensaje de contraseña correcta
             setIsCorrectPassword(true);
@@ -27,7 +27,7 @@ export const RulesPassword = ({
             }, 1000);
             return () => clearTimeout(timeoutId); // limpia el timeout al desmontar el componente
         }
-    }, [arrayRules, password, confirmPassword, setFlagCorrectPassword]); // se ejecuta cada vez que cambia el valor de las reglas de la contraseña, la contraseña o la confirmación de la contraseña
+    }, [arrayRulesPassword, password, confirmPassword, setFlagCorrectPassword]); // se ejecuta cada vez que cambia el valor de las reglas de la contraseña, la contraseña o la confirmación de la contraseña
 
     const getPasswordMatchMessage = () => {
         if (password === confirmPassword) {
@@ -63,7 +63,7 @@ export const RulesPassword = ({
                     {getPasswordMatchMessage()}
                 </h1>
             ) : ( // si la contraseña es incorrecta, muestra los mensajes de las reglas de la contraseña
-                arrayRules.map(renderRuleMessage)
+                arrayRulesPassword.map(renderRuleMessage)
             )}
         </>
     );

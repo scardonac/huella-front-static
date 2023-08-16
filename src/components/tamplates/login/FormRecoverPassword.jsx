@@ -4,6 +4,8 @@ import { useState } from "react";
 import { CustomAlert } from "../../molecules/customAlert/customAlert"
 import { RulesPassword } from "../../molecules/rulesPassword/RulesPassword";
 import { TextInputController } from "../../molecules/inputs/TextInputController"
+//Data
+import { arrayRulesPassword } from "../../../Data";
 
 export const FormRecoverPassword = ({
     control,
@@ -17,30 +19,6 @@ export const FormRecoverPassword = ({
 
     const password = watch('password'); // obtiene el valor del input password
     const confirmPassword = watch('confirmPassword'); // obtiene el valor del input confirmPassword
-
-    // Protocolo de contraseña
-    const arrayRules = [
-        {
-            text: 'Mínimo 12 caracteres',
-            valid: password.length >= 12
-        },
-        {
-            text: 'Un número (0-9)',
-            valid: /^(?=.*[0-9])/.test(password)
-        },
-        {
-            text: 'Una mayúscula (A-Z)',
-            valid: /^(?=.*[A-Z])/.test(password)
-        },
-        {
-            text: 'Una minúscula (a-z)',
-            valid: /^(?=.*[a-z])/.test(password)
-        },
-        {
-            text: 'Un caracter especial o símbolo (%-#)',
-            valid: /^(?=.*[\W_])/.test(password)
-        },
-    ]
 
     return (
         <>
@@ -97,7 +75,7 @@ export const FormRecoverPassword = ({
 
                     <div className="mt-3 mb-3">
                         <RulesPassword
-                            arrayRules={arrayRules}
+                            arrayRulesPassword={arrayRulesPassword(password)}
                             confirmPassword={confirmPassword}
                             password={password}
                             setFlagCorrectPassword={setFlagCorrectPassword}

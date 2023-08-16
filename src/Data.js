@@ -627,3 +627,28 @@ export const dataGraphDos = [
         "color": "bg-teal-900"
     },
 ];
+
+// Protocolo de contraseña
+export const arrayRulesPassword = (password) => [
+    {
+        text: 'Mínimo 12 caracteres',
+        valid: password.length >= 12
+    },
+    {
+        text: 'Un número (0-9)',
+        valid: /^(?=.*[0-9])/.test(password)
+    },
+    {
+        text: 'Una mayúscula (A-Z)',
+        valid: /^(?=.*[A-Z])/.test(password)
+    },
+    {
+        text: 'Una minúscula (a-z)',
+        valid: /^(?=.*[a-z])/.test(password)
+    },
+    {
+        text: 'Un caracter especial o símbolo (%-#)',
+        valid: /^(?=.*[\W_])/.test(password)
+    },
+]
+

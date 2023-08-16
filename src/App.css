@@ -55,3 +55,51 @@ input[type="radio"]:checked+label {
 input[type="radio"]:checked+label::after {
   display: block;
 }
+
+/* Estilo para el contenedor del checkbox */
+/* .checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font: normal normal normal 16px/22px Sora;
+  letter-spacing: 0.08px;
+  color: #363F40;
+  opacity: 1;
+} */
+
+/* Estilo del checkbox oculto */
+/* .checkbox-input {
+  display: none;
+} */
+
+/* Estilo para el checkbox no seleccionado */
+/* .checkmark {
+  width: 20px;
+  height: 20px;
+  background: var(--grayscale-10) 0% 0% no-repeat padding-box;
+  border: 1.5px solid var(--grayscale-20);
+  border-radius: 3px;
+  opacity: 1;
+  margin-right: 10px;
+} */
+
+/* Estilo para el checkbox seleccionado */
+/* .checkbox-input:checked + .checkmark {
+  background: var(--primary-80) 0% 0% no-repeat padding-box;
+  border: 2px solid #0E555C;
+} */
+
+/* Estilo para el label */
+/* .checkbox-container label {
+  font: normal normal normal 16px/22px Sora;
+  letter-spacing: 0.08px;
+  color: #363F40;
+  text-align: left;
+  opacity: 1;
+} */
+
+/* Cambio de color del label al pasar el cursor */
+/* .checkbox-container:hover label {
+  color: #555;
+} */
