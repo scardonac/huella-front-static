@@ -103,3 +103,50 @@ input[type="radio"]:checked+label::after {
 /* .checkbox-container:hover label {
   color: #555;
 } */
+
+/* Estilo base para ocultar el checkbox */
+.checkbox {
+  display: none;
+}
+
+/* Estilo para el contenedor del checkbox personalizado */
+.custom-checkbox {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px; /* Espacio para el ícono de verificación */
+  cursor: pointer;
+}
+
+/* Estilo para el ícono de verificación */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #F0F2F2;
+  border: 1px solid #C6CCCB;
+  border-radius: 4px;
+}
+
+/* Estilo cuando el checkbox está seleccionado */
+.checkbox:checked + .custom-checkbox .checkmark {
+  background-color: #0E555C;
+  border-color: #0E555C;
+}
+
+/* Estilo para el texto del checkbox */
+.custom-checkbox span {
+  margin-left: 30px; /* Espacio para el ícono de verificación */
+}
+
+/* Estilo cuando se pasa el mouse sobre el contenedor */
+.custom-checkbox:hover .checkmark {
+  background-color: #D5E2E3;
+}
+
+/* Estilo cuando se pasa el mouse sobre el texto */
+.custom-checkbox:hover span {
+  text-decoration: underline;
+  color: #0E555C;
+}

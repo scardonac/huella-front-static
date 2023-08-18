@@ -23,10 +23,10 @@ import { Line } from "react-chartjs-2";
         Filler,
     );
 
-var beneficios = [0, 56, 20,36];
-var meses = ["Enero", "Febrero", "Marzo"];
+let beneficios = [0, 56, 20,36];
+let meses = ["Enero", "Febrero", "Marzo"];
 
-    var midata = {
+    let midata = {
         labels: meses,
         datasets: [
             {
@@ -43,7 +43,7 @@ var meses = ["Enero", "Febrero", "Marzo"];
             },
         ],
     };
-var misoptions = {
+let misoptions = {
 };
     export default function LinesChart() {
         return <Line data={midata} options={misoptions}/>

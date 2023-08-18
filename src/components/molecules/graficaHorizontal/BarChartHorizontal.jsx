@@ -23,10 +23,10 @@ import { Bar } from "react-chartjs-2";
         Filler
     );
 
-var Emisiones= [24.45, 0.30, 42.18];
-var Años = ["", "", ""];
+let Emisiones= [24.45, 0.30, 42.18];
+let Años = ["", "", ""];
 
-    var midata = {
+    let midata = {
         labels: Años,
         datasets: [
             {
@@ -42,7 +42,7 @@ var Años = ["", "", ""];
         ],
     };
 
-var misoptions = {
+let misoptions = {
     responsive: true,
     indexAxis: 'y',
     animation: false,

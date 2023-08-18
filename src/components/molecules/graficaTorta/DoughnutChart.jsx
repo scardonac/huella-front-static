@@ -5,12 +5,12 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-var options = {
+let options = {
     responsive: true,
     maintainAspectRatio: false,
 };
 
-var data = {
+let data = {
     labels: ['Fugas en equipos de control de incendios', 'Viajes de negocio', 'Desplazamiento de empleados y Teletrabajo', 'Equipos IT', 'WTT Viajes', 'Alojamiento', 'Disposición de residuos'],
     datasets: [
         {
