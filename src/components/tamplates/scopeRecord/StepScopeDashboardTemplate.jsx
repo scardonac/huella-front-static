@@ -107,7 +107,7 @@ export const StepScopeDashboardTemplate = () => {
 
     // Utiliza el hook useNavigate para realizar la navegación a la URL deseada
     // y pasar el estado como parte de la navegación.
-    navigate(url, {state});
+    navigate(url, { state });
   }
 
   return (

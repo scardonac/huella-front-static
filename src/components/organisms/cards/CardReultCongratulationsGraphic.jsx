@@ -5,7 +5,7 @@ import { Imagenes } from "../../../assets/Images/ImagenProvider";
 // Components
 const { Grupo2572 } = Imagenes;
 
-export default function CardReultCongratulationsGraphic() {
+export default function CardReultCongratulationsGraphic({ state }) {
     return (
         <div className="CardReultCongratulationsGraphic relative bg-white w-full h-[372px] col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-4 rounded-3xs shadow-[0px_10px_10px_rgba(0,_0,_0,_0.05)] flex flex-wrap border-[1px] border-solid border-darkcyan">
             <div className="Felicidades col-span-12 flex flex-col justify-center items-center rounded-3xs box-border w-full h-[372px] text-darkslategray-100 ">

@@ -1,10 +1,67 @@
-import BarChartHorizontal from '../../molecules/graficaHorizontal/BarChartHorizontal'
 //Assets
 import { Imagenes } from "../../../assets/Images/ImagenProvider";
 // Components
+import BarChart from '../../molecules/graphics/BarChart';
+
 const { Grupo2561 } = Imagenes;
 
-const CardResultGraphicComparison = ({ dataGraph }) => {
+const CardResultGraphicComparison = ({ state }) => {
+
+  const Emisiones = [
+    state?.partial_results?.Results_CO2[1],
+    state?.partial_results?.Results_CO2[2],
+    state?.partial_results?.Results_CO2[3],
+  ];
+  const Años = ["", "", ""];
+
+  const chartData = {
+    labels: Años,
+    datasets: [
+      {
+        label: "Emisiones",
+        data: Emisiones,
+        backgroundColor: [
+          "rgba(77, 153, 127,1)",
+          "rgba(206, 230, 173,1)",
+          "rgba(14, 85, 92,1)"
+        ]
+      }
+    ]
+  };
+
+  const chartOptions = {
+    responsive: true,
+    indexAxis: "y",
+    animation: false,
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    scales: {
+      x: {
+        ticks: { color: "rgba(0, 0, 0)" }
+      }
+    }
+  };
+
+  const dataGraph = [
+    {
+      "name": "Emisiones directas",
+      "value": state?.partial_results?.Results_CO2[1],
+      "color": "bg-emerald-600"
+    },
+    {
+      "name": "Emisiones indirectas",
+      "value": state?.partial_results?.Results_CO2[2],
+      "color": "bg-lime-200"
+    },
+    {
+      "name": "Otras Emisiones indirectas",
+      "value": state?.partial_results?.Results_CO2[3],
+      "color": "bg-teal-900"
+    },
+  ];
 
   return (
     <div className="CardResultGraphicComparison relative bg-white w-full h-[372px] col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-8 rounded-3xs shadow-[0px_10px_10px_rgba(0,_0,_0,_0.05)] p-4 flex flex-wrap">
@@ -37,11 +94,13 @@ const CardResultGraphicComparison = ({ dataGraph }) => {
         ))}
       </div>
       <div className="w-full sm:w-[60%] p-4 relative mt-[5px]">
-          <BarChartHorizontal/>
+
+        <BarChart data={chartData} options={chartOptions} />
+
         <div className="flex justify-between mt-2">
-        <div className="text-start mt-1">
-          tCO2 eq
-        </div>
+          <div className="text-start mt-1">
+            tCO2 eq
+          </div>
         </div>
       </div>
 

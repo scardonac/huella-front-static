@@ -1,14 +1,11 @@
 
 // Dependencias
-import DoughnutChart from "../../molecules/graficaTorta/DoughnutChart";
+import DoughnutChart from "../../molecules/graphics/DoughnutChart";
 import { Link } from "react-router-dom";
-// import { Imagenes } from "../../../assets/Images/ImagenProvider";
-// Components
-// const { Grupo2592 } = Imagenes;
 
 const CardResultGraphicCategories = ({ dataGraph }) => {
   return (
-    <div className="CardResultGraphicCategories mt-5 grid grid-cols-12 gap-4 w-90 h-[513px] rounded-3xs bg-white text-left text-lg text-gray-100 font-sora">
+    <div className="CardResultGraphicCategories mt-5 grid grid-cols-12 gap-4 w-90 h-[563px] rounded-3xs bg-white text-left text-lg text-gray-100 font-sora">
       <div className="GraficaTortas col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-6 text-white p-4 flex flex-col justify-center items-center">
         <div className="ml-10 mt-4 mb-4 w-full text-[inherit] tracking-[0.09px] font-bold font-inherit text-darkslategray-100 flex justify-start">
           <h4>
