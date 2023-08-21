@@ -56,97 +56,32 @@ input[type="radio"]:checked+label::after {
   display: block;
 }
 
-/* Estilo para el contenedor del checkbox */
-/* .checkbox-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font: normal normal normal 16px/22px Sora;
-  letter-spacing: 0.08px;
-  color: #363F40;
-  opacity: 1;
-} */
-
-/* Estilo del checkbox oculto */
-/* .checkbox-input {
-  display: none;
-} */
-
-/* Estilo para el checkbox no seleccionado */
-/* .checkmark {
-  width: 20px;
-  height: 20px;
-  background: var(--grayscale-10) 0% 0% no-repeat padding-box;
-  border: 1.5px solid var(--grayscale-20);
-  border-radius: 3px;
-  opacity: 1;
-  margin-right: 10px;
-} */
-
-/* Estilo para el checkbox seleccionado */
-/* .checkbox-input:checked + .checkmark {
-  background: var(--primary-80) 0% 0% no-repeat padding-box;
-  border: 2px solid #0E555C;
-} */
-
-/* Estilo para el label */
-/* .checkbox-container label {
-  font: normal normal normal 16px/22px Sora;
-  letter-spacing: 0.08px;
-  color: #363F40;
-  text-align: left;
-  opacity: 1;
-} */
-
-/* Cambio de color del label al pasar el cursor */
-/* .checkbox-container:hover label {
-  color: #555;
-} */
-
-/* Estilo base para ocultar el checkbox */
-.checkbox {
-  display: none;
-}
-
-/* Estilo para el contenedor del checkbox personalizado */
+/*  */
 .custom-checkbox {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   display: inline-block;
   position: relative;
-  padding-left: 35px; /* Espacio para el ícono de verificación */
+  margin-right: 8px;
   cursor: pointer;
 }
 
-/* Estilo para el ícono de verificación */
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 20px;
-  width: 20px;
-  background-color: #F0F2F2;
-  border: 1px solid #C6CCCB;
-  border-radius: 4px;
-}
-
-/* Estilo cuando el checkbox está seleccionado */
-.checkbox:checked + .custom-checkbox .checkmark {
+.custom-checkbox.checked {
   background-color: #0E555C;
   border-color: #0E555C;
 }
 
-/* Estilo para el texto del checkbox */
-.custom-checkbox span {
-  margin-left: 30px; /* Espacio para el ícono de verificación */
-}
-
-/* Estilo cuando se pasa el mouse sobre el contenedor */
-.custom-checkbox:hover .checkmark {
-  background-color: #D5E2E3;
-}
-
-/* Estilo cuando se pasa el mouse sobre el texto */
-.custom-checkbox:hover span {
-  text-decoration: underline;
-  color: #0E555C;
+.custom-checkbox.checked::after {
+  content: '\2713';
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

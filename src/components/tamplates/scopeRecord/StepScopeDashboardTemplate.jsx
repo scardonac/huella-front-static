@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 //Components
 import { ButtonTypeA } from '../../../components/molecules/buttons/buttonTypeA/ButtonTypeA';
 import { EmisionesTable } from '../../../components/organisms/tables/EmisionesTable';
-import { ModalAddCategories } from '../../organisms/modals/ModalAddCategories';
+import { ModalAddCategories } from '../../organisms/modalContents/ModalAddCategories';
 import { SedeInfo } from '../../../components/organisms/sedeInfo/SedeInfo';
 import Modal from '../../organisms/modals/Modal';
 //Assets

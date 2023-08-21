@@ -6,16 +6,11 @@ import { useForm } from 'react-hook-form';
 import { paths } from "../../../routes/paths";
 //Components
 import { FormRegister } from '../../../components/tamplates/login/FormRegister';
-import { FormForgotPassword } from '../../../components/tamplates/login/FormForgotPassword';
 import { LandingHeader } from '../../../components/organisms/header/LandingHeader';
 //Redux
 import { useAppDispatch } from '../../../redux/store';
 //Actions
-import { LogingAction } from '../../../redux/actions/AuthAction';
-//Assets
-import { Imagenes } from "../../../assets/Images/ImagenProvider";
-
-const { ImgBanner, Logocarbonlytic } = Imagenes; // importa las imágenes
+import { RegisterAction } from '../../../redux/actions/AuthAction';
 
 export const LandingRegister = () => {
 
@@ -26,8 +21,15 @@ export const LandingRegister = () => {
     const [tab, setTab] = useState(1); // estado para cambiar entre pestañas
 
     const defaultValues = {
+        agriculturalProjects: false,
+        carbonFootprint: false,
+        companyName: '',
+        confidentiality: false,
+        confirmPassword: '',
         email: '',
+        nit: '',
         password: '',
+        powerProjects: false,
     };
 
     const {
@@ -37,37 +39,33 @@ export const LandingRegister = () => {
         handleSubmit,
         reset,
         watch,
+        setValue,
+        formState: { errors },
     } = useForm({ defaultValues });
 
     const dataForm = watch();
 
     // función para enviar el formulario
     const onSubmit = async () => {
-        tab === 1 ? await onLogIn() : await onRecoveryPassword()
+        console.log('dataForm', dataForm);
+        await onRegister()
+        await navigate(paths.REGISTERCOMPLETION)
     }
 
-    const onRecoveryPassword = async () => {
+    const onRegister = async () => {
         // Lógica de autenticación, verificación de credenciales, etc.
-        const user = {
-            email: dataForm.email,
-            // otros datos del usuario
-        };
-        // const { error, verify } = await dispatch(LogingAction(user, navigate)); // envía la acción de login con el usuario autenticado
-        // error && setTextAlert(error); // si hay un error, muestra el mensaje
-        // verify && navigate(paths.APPHOME); // si el usuario está autenticado, redirige a la página de inicio
-        console.log('Recuperar contraseña', user)
-        setTab(3)
-    }
+        let dataRegister = {
+            user: {
+                "nombre": dataForm.companyName,
+                "contraseña": dataForm.password,
+                "email": dataForm.email,
+                "empresa": dataForm.companyName,
+                "carbon_agro": dataForm.agriculturalProjects,
+            },
+            empresa_nit: dataForm.nit,
+        }
 
-    const onLogIn = async () => {
-        // Lógica de autenticación, verificación de credenciales, etc.
-        const user = {
-            email: dataForm.email,
-            contraseña: dataForm.password,
-            // otros datos del usuario
-        };
-
-        const { error, verify } = await dispatch(LogingAction(user, navigate)); // envía la acción de login con el usuario autenticado
+        const { error, verify } = await dispatch(RegisterAction(dataRegister, navigate)); // envía la acción de login con el usuario autenticado
         error && setTextAlert(error); // si hay un error, muestra el mensaje
         verify && navigate(paths.APPHOME); // si el usuario está autenticado, redirige a la página de inicio
     }
@@ -78,21 +76,23 @@ export const LandingRegister = () => {
         setTextAlert(null) // limpia los mensajes de error
     }, [tab])
 
+    console.log(errors, 'errors00000000');
     return (
-        <div className="LandingRegister w-full h-auto flex flex-col bg-blancoMisty">
+        <div className="LandingRegister w-full h-auto flex flex-col bg-blancoMisty justify-start items-center">
             <LandingHeader />
-            <div className="flex flex-col items-center justify-center w-full h-full p-5">
-                <div className='flex w-1/2 justify-center items-center bg-white border-2 border-primary-80 rounded-3xs p-4 mt-20 opacity-100'>
-                    <FormRegister
-                        control={control}
-                        handleSubmit={handleSubmit}
-                        onSubmit={onSubmit}
-                        setTab={setTab}
-                        textAlert={textAlert}
-                        watch={watch}
-                    />
-                </div>
+            <div className="flex justify-center items-center bg-white border-2 border-primary-80 rounded-3xs p-4 mt-24 opacity-100 w-2/4">
+                <FormRegister
+                    control={control}
+                    errors={errors}
+                    handleSubmit={handleSubmit}
+                    onSubmit={onSubmit}
+                    setTab={setTab}
+                    setValue={setValue}
+                    textAlert={textAlert}
+                    watch={watch}
+                />
             </div>
+
         </div>
     );
 };

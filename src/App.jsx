@@ -4,6 +4,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import { AppPageLayout } from './components/organisms/layout/AppPageLayout'
 import { CompensationPage } from './pages/AppPage/AppCompensation/CompensationPage';
 import { CompletionRecoverPassword } from './Pages/LandingPage/LandingRecoverPassword/CompletionRecoverPassword';
+import { CompletionRegistration } from './components/tamplates/login/CompletionRegistration';
 import { HomePage } from './pages/AppPage/AppHomePage/HomePage';
 import { LandingContact } from './Pages/LandingPage/LandingContact/LandingContact';
 import { LandingHome } from './Pages/LandingPage/LandingHome/LandingHome';
@@ -34,6 +35,7 @@ export const App = () => {
             <Route path={paths.PRECIOS} element={<LandingPrecios />} />
             <Route path={paths.RECOVERPASSWORD} element={<LandingRecoverPassword />} />
             <Route path={paths.RECOVERPASSWORDCOMPLETION} element={<CompletionRecoverPassword />} />
+            <Route path={paths.REGISTERCOMPLETION} element={<CompletionRegistration />} />
             <Route path={paths.REGISTER} element={<LandingRegister />} />
             <Route path={paths.APP} element={<AppPageLayout />}>
               <Route path={paths.APPCOMPENSACION} element={<CompensationPage />} />

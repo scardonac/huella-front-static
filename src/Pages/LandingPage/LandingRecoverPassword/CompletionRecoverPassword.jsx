@@ -83,17 +83,9 @@ export const CompletionRecoverPassword = () => {
             <LandingHeader />
             <div className='flex gap-2'>
                 <div className='w-full mt-14 flex flex-col justify-center items-center bg-fuchsia-400'>
-                    <CompletionForgotPassword
-                        control={control}
-                        handleSubmit={handleSubmit}
-                        onSubmit={onSubmit}
-                        setTab={setTab}
-                        tab={tab}
-                        textAlert={textAlert}
-                    />
+                    <CompletionForgotPassword />
                 </div>
             </div>
         </div>
-
     );
 };

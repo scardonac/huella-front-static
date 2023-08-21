@@ -23,19 +23,13 @@ export const LogingAction = (user, navigate) => {
 }
 
 // Acción para el registro
-export const RegisterAction = (username, email, password) => {
-
-    let dataRegister = {
-        nombre: "Juan",
-        contraseña: "testpassword",
-        email: "testuser@example.com",
-        empresa: "INTEIA"
-    }
+export const RegisterAction = (dataRegister) => {
 
     return async (dispatch) => {
         try {
             const response = await axiosClient.post('/users', dataRegister);
             // dispatch(loginCase(response));
+            return { error: null, verify: true };
         } catch (error) {
             console.log(error);
         }

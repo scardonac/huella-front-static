@@ -14,4 +14,5 @@ export const paths = {
     RECOVERPASSWORD: "/recover-password",
     RECOVERPASSWORDCOMPLETION: "/recover-password-completion",
     REGISTER: "/register",
+    REGISTERCOMPLETION: "/register-completion",
 }

@@ -1,6 +1,9 @@
+//Dependencies
+import { useNavigate } from "react-router-dom";
 //Components
 import { CustomAlert } from "../../molecules/customAlert/customAlert"
 import { TextInputController } from "../../molecules/inputs/TextInputController"
+import { paths } from "../../../routes/paths";
 
 export const FormLogIn = ({
     control,
@@ -9,6 +12,9 @@ export const FormLogIn = ({
     setTab,
     textAlert,
 }) => {
+
+    const navigate = useNavigate(); // hook para navegar entre páginas
+
     return (
         <>
             <b className="fzp text-21xl tracking-[0.4px] leading-[50px] text-darkslategray text-left text-primary-title1">
@@ -62,9 +68,13 @@ export const FormLogIn = ({
                         </b>
                     </button>
                 </div>
-                <h1 className="mt-4 cursor-pointer text-base [text-decoration:underline] tracking-[0.08px] leading-[22px] font-sora text-gray-100 text-center">
+                <button
+                    type="button"
+                    className="mt-4 border-none p-0 bg-transparent text-base [text-decoration:underline] tracking-[0.08px] leading-[22px] font-sora text-gray-100 text-center"
+                    onClick={() => navigate(paths.REGISTER)}
+                >
                     ¿Aún no tienes una cuenta? Regístrate
-                </h1>
+                </button>
             </form>
         </>
     )

@@ -1,4 +1,5 @@
 // Modal.jsx
+import { useEffect } from "react";
 import { Icons } from "../../../assets/icons/IconProvider";
 import { ButtonTypeA } from "../../molecules/buttons/buttonTypeA/ButtonTypeA";
 
@@ -10,15 +11,31 @@ const Modal = ({
     buttons = false,
     children,
     closeModal,
+    height = "380px",
     isOpen,
     labelButtonFist = "Cancelar",
     labelButtonSecond = "Subir datos",
 }) => {
+
+    useEffect(() => {
+        const handleKeyPress = (event) => {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyPress);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [closeModal]);
+
     return (
         <>
             {isOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-midnightBlue font-Sora">
-                    <div className="bg-white w-2/5 h-[380px] rounded-lg p-8">
+                    <div className={`bg-white w-2/5 h-${height} rounded-lg p-8`}>
                         <div className="flex justify-end">
                             <img
                                 className="w- h-4 cursor-pointer border border-gray-300 rounded-full opacity-50 hover:opacity-100"

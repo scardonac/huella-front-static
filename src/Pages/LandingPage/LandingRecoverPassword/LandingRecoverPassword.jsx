@@ -96,16 +96,6 @@ export const LandingRecoverPassword = () => {
                             watch={watch}
                         />
                     )}
-                    {tab === 2 && (
-                        <CompletionForgotPassword
-                            control={control}
-                            handleSubmit={handleSubmit}
-                            onSubmit={onSubmit}
-                            setTab={setTab}
-                            tab={tab}
-                            textAlert={textAlert}
-                        />
-                    )}
                 </div>
             </div>
             <img

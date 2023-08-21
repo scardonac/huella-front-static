@@ -54,6 +54,7 @@ export default {
         blancoMisty: "#F7F9F7",
         midnightBlue: '#20262666',
         forestGray: '#363F40',
+        lightHaze: '#F0F2F2',
         darkslategray: {
           "100": "#0e555c",
           "200": "#363f40",

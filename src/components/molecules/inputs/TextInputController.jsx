@@ -21,6 +21,7 @@ export const TextInputController = ({
     styleInput = 'bg-white rounded-8xs box-border w-full h-[37px] border-[0.5px] border-solid border-dimgray-200 px-3 py-2',
     styleLabel = 'text-left text-gray-600 font-normal leading-6 text-base opacity-100',
     type = 'text',
+    inputProps = {}
 }) => {
 
     const [showPassword, setShowPassword] = useState(false);
@@ -36,6 +37,7 @@ export const TextInputController = ({
                     <div className="relative">
                         <input
                             {...field}
+                            {...inputProps} // Propiedades personalizadas
                             className={`${styleInput} ${error && 'border-red-500'} ${disabled && 'bg-zinc-200'}`}
                             placeholder={placeholder}
                             type={showPassword ? 'text' : type}
