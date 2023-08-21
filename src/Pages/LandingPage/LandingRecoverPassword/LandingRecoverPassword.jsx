@@ -11,7 +11,7 @@ import { paths } from "../../../routes/paths";
 //Redux
 import { useAppDispatch } from '../../../redux/store';
 //Actions
-import { LogingAction } from '../../../redux/actions/AuthAction';
+import { LoginAction } from '../../../redux/actions/AuthAction';
 //Assets
 import { Imagenes } from "../../../assets/Images/ImagenProvider";
 
@@ -51,7 +51,7 @@ export const LandingRecoverPassword = () => {
             email: dataForm.email,
             // otros datos del usuario
         };
-        // const { error, verify } = await dispatch(LogingAction(user, navigate)); // envía la acción de login con el usuario autenticado
+        // const { error, verify } = await dispatch(LoginAction(user, navigate)); // envía la acción de login con el usuario autenticado
         // error && setTextAlert(error); // si hay un error, muestra el mensaje
         // verify && navigate(paths.APPHOME); // si el usuario está autenticado, redirige a la página de inicio
         console.log('Recuperar contraseña', user)
@@ -66,7 +66,7 @@ export const LandingRecoverPassword = () => {
             // otros datos del usuario
         };
         navigate(paths.RECOVERPASSWORDCOMPLETION)
-        // const { error, verify } = await dispatch(LogingAction(user, navigate)); // envía la acción de login con el usuario autenticado
+        // const { error, verify } = await dispatch(LoginAction(user, navigate)); // envía la acción de login con el usuario autenticado
         // error && setTextAlert(error); // si hay un error, muestra el mensaje
         // verify && navigate(paths.APPHOME); // si el usuario está autenticado, redirige a la página de inicio
     }

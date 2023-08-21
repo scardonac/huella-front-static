@@ -81,6 +81,8 @@ export const FormRegister = ({
         }
     }
 
+    console.log(textAlert, 'textAlert')
+
     return (
         // <form onSubmit={handleSubmit(onSubmitWithReCAPTCHA)} className="w-8/12">
         <form onSubmit={handleSubmit(habdleOnEnter)} className="w-8/12">

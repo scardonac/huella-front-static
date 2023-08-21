@@ -5,7 +5,7 @@ import { loginCase } from "../slices/AuthSlice";
 
 
 // Acción para el login
-export const LogingAction = (user, navigate) => {
+export const LoginAction = (user, navigate) => {
 
     return async (dispatch) => {
         try {
@@ -23,7 +23,7 @@ export const LogingAction = (user, navigate) => {
 }
 
 // Acción para el registro
-export const RegisterAction = (dataRegister) => {
+export const SignUpAction = (dataRegister) => {
 
     return async (dispatch) => {
         try {
@@ -32,6 +32,8 @@ export const RegisterAction = (dataRegister) => {
             return { error: null, verify: true };
         } catch (error) {
             console.log(error);
+            let TextError = error.response.data.message === 'empresa already exists' ? 'El NIT ingresado ya está registrado, intenta con otro' : 'Algo salió mal, intenta nuevamente';
+            return { error: TextError, verify: false };
         }
     }
 }

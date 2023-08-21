@@ -10,7 +10,7 @@ import { LandingHeader } from '../../../components/organisms/header/LandingHeade
 //Redux
 import { useAppDispatch } from '../../../redux/store';
 //Actions
-import { RegisterAction } from '../../../redux/actions/AuthAction';
+import { SignUpAction } from '../../../redux/actions/AuthAction';
 
 export const LandingRegister = () => {
 
@@ -49,7 +49,7 @@ export const LandingRegister = () => {
     const onSubmit = async () => {
         console.log('dataForm', dataForm);
         await onRegister()
-        await navigate(paths.REGISTERCOMPLETION)
+        // await navigate(paths.REGISTERCOMPLETION)
     }
 
     const onRegister = async () => {
@@ -65,9 +65,9 @@ export const LandingRegister = () => {
             empresa_nit: dataForm.nit,
         }
 
-        const { error, verify } = await dispatch(RegisterAction(dataRegister, navigate)); // envía la acción de login con el usuario autenticado
+        const { error, verify } = await dispatch(SignUpAction(dataRegister, navigate)); // envía la acción de login con el usuario autenticado
         error && setTextAlert(error); // si hay un error, muestra el mensaje
-        verify && navigate(paths.APPHOME); // si el usuario está autenticado, redirige a la página de inicio
+        verify && navigate(paths.REGISTERCOMPLETION); // si el usuario está autenticado, redirige a la página de inicio
     }
 
     useEffect(() => {
