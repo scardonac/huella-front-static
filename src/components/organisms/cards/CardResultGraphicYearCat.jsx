@@ -1,7 +1,23 @@
 //Dependencies
+import { useSelector } from "react-redux";
+//Components
 import BarChart from "../../molecules/graphics/BarChart";
+import { useState } from "react";
 
 export default function CardResultGraphicYearCat() {
+
+    // Obtenemos el estado del registro del store de Redux
+    const { register: { directEmissions, inDirectEmissions, otherEmissions, firstStep, centerCurrent, calculations } } = useSelector(state => state.persistedData);
+
+    const ArrayEmisiones = [...directEmissions, ...inDirectEmissions, ...otherEmissions];
+
+    const [selectedCategoria, setSelectedCategoria] = useState(""); // Estado para guardar la categoría seleccionada
+
+    const handleCategoriaChange = (event) => {
+        setSelectedCategoria(event.target.value); // Actualizar el estado con el valor seleccionado
+    };
+
+    console.log(selectedCategoria, 'selectedCategoria')
 
     const Emisiones = [0.00, 0.35, 0.15, 0.25, 0.20, 0.30, 0.10, 0.05, 0.40];
     const Años = ["2021", "2022", "2023"];
@@ -49,9 +65,25 @@ export default function CardResultGraphicYearCat() {
                     Selecciona una categoría
                 </label>
                 <div className="absolute w-[calc(100%_-_138px)] top-[calc(50%_-_170px)] right-[98px] left-[40px]">
-                    <select className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option>Plantas generadoras de energía</option>
+                    {/* <select className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <option>Selecciona una categoría</option>
+                        {ArrayEmisiones.map((emision, index) => (
+                            <option key={index} value={emision.id}>{emision.nombre}</option>
+                        ))}
+                    </select> */}
+                    <select
+                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        onChange={handleCategoriaChange} // Agregar el evento onChange para capturar la selección
+                        value={selectedCategoria} // Asignar el valor del estado al componente select
+                    >
+                        <option>Selecciona una categoría</option>
+                        {ArrayEmisiones.map((emision, index) => (
+                            <option key={index} value={emision.id}>
+                                {emision.nombre}
+                            </option>
+                        ))}
                     </select>
+
                     <div className="absolute top-[50px] left-[0.5px] text-smi tracking-[0.07px]">
                         tCO2 eq
                     </div>

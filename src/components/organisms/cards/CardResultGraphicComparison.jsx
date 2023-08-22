@@ -12,10 +12,9 @@ const CardResultGraphicComparison = ({ state }) => {
     state?.partial_results?.Results_CO2[2],
     state?.partial_results?.Results_CO2[3],
   ];
-  const Años = ["", "", ""];
-
+  
   const chartData = {
-    labels: Años,
+    labels: ["Alcance 1", "Alcance 2", "Alcance 3"],
     datasets: [
       {
         label: "Emisiones",
@@ -31,11 +30,12 @@ const CardResultGraphicComparison = ({ state }) => {
 
   const chartOptions = {
     responsive: true,
+    // maintainAspectRatio: false,
     indexAxis: "y",
     animation: false,
     plugins: {
       legend: {
-        display: false
+        display: false, // Oculta la leyenda en la parte superior
       }
     },
     scales: {

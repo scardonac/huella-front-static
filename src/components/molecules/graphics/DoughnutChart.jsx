@@ -1,44 +1,48 @@
-import React from "react";
-import { Chart as ChartJS, ArcElement,Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-// import {DoughnutController} from "chart.js"
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-let options = {
-    responsive: true,
-    maintainAspectRatio: false,
-};
-
-let data = {
-    labels: ['Fugas en equipos de control de incendios', 'Viajes de negocio', 'Desplazamiento de empleados y Teletrabajo', 'Equipos IT', 'WTT Viajes', 'Alojamiento', 'Disposición de residuos'],
-    datasets: [
-        {
-            label: 'Emisiones',
-            data: [24.32, 20.35, 8.49, 5.33, 3.16, 2.23, 1.07, 1.98],
-            backgroundColor: [
-                'rgba(14, 85, 92, 1)',
-                'rgba(0, 39, 68, 1)',
-                'rgba(230, 80, 11, 1)',
-                'rgba(77, 153, 127, 1)',
-                'rgba(0, 92, 153, 1)',
-                'rgba(254, 80, 0, 1)',
-                'rgba(206, 230, 173, 1)'
-            ],
-            borderColor: [
-                'rgba(14, 85, 92, 1)',
-                'rgba(0, 39, 68, 1)',
-                'rgba(230, 80, 11, 1)',
-                'rgba(77, 153, 127, 1)',
-                'rgba(0, 92, 153, 1)',
-                'rgba(254, 80, 0, 1)',
-                'rgba(206, 230, 173, 1)'
-            ],
-            borderWidth: 1,
-        },
-    ],
-};
-
-export default function DoughnutChart() {
-    return <Doughnut data={data} options={options} />
+function DoughnutChart({ data, options }) {
+    return <Doughnut data={data} options={options} />;
 }
+
+export default DoughnutChart;
+
+// function DoughnutChart({ data, options, legendItems }) {
+//     // Asegúrate de sumar los valores numéricos para mostrarlos en el gráfico
+//     const totalValue = legendItems.reduce((total, item) => total + parseFloat(item.value.replace(",", ".")), 0);
+
+//     const updatedData = {
+//         ...data,
+//         datasets: data.datasets.map(dataset => ({
+//             ...dataset,
+//             data: legendItems.map(item => parseFloat(item.value.replace(",", "."))),
+//         })),
+//     };
+
+//     return (
+//         <div className="doughnut-chart-container">
+//             <div className="doughnut-chart">
+//                 <Doughnut data={updatedData} options={options} />
+//             </div>
+//             <div className="legend">
+//                 {legendItems.map(({ name, value, color }, index) => (
+//                     <div className="legend-item" key={index}>
+//                         <span className={`legend-color ${color}`} />
+//                         <span className="legend-text text-cyan-950">{name}</span>
+//                         <span className="legend-value">{value}</span>
+//                     </div>
+//                 ))}
+//                 <div className="legend-item">
+//                     <span className="legend-color" style={{ background: 'transparent' }} />
+//                     <span className="legend-text">Total</span>
+//                     <span className="legend-value">{totalValue.toFixed(2)}</span>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
+
+// export default DoughnutChart;
+

@@ -9,7 +9,7 @@ import CardResultGraphicYear from '../../../components/organisms/cards/CardResul
 import CardResultGraphicYearCat from '../../../components/organisms/cards/CardResultGraphicYearCat'
 import CardReultCongratulationsGraphic from '../../../components/organisms/cards/CardReultCongratulationsGraphic'
 //Data
-import { dataGraph, dataGraphDos } from '../../../Data'
+import { dataGraph } from '../../../Data'
 //Assets
 import { Icons } from '../../../assets/icons/IconProvider'
 import { Imagenes } from '../../../assets//Images/ImagenProvider'

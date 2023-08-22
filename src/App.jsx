@@ -22,6 +22,7 @@ import { paths } from '../src/routes/paths.js'
 import { AppPageResults, PageCompanyResults, PageCompanyDetailResults } from './Pages/AppPage/AppResultadosPage';
 //Css
 import './App.css'
+import GraphicsTest from './components/molecules/graphics/GraphicsTest';
 
 export const App = () => {
   return (
@@ -37,6 +38,7 @@ export const App = () => {
             <Route path={paths.RECOVERPASSWORDCOMPLETION} element={<CompletionRecoverPassword />} />
             <Route path={paths.REGISTERCOMPLETION} element={<CompletionRegistration />} />
             <Route path={paths.REGISTER} element={<LandingRegister />} />
+            <Route path='/GraphicsTest' element={<GraphicsTest />} />
             <Route path={paths.APP} element={<AppPageLayout />}>
               <Route path={paths.APPCOMPENSACION} element={<CompensationPage />} />
               <Route path={paths.APPHOME} element={<HomePage />} />

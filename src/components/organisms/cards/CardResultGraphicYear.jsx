@@ -35,6 +35,49 @@ export default function CardResultGraphicYear({ state }) {
         }
     };
 
+    // const chartData = {
+    //     labels: ["Group A", "Group B", "Group C"],
+    //     datasets: [
+    //         {
+    //             label: "Dataset 1",
+    //             data: [10, 20, 30],
+    //             backgroundColor: "rgba(75, 192, 192, 0.5)",
+    //         },
+    //         {
+    //             label: "Dataset 2",
+    //             data: [15, 25, 35],
+    //             backgroundColor: "rgba(255, 99, 132, 0.5)",
+    //         },
+    //         {
+    //             label: "Dataset 3",
+    //             data: [5, 10, 15],
+    //             backgroundColor: "rgba(54, 162, 235, 0.5)",
+    //         },
+    //     ],
+    // };
+
+    // const chartOptions = {
+    //     plugins: {
+    //         title: {
+    //             display: false,
+    //             // text: "Chart.js Stacked Bar Chart with Groups",
+    //         },
+    //         legend: {
+    //             display: false
+    //         }
+    //     },
+    //     responsive: true,
+    //     scales: {
+    //         x: {
+    //             stacked: true,
+    //         },
+    //         y: {
+    //             stacked: true,
+    //         },
+    //     },
+    // };
+
+
     return (
         <div className="CardResultGraphicYear relative bg-white w-full h-[420px] col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-6 rounded-3xs shadow-[0px_10px_10px_rgba(0,_0,_0,_0.05)] p-4 flex flex-wrap">
 
