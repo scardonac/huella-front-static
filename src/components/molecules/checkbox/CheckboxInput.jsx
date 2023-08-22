@@ -14,7 +14,7 @@ export const CheckboxInput = ({ label, name, setValue, styleDivTrue = '', styleD
                 className={`custom-checkbox ${isCheckedState ? 'checked' : ''}`}
                 onClick={toggleCheckbox}
             ></div>
-            <label className={styleLabel} onClick={toggleCheckbox}>
+            <label className={styleLabel} onClick={toggleCheckbox} htmlFor={name}>
                 {label}
             </label>
         </div>
