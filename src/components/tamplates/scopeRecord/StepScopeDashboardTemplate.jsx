@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 //Components
 import { ButtonTypeA } from '../../../components/molecules/buttons/buttonTypeA/ButtonTypeA';
 import { EmisionesTable } from '../../../components/organisms/tables/EmisionesTable';
-import { ModalAddCategories } from '../../organisms/modals/ModalAddCategories';
+import { ModalAddCategories } from '../../organisms/modalContents/ModalAddCategories';
 import { SedeInfo } from '../../../components/organisms/sedeInfo/SedeInfo';
 import Modal from '../../organisms/modals/Modal';
 //Assets
@@ -23,7 +23,7 @@ export const StepScopeDashboardTemplate = () => {
 
   const dispatch = useAppDispatch(); // Dispatch de acciones de Redux
 
-  const navigate = useNavigate(); //Inicializamos el hook de navegación
+  const navigate = useNavigate(); // hook para navegar entre páginas //Inicializamos el hook de navegación
 
   // Obtenemos el estado del registro del store de Redux
   const { register: { directEmissions, inDirectEmissions, otherEmissions, firstStep, centerCurrent, calculations } } = useSelector(state => state.persistedData);
@@ -107,7 +107,7 @@ export const StepScopeDashboardTemplate = () => {
 
     // Utiliza el hook useNavigate para realizar la navegación a la URL deseada
     // y pasar el estado como parte de la navegación.
-    navigate(url, {state});
+    navigate(url, { state });
   }
 
   return (

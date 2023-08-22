@@ -4,9 +4,9 @@ import { useNavigate, useLocation } from 'react-router-dom'
 //Components
 import { SectionComponent } from '../sectionComponent/SectionComponent'
 //Data
-import { secciones } from '../../../Backend'
+import { secciones } from '../../../Data'
 //Assets
-import { Imagenes } from "../../../assets/Images/wImagenProvider";
+import { Imagenes } from "../../../assets/Images/ImagenProvider";
 // Components
 const { Grupo2522 } = Imagenes;
 //Styles

@@ -11,4 +11,8 @@ export const paths = {
     HOME: "/",
     LOGIN: "/login",
     PRECIOS: "/precios",
+    RECOVERPASSWORD: "/recover-password",
+    RECOVERPASSWORDCOMPLETION: "/recover-password-completion",
+    REGISTER: "/register",
+    REGISTERCOMPLETION: "/register-completion",
 }

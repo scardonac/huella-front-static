@@ -20,13 +20,14 @@ import { useAppDispatch } from '../../../redux/store';
 
 export const StepIndirectEmissionsTemplate = () => {
 
-  const nav = useNavigate();
-  const dispatch = useAppDispatch();
-  const { goNext } = useContext(NavigateAppContext);
+  const nav = useNavigate(); // hook para navegar entre páginas
+  const dispatch = useAppDispatch(); // hook para ejecutar acciones de redux
 
-  const { register: { thirdStep, inDirectEmissions } } = useSelector(state => state.persistedData);
+  const { goNext } = useContext(NavigateAppContext); // hook para navegar entre páginas
 
-  const [dataEmisionesIndirect, setDataEmisionesIndirect] = useState([])
+  const { register: { thirdStep, inDirectEmissions } } = useSelector(state => state.persistedData); // selector para obtener los datos del registro
+
+  const [dataEmisionesIndirect, setDataEmisionesIndirect] = useState([]) // estado para almacenar las emisiones indirectas
 
   const [defaultValues] = useState({
     categories: [],

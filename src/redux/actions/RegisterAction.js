@@ -4,7 +4,7 @@ import {
     emisionesIndirectasIcons,
     espaciosIcons,
     otrasEmisionesIndirectasIcons
-} from "../../Backend";
+} from "../../Data";
 import axiosClient from "../../config/AxiosClient";
 //Slices
 import {

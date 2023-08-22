@@ -13,7 +13,7 @@ export const WrapReports = ({
     children,
 }) => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // hook para navegar entre páginas
 
     const functionNavigate = () => {
         navigate(navigateTo);

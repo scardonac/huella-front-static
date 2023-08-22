@@ -44,12 +44,17 @@ export default {
           buttonBg1: "#f7f9f7",
           buttonBg2: "#fe5000",
           yellow1: "#F2DE00",
+          error1: "#FF1A1A",
         },
         hover: {
           buttonBg1: "#FFFFFF",
           buttonBg2: "#E6500B",
         },
         white: "#fff",
+        blancoMisty: "#F7F9F7",
+        midnightBlue: '#20262666',
+        forestGray: '#363F40',
+        lightHaze: '#F0F2F2',
         darkslategray: {
           "100": "#0e555c",
           "200": "#363f40",
