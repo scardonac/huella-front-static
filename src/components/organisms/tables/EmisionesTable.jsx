@@ -57,7 +57,7 @@ export const EmisionesTable = ({
                                 <td className="flex px-6 py-8 text-gray-900">
                                     <p className="font-medium text-gray-700">{emision?.nombre}</p>
                                 </td>
-                                <td className="px-6 py-4 text-center">{emision?.value ?? "-"}</td>
+                                <td className="px-6 py-4 text-center">{emision?.value_co2 ?? "-"}</td>
                                 <td className="px-6 py-4">
                                     <StateIndicator state={emision?.status} />
                                 </td>

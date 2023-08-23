@@ -5,7 +5,7 @@ import { ButtonTypeA } from "../../molecules/buttons/buttonTypeA/ButtonTypeA"
 
 export const ButtonGroupReportsU = ({ actionDraft }) => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // hook para navegar entre páginas
 
     return (
         <div className='flex sm:flex-col sm:items-center md:flex-row justify-evenly gap-4 pt-6 w-2/4'>

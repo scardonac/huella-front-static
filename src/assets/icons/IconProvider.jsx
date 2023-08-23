@@ -11,6 +11,7 @@ import DateIcon from "./icon_date.svg"
 import EditIcon from "./icon_edit.svg"
 import EmailIcon from "./icon_email.svg"
 import EmailWhiteIcon from "./icon_email_white.svg"
+import HidePassword from "./icon_hidePassword.svg"
 import HomeIcon from "./icon_home.svg"
 import IconAlert from "./icon_alert.svg"
 import IconAlertWhite from "./icon_alert_white.svg"
@@ -26,6 +27,7 @@ import ResultadosIcon from "./icon_results.svg"
 import SupportIcon from "./icon_support.svg"
 import TrushIcon from "./icon_trush.svg"
 import UserIcon from "./icon_user.svg"
+import ViewPassword from "./icon_viewPassword.svg"
 import YoutubeIcon from "./icon_Youtube.svg"
 
 export const Icons = {
@@ -42,6 +44,7 @@ export const Icons = {
     EditIcon,
     EmailIcon,
     EmailWhiteIcon,
+    HidePassword,
     HomeIcon,
     IconAlert,
     IconAlertWhite,
@@ -57,5 +60,6 @@ export const Icons = {
     SupportIcon,
     TrushIcon,
     UserIcon,
+    ViewPassword,
     YoutubeIcon,
 }

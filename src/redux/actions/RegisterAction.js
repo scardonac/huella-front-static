@@ -4,7 +4,7 @@ import {
     emisionesIndirectasIcons,
     espaciosIcons,
     otrasEmisionesIndirectasIcons
-} from "../../Backend";
+} from "../../Data";
 import axiosClient from "../../config/AxiosClient";
 //Slices
 import {
@@ -189,11 +189,24 @@ export const updateEmissionsAction = (id) => {
     return async (dispatch) => {
         try {
             const { data } = await axiosClient.get(`/render/${id}`);
-            const arrayAllEmisiones = data?.logs_details;
+            const arrayAllEmisiones = data?.logs_details ? data?.logs_details : [];
             const newDataDirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 1), emisionesDirectasIcons); // Mapear las emisiones directas
             const newDataIndirectEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 3), emisionesIndirectasIcons); // Mapear las emisiones indirectas
             const newDataOtherEmissions = mapEmissions(arrayAllEmisiones?.filter((emision) => emision?.tipo === 2), otrasEmisionesIndirectasIcons); // Mapear las otras emisiones
             return { error: null, verify: true, data: { ...data, emissions: [...newDataDirectEmissions, ...newDataIndirectEmissions, ...newDataOtherEmissions] } };
+        } catch (error) {
+            console.log(error);
+            return { error: 'Error al actualizar las emisiones', verify: false, data: null };
+        }
+    }
+}
+
+export const getEmissionsAllAction = () => {
+    return async (dispatch, getState) => {
+        try {
+            const { data } = await axiosClient.get('/render/all');
+            const arrayAllEmisiones = data.resultados_calculos ? data.resultados_calculos : [];
+            return { error: null, verify: true, data: arrayAllEmisiones };
         } catch (error) {
             console.log(error);
             return { error: 'Error al actualizar las emisiones', verify: false, data: null };

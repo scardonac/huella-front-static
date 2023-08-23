@@ -9,7 +9,7 @@ import { Illustrations } from '../../../assets/Illustrations/IllustrationProvide
 //Routes
 import { paths } from '../../../routes/paths'
 //Data
-import { emisionesDirectasDashboardATable, emisionesDirectasDashboardBTable } from '../../../Backend'
+import { emisionesDirectasDashboardATable, emisionesDirectasDashboardBTable } from '../../../Data'
 //Redux
 import { useAppDispatch } from '../../../redux/store'
 //Slice

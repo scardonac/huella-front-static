@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './ButtonTypeA.css'
 
 export const ButtonTypeA = ({
     text = "defaultText",

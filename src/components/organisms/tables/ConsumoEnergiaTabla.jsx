@@ -4,7 +4,7 @@ import { Icons } from "../../../assets/icons/IconProvider";
 const { AddDocumentIcon, Arrow1Icon } = Icons;
 
 //Data
-import { meses } from '../../../Backend';
+import { meses } from '../../../Data';
 
 export const ConsumoEnergiaTabla = ({
     handleValue = null,

@@ -3,17 +3,17 @@ import { useNavigate, useLocation, Link } from 'react-router-dom'
 //Routes
 import { paths } from '../../../routes/paths'
 //Assets
-import { Imagenes } from "../../../assets/Images/wImagenProvider";
+import { Imagenes } from "../../../assets/Images/ImagenProvider";
 // Components
 const { Grupo2522 } = Imagenes;
 
 export const LandingHeader = () => {
-    const { pathname } = useLocation()
 
-    const navigate = useNavigate()
+    const { pathname } = useLocation() // hook para obtener la ruta actual
+    const navigate = useNavigate() // hook para navegar entre páginas
 
     return (
-        <nav className="LandingHeader fixed z-50 w-full bg-darkslategray-100 h-20 min-w-[1500px] lg:min-w-[1200px] flex justify-center items-center gap-64" id="N">
+        <nav className="LandingHeader fixed z-50 w-full bg-darkslategray-100 p-3 flex justify-around items-center" id="N">
             <div className="">
                 <img className='' src={Grupo2522} />
             </div>
@@ -28,13 +28,19 @@ export const LandingHeader = () => {
                     <b className={`text-primary-white1 text-f16 hover:text-primary-green2  ${pathname === "/precios" ? "underline font-bold text-primary-green2" : ""}`}>Precios</b>
                 </Link>
             </div>
-            <div className='flex gap-8'>
+            <div className='flex gap-4'>
                 <button
                     onClick={() => navigate(paths.LOGIN)}
                     className={`text-primary-white1 text-f16 border px-4 py-2 rounded-lg border-primary-white1 ${pathname === "/login" ? " font-bold text-primary-green2" : ""}`}
-                >Iniciar sesión
+                >
+                    Iniciar sesión
                 </button>
-                <button className='text-primary-title1 font-bold text-f16 border px-4 py-2 rounded-lg bg-primary-green2'>Regístrate</button>
+                <button
+                    onClick={() => navigate(paths.REGISTER)}
+                    className='text-primary-title1 font-bold text-f16 border px-4 py-2 rounded-lg bg-primary-green2'
+                >
+                    Regístrate
+                </button>
             </div>
         </nav>
     )
