@@ -1,16 +1,23 @@
+//Dependencies
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../../../redux/store";
+//Components
 import BarChart from "../../molecules/graphics/BarChart";
+//Redux
+import { getEmissionsAllAction } from "../../../redux/actions/RegisterAction";
 
 export default function CardResultGraphicYear({ state }) {
 
-    const Emisiones = [0.00, 0.35, 0.15, 0.25, 0.20, 0.30, 0.10, 0.05, 0.40];
-    const Años = ["2021", "2022", "2023"];
+    const dispatch = useAppDispatch(); // Dispatch de acciones de Redux
+
+    const [emissionsAll, setEmissionsAll] = useState([]); // Estado para guardar las emisiones de la base de datos
 
     const chartData = {
-        labels: Años,
+        labels: emissionsAll.labels,
         datasets: [
             {
                 label: "Emisiones",
-                data: Emisiones,
+                data: emissionsAll.value,
                 backgroundColor: [
                     "rgba(206, 230, 173,1)",
                     "rgba(14, 85, 92,1)",
@@ -35,48 +42,22 @@ export default function CardResultGraphicYear({ state }) {
         }
     };
 
-    // const chartData = {
-    //     labels: ["Group A", "Group B", "Group C"],
-    //     datasets: [
-    //         {
-    //             label: "Dataset 1",
-    //             data: [10, 20, 30],
-    //             backgroundColor: "rgba(75, 192, 192, 0.5)",
-    //         },
-    //         {
-    //             label: "Dataset 2",
-    //             data: [15, 25, 35],
-    //             backgroundColor: "rgba(255, 99, 132, 0.5)",
-    //         },
-    //         {
-    //             label: "Dataset 3",
-    //             data: [5, 10, 15],
-    //             backgroundColor: "rgba(54, 162, 235, 0.5)",
-    //         },
-    //     ],
-    // };
+    const getEmisionsAll = async () => {
+        const { data, error, verify } = await dispatch(getEmissionsAllAction()); //Obtiene las emisiones de la base de datos
+        if (!verify) return;
+        // const dataDetail = data.flatMap((calculo) => calculo?.calculo_details?.valor_co2); // obtiene los logs de la base de datos
+        setEmissionsAll({ // Actualiza el estado con las emisiones filtradas
+            labels: data.flatMap((calculo) => `${calculo?.calculo_details?.inicio_reg?.replace(/-/g, "/")}-${calculo?.calculo_details?.final_reg?.replace(/-/g, "/")}`),
+            value: data.flatMap((calculo) => calculo?.calculo_details?.valor_co2),
+        })
+    };
 
-    // const chartOptions = {
-    //     plugins: {
-    //         title: {
-    //             display: false,
-    //             // text: "Chart.js Stacked Bar Chart with Groups",
-    //         },
-    //         legend: {
-    //             display: false
-    //         }
-    //     },
-    //     responsive: true,
-    //     scales: {
-    //         x: {
-    //             stacked: true,
-    //         },
-    //         y: {
-    //             stacked: true,
-    //         },
-    //     },
-    // };
+    // Obtiene las emisiones de la base de datos.
+    useEffect(() => {
+        getEmisionsAll();
+    }, []);
 
+    console.log(emissionsAll)
 
     return (
         <div className="CardResultGraphicYear relative bg-white w-full h-[420px] col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-6 rounded-3xs shadow-[0px_10px_10px_rgba(0,_0,_0,_0.05)] p-4 flex flex-wrap">

@@ -47,25 +47,25 @@ export const LandingRegister = () => {
 
     // función para enviar el formulario
     const onSubmit = async () => {
-        console.log('dataForm', dataForm);
         await onRegister()
-        // await navigate(paths.REGISTERCOMPLETION)
     }
 
     const onRegister = async () => {
         // Lógica de autenticación, verificación de credenciales, etc.
         let dataRegister = {
             user: {
-                "nombre": dataForm.companyName,
-                "contraseña": dataForm.password,
-                "email": dataForm.email,
-                "empresa": dataForm.companyName,
-                "carbon_agro": dataForm.agriculturalProjects,
+                nombre: dataForm.companyName,
+                contraseña: dataForm.password,
+                email: dataForm.email,
+                empresa: dataForm.companyName,
+                carbon_agro: dataForm.agriculturalProjects,
+                carbon_energia: dataForm.powerProjects,
+                carbon_huella: dataForm.carbonFootprint,
             },
             empresa_nit: dataForm.nit,
         }
 
-        const { error, verify } = await dispatch(SignUpAction(dataRegister, navigate)); // envía la acción de login con el usuario autenticado
+        const { error, verify } = await dispatch(SignUpAction(dataRegister)); // envía la acción de login con el usuario autenticado
         error && setTextAlert(error); // si hay un error, muestra el mensaje
         verify && navigate(paths.REGISTERCOMPLETION); // si el usuario está autenticado, redirige a la página de inicio
     }
@@ -76,7 +76,6 @@ export const LandingRegister = () => {
         setTextAlert(null) // limpia los mensajes de error
     }, [tab])
 
-    console.log(errors, 'errors00000000');
     return (
         <div className="LandingRegister w-full h-auto flex flex-col bg-blancoMisty justify-start items-center">
             <LandingHeader />

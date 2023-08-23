@@ -1,21 +1,38 @@
 // import React from 'react';
 // import { render } from '@testing-library/react';
-// import { CustomAlert } from '../../../src/components/molecules/customAlert/CustomAlert';
+// import { CustomAlert } from '../../../src/components/molecules/customAlert/customAlert';
 
 // describe('Pruebas en <CustomAlert />', () => {
-//     test('renders CustomAlert with correct message and type', () => {
-//         // Arrange
-//         const message = 'This is a test message';
-//         const type = 'success';
+//     // test('renders CustomAlert with correct message and type', () => {
+//     //     // Arrange
+//     //     const message = 'This is a test message';
+//     //     const type = 'success';
 
-//         // Act
-//         const { getByText } = render(<CustomAlert message={message} type={type} />);
+//     //     // Act
+//     //     const { getByText } = render(<CustomAlert message={message} type={type} />);
 
-//         // Assert
-//         const alertMessage = getByText(message);
-//         expect(alertMessage).toBeInTheDocument();
+//     //     // Assert
+//     //     const alertMessage = getByText(message);
+//     //     expect(alertMessage).toBeInTheDocument();
 
-//         const alertContainer = alertMessage.parentElement;
-//         expect(alertContainer).toHaveClass('bg-green-600');
-//     });
+//     //     const alertContainer = alertMessage.parentElement;
+//     //     expect(alertContainer).toHaveClass('bg-green-600');
+//     // });
+//     // test('renders CustomAlert with correct message and type', () => {
+//     //     // Arrange
+//     //     const message = 'This is a test message';
+//     //     const type = 'error';
+
+//     //     // Act
+//     //     const { getByText } = render(<CustomAlert message={message} type={type} />);
+
+//     //     // Assert
+//     //     const alertMessage = getByText(message);
+//     //     expect(alertMessage).toBeInTheDocument();
+
+//     //     const alertContainer = alertMessage.parentElement;
+//     //     expect(alertContainer).toHaveClass('bg-red-600');
+//     // });
 // });
+
+

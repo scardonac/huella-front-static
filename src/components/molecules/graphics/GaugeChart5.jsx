@@ -7,7 +7,7 @@ const { Planetgrown } = Illustrations; // Illustrations
 const { Grupo2572, Goalshome } = Imagenes; // Images
 
 export const GaugeChart5 = () => {
-    const [series, setSeries] = useState([50]);
+    const [series, setSeries] = useState([60]);
     const [options] = useState({
         chart: {
             height: 350,

@@ -66,7 +66,6 @@ export const StepScopeDashboardTemplate = () => {
   const updateSelectedEmisions = async () => {
     const { data, error, verify } = await dispatch(updateEmissionsAction(calculations.id)); //Actualizamos las emisiones seleccionadas.
     if (!verify) return;
-    console.log(data, 'data')
     setEmissionsScope(data.emissions)
     setDataRender(data)
   };

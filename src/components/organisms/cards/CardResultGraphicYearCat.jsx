@@ -1,10 +1,15 @@
 //Dependencies
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../../../redux/store";
 import { useSelector } from "react-redux";
 //Components
 import BarChart from "../../molecules/graphics/BarChart";
-import { useState } from "react";
+//Redux
+import { getEmissionsAllAction } from "../../../redux/actions/RegisterAction";
 
 export default function CardResultGraphicYearCat() {
+
+    const dispatch = useAppDispatch(); // Dispatch de acciones de Redux
 
     // Obtenemos el estado del registro del store de Redux
     const { register: { directEmissions, inDirectEmissions, otherEmissions, firstStep, centerCurrent, calculations } } = useSelector(state => state.persistedData);
@@ -12,23 +17,21 @@ export default function CardResultGraphicYearCat() {
     const ArrayEmisiones = [...directEmissions, ...inDirectEmissions, ...otherEmissions];
 
     const [selectedCategoria, setSelectedCategoria] = useState(""); // Estado para guardar la categoría seleccionada
+    const [emissionsAll, setEmissionsAll] = useState([]); // Estado para guardar las emisiones de la base de datos
+    const [data, setData] = useState(null); // Estado para guardar las emisiones de la base de datos
 
     const handleCategoriaChange = (event) => {
         setSelectedCategoria(event.target.value); // Actualizar el estado con el valor seleccionado
     };
 
-    console.log(selectedCategoria, 'selectedCategoria')
-
-    const Emisiones = [0.00, 0.35, 0.15, 0.25, 0.20, 0.30, 0.10, 0.05, 0.40];
-    const Años = ["2021", "2022", "2023"];
 
     const chartData = {
-        labels: Años,
+        labels: emissionsAll.label,
         datasets: [
             {
                 Title: "Emisiones por año",
                 label: 'Emisiones',
-                data: Emisiones,
+                data: emissionsAll.value,
                 backgroundColor: [
                     'rgba(206, 230, 173,1)',
                     'rgba(14, 85, 92,1)',
@@ -54,6 +57,28 @@ export default function CardResultGraphicYearCat() {
         }
     };
 
+    const getEmisionsAll = async () => {
+        const { data: resp, error, verify } = await dispatch(getEmissionsAllAction()); //Obtiene las emisiones de la base de datos
+        if (!verify) return;
+        setData(resp);
+    };
+
+    // Obtiene las emisiones de la base de datos.
+    useEffect(() => {
+        getEmisionsAll();
+    }, []);
+
+    useEffect(() => {
+        if (!data) return; // Si no hay datos, no hace nada
+        const dataLog = data.flatMap((calculo) => calculo?.logs_details); // obtiene los logs de la base de datos
+        const dataFilter = dataLog.filter((log) => log?.categoria_insumo === selectedCategoria); // Filtra las emisiones por la categoría seleccionada y retorna el resultado);
+        setEmissionsAll({ // Actualiza el estado con las emisiones filtradas
+            label: dataFilter?.flatMap((emision) => emision?.nombre),
+            value: dataFilter?.flatMap((emision) => emision.value_co2)
+        })
+
+    }, [selectedCategoria, data]);
+
     return (
         <div className="CardResultGraphicYearCat relative bg-white w-full h-[535px] col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-6 rounded-3xs shadow-[0px_10px_10px_rgba(0,_0,_0,_0.05)] p-4 flex flex-wrap">
 
@@ -65,12 +90,6 @@ export default function CardResultGraphicYearCat() {
                     Selecciona una categoría
                 </label>
                 <div className="absolute w-[calc(100%_-_138px)] top-[calc(50%_-_170px)] right-[98px] left-[40px]">
-                    {/* <select className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                        <option>Selecciona una categoría</option>
-                        {ArrayEmisiones.map((emision, index) => (
-                            <option key={index} value={emision.id}>{emision.nombre}</option>
-                        ))}
-                    </select> */}
                     <select
                         className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-[0.5px] border-[#627173] bg-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                         onChange={handleCategoriaChange} // Agregar el evento onChange para capturar la selección
@@ -78,7 +97,7 @@ export default function CardResultGraphicYearCat() {
                     >
                         <option>Selecciona una categoría</option>
                         {ArrayEmisiones.map((emision, index) => (
-                            <option key={index} value={emision.id}>
+                            <option key={index} value={emision.categoria_insumo}>
                                 {emision.nombre}
                             </option>
                         ))}

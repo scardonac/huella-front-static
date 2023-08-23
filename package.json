@@ -41,7 +41,6 @@
     "@babel/preset-react": "^7.22.5",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/react": "^14.0.0",
-    "@types/jest": "^27.4.1",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
