@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pruebas en <CustomAlert /> Debe renderizarse correctamente 1`] = `
+<body>
+  <div>
+    <div
+      class="bg-green-600 rounded h-[28px] flex items-center mt-1 whitespace-normal w-fit p-2"
+    >
+      <img
+        alt="Icono de alerta"
+        src="IconAlertWhite"
+      />
+      <p
+        class="ml-1 text-white text-left text-base leading-5 tracking-tighter font-normal opacity-100"
+      >
+        Test
+      </p>
+    </div>
+  </div>
+</body>
+`;

@@ -1,38 +1,19 @@
-// import React from 'react';
-// import { render } from '@testing-library/react';
-// import { CustomAlert } from '../../../src/components/molecules/customAlert/customAlert';
+import React from 'react';
+import { render } from '@testing-library/react';
+import { CustomAlert } from '../../../src/components/molecules/customAlert/customAlert';
+//mocks svg
+jest.mock('../../../src/assets/icons/IconProvider', () => ({
+    Icons: {
+        IconAlertWhite: 'IconAlertWhite',
+    }
+}));
+describe('Pruebas en <CustomAlert />', () => {
 
-// describe('Pruebas en <CustomAlert />', () => {
-//     // test('renders CustomAlert with correct message and type', () => {
-//     //     // Arrange
-//     //     const message = 'This is a test message';
-//     //     const type = 'success';
+    test('Debe renderizarse correctamente', () => {
+        const { baseElement } = render(<CustomAlert message="Test" type="success" />);
+        expect(baseElement).toMatchSnapshot();
+    });
 
-//     //     // Act
-//     //     const { getByText } = render(<CustomAlert message={message} type={type} />);
-
-//     //     // Assert
-//     //     const alertMessage = getByText(message);
-//     //     expect(alertMessage).toBeInTheDocument();
-
-//     //     const alertContainer = alertMessage.parentElement;
-//     //     expect(alertContainer).toHaveClass('bg-green-600');
-//     // });
-//     // test('renders CustomAlert with correct message and type', () => {
-//     //     // Arrange
-//     //     const message = 'This is a test message';
-//     //     const type = 'error';
-
-//     //     // Act
-//     //     const { getByText } = render(<CustomAlert message={message} type={type} />);
-
-//     //     // Assert
-//     //     const alertMessage = getByText(message);
-//     //     expect(alertMessage).toBeInTheDocument();
-
-//     //     const alertContainer = alertMessage.parentElement;
-//     //     expect(alertContainer).toHaveClass('bg-red-600');
-//     // });
-// });
+});
 
 

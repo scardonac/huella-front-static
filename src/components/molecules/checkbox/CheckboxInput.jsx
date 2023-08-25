@@ -9,10 +9,16 @@ export const CheckboxInput = ({ label, name, setValue, styleDivTrue = '', styleD
     };
 
     return (
-        <div className={isCheckedState ? styleDivTrue : (styleDivFalse || styleDivTrue)}>
+        <div
+            className={isCheckedState ? styleDivTrue : (styleDivFalse || styleDivTrue)}
+            id='checkbox_div'
+            data-testid="checkbox_div"
+        >
             <div
                 className={`custom-checkbox ${isCheckedState ? 'checked' : ''}`}
                 onClick={toggleCheckbox}
+                id='checkbox_input'
+                data-testid="checkbox_input"
             ></div>
             <label className={styleLabel} onClick={toggleCheckbox} htmlFor={name}>
                 {label}

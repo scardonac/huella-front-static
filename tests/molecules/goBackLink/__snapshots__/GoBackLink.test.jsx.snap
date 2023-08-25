@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pruebas en <GoBackLink /> Debe renderizarse correctamente 1`] = `
+<body>
+  <div>
+    <div
+      class="relative"
+      data-testid="go_back_div"
+      id="go_back_div"
+    >
+      <a
+        class="text-primary-gris3 underline absolute cursor-pointer"
+        data-testid="go_back_link"
+        id="go_back_link"
+        style="left: 30px; top: 30px;"
+      >
+        &lt; Volver
+      </a>
+    </div>
+  </div>
+</body>
+`;
