@@ -7,6 +7,7 @@ jest.mock('../../../src/assets/icons/IconProvider', () => ({
     Icons: {
         IconAlertWhite: 'IconAlertWhite',
         AddDocumentBlackIcon: 'AddDocumentBlackIcon',
+        BackArrowIcon: 'BackArrowIcon',
     }
 }));
 jest.mock('../../../src/assets/Illustrations/IllustrationProvider', () => ({
@@ -20,6 +21,12 @@ jest.mock('../../../src/context/NavigateAppContext', () => ({
         goBack: jest.fn(),
     }
 }));
+//mocks react-router-dom
+jest.mock('react-router-dom', () => ({
+    Link: 'Link',
+}));
+//mocks functionNavigate
+const functionNavigate = jest.fn();
 
 describe('Pruebas en <GoBackLink />', () => {
 
@@ -31,7 +38,7 @@ describe('Pruebas en <GoBackLink />', () => {
         };
         jest.spyOn(React, 'useContext').mockReturnValue(mockContext);
 
-        const { baseElement } = render(<GoBackLink />);
+        const { baseElement } = render(<GoBackLink functionNavigate={functionNavigate} />);
         expect(baseElement).toMatchSnapshot();
     });
 

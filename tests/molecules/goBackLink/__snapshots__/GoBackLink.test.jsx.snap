@@ -4,18 +4,27 @@ exports[`Pruebas en <GoBackLink /> Debe renderizarse correctamente 1`] = `
 <body>
   <div>
     <div
-      class="relative"
+      class="flex items-center mb-3 p-2 text-darkgray"
       data-testid="go_back_div"
       id="go_back_div"
     >
-      <a
-        class="text-primary-gris3 underline absolute cursor-pointer"
+      <img
+        alt=""
+        class="mr-1 w-[5.59px] h-[10.05px]"
+        src="BackArrowIcon"
+      />
+      <link
+        class="text-[inherit] relative lg:ml-0 cursor-pointer flex items-center"
         data-testid="go_back_link"
         id="go_back_link"
-        style="left: 30px; top: 30px;"
+        to="#"
       >
-        &lt; Volver
-      </a>
+        <b
+          class="[text-decoration:underline] tracking-[0.08px] leading-[22px]"
+        >
+          Volver
+        </b>
+      </link>
     </div>
   </div>
 </body>

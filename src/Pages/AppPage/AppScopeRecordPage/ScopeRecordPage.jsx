@@ -33,7 +33,7 @@ export const ScopeRecordPage = () => {
     }, [])
 
     return (
-        <div className='AppContentPage w-full h-full bg-yellow-300'>
+        <div className='AppContentPage w-full h-full'>
             {contentPage[actualPage] ? contentPage[actualPage] : null}
         </div>
     )
