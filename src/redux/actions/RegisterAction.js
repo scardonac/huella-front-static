@@ -68,7 +68,7 @@ export const createCenterAction = (dataForm) => {
             if (error.response.data.message == 'centro already exists' && center !== '0') return { error: 'El centro ya existe', verify: false };
             // Despachar una acción de error si es necesario
             dispatch(getCenterCurrentCase(null)); // Actualizar el centro actual a null
-            return { error: 'Error al crear el centro', verify: false };
+            return { error: error.response.data.message, verify: false };
         }
     };
 };
