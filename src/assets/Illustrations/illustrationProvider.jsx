@@ -15,6 +15,7 @@ import aire_Default from '../../assets/Illustrations/Illustrarion_aire_Default.s
 import aire_VFuerte from '../../assets/Illustrations/Illustrarion_aire_VFuerte.svg'
 import aire_VSuave from '../../assets/Illustrations/Illustrarion_aire_VSuave.svg'
 import Balance from '../Illustrations/illustration-pweb-balance.svg'
+import BannerAsesoria from '../../assets/Illustrations/img_banner_asesoria.png'
 import beginRegister from '../../assets/Illustrations/Illustration_beginRegister.svg'
 import Bodega_Azul from '../../assets/Illustrations/illustration_Bodega_Azul.svg'
 import Bodega_Default from '../../assets/Illustrations/illustration_Bodega_Default.svg'
@@ -119,6 +120,7 @@ export const Illustrations = {
     aire_VFuerte,
     aire_VSuave,
     Balance,
+    BannerAsesoria,
     beginRegister,
     Bodega_Azul,
     Bodega_Default,

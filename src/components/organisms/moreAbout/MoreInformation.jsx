@@ -4,15 +4,15 @@ import { GoBackLink } from "../../molecules/goBackLink/GoBackLink";
 //Assets
 import { Illustrations } from "../../../assets/Illustrations/IllustrationProvider"
 
-const { Planetgrown } = Illustrations; // importa las imágenes
-export const MoreInformation = ({setMoreInformation}) => {
+const { BannerAsesoria } = Illustrations; // importa las imágenes
+export const MoreInformation = ({ setMoreInformation }) => {
     return (
         <>
-            <GoBackLink 
+            <GoBackLink
                 functionNavigate={() => setMoreInformation(false)}
             />
             <div className="w-full h-full flex flex-col justify-center items-center">
-                <div className="w-2/4 flex  flex-col justify-center gap-5">
+                <div className="w-[45%] flex  flex-col justify-center gap-5">
                     <b className="w-full font-bold text-5xl leading-[45px] tracking-[0.36px] text-primary-title1 text-center opacity-100">
                         Metas
                     </b>
@@ -54,17 +54,19 @@ export const MoreInformation = ({setMoreInformation}) => {
                         <img
                             className="w-full object-cover"
                             alt=""
-                            src={Planetgrown}
+                            src={BannerAsesoria}
                         />
 
-                        {/* Botón */}
-                        <div className="absolute top-1/4 left-2/3 w-[234px]">
+                        <div
+                            className="absolute sm:w-fit sm:top-[5%] md:top-[46%] md:left-[0%] md:w-full  lg:top-[30%] lg:w-[210px] lg:left-[53%] xl:top-[30%] 2xl:top-[45%] 2xl:left-[55%] 2xl:w-[234px]"
+                        >
                             <ButtonTypeA width="100%" text='Solicita una asesoría' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={false} action={() => { }} />
                         </div>
 
-                        {/* Etiqueta */}
-                        <div className="absolute top-[12%] left-[70%] px-2 py-1">
-                            <b className="w-full font-bold text-base leading-[45px] tracking-[0.36px] text-primary-title1 text-start opacity-100">
+                        <div
+                            className="absolute md:hidden lg:block lg:top-[16%] lg:left-[55.8%] px-2 xl:top-[18%] 2xl:top-[31%] 2xl:left-[57%] py-1"
+                        >
+                            <b className="w-full font-bold lg:text-base 2xl:text-lg leading-[45px] tracking-[0.36px] text-primary-title1 text-start opacity-100">
                                 Deseas tener ayuda
                             </b>
                         </div>
