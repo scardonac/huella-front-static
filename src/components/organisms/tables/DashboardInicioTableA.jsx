@@ -8,6 +8,7 @@ import { StateIndicator } from '../stateIndicator/StateIndicator';
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 //Data
 import { emisionesDirectasIcons, emisionesIndirectasIcons, otrasEmisionesIndirectasIcons } from '../../../Data';
+import UnderlineTabs from '../underlineTabs/UnderlineTabs';
 
 export const DashboardInicioTableA = ({
     emissionsEarring = [],
@@ -27,8 +28,15 @@ export const DashboardInicioTableA = ({
 
     return (
         <div className='EmisionesTable mt-8'>
-            <h3 className='mb-2'>{label}</h3>
-            <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md ">
+            <h3 className='mb-2'>Procesos en curso</h3>
+            <UnderlineTabs
+                emissionsEarring={emissionsEarring}
+                thTablea={thTablea}
+                navigationActive={navigationActive}
+                goNext={goNext}
+                dataIcons={dataIcons}
+            />
+            {/* <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md ">
                 <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
                     <thead className="">
                         <tr >
@@ -63,7 +71,7 @@ export const DashboardInicioTableA = ({
                         ))}
                     </tbody>
                 </table>
-            </div>
+            </div> */}
         </div>
     )
 }

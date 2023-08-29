@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 import { Icons } from '../../../assets/icons/IconProvider';
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 
-const { Arrow1Icon, Compensation1Icon, CompensacionIcon } = Icons;
-const { illustration1 } = Illustrations; //Iconos
+const { Arrow1Icon, Compensation1Icon, CompensacionIcon } = Icons; //Icons
+const { illustration1 } = Illustrations; //Illustrations
 
 export default function ListTableResult({ title, subtitle, period, co2, download, empresaId, isLastRow = false }) {
 

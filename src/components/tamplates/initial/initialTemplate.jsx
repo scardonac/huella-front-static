@@ -16,6 +16,7 @@ import { useAppDispatch } from '../../../redux/store'
 import { getCenterCurrentCase } from '../../../redux/slices/RegisterSlice'
 import { useEffect, useState } from 'react'
 import { getEmissionsAllAction } from '../../../redux/actions/RegisterAction'
+import UnderlineTabs from '../../organisms/underlineTabs/UnderlineTabs'
 
 const { office_VSuave } = Illustrations; //Illustrations
 
@@ -43,7 +44,7 @@ export const InitialTemplate = () => {
 
     const thTablea = [
         { label: '', className: 'pl-6 pt-4 font-bold text-darkslategray-200' },
-        { label: 'Categoría GEI', className: 'pl-6 pt-4 font-bold text-darkslategray-200' },
+        { label: 'Categoría GEI', className: 'pl-6 pt-4 font-bold text-darkslategray-200 w-1/3' },
         { label: 'Estado', className: 'pl-6 pt-4 font-bold text-darkslategray-200 text-center' },
         { label: 'Último registro', className: 'pl-6 pt-4 font-bold text-darkslategray-200' },
         { label: '', className: 'pl-6 pr-4 pt-4 font-bold text-darkslategray-200' },
@@ -62,7 +63,6 @@ export const InitialTemplate = () => {
                 iconChecked: 'office_VSuave',
             }
         })
-        console.log(data[data.length - 1], 'data[data.length - 1]')
         const newDataEarring = data[data.length - 1].logs_details.map((log) => {
             let registrationDate = data[data.length - 1].calculo_details?.final_reg?.replace(/-/g, "/");
             return {
@@ -80,7 +80,6 @@ export const InitialTemplate = () => {
         getEmisionsAll();
     }, []);
 
-    console.log(emissionsEarring, 'emissionsEarring')
     return (
         <div className='HomePage bg-primary-gris1 h-full'>
             <div className=' w-[90%] max-w-[1400px] min-w-[1000px] mx-auto pt-10 flex flex-col'>
