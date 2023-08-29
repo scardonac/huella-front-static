@@ -5,6 +5,7 @@ import { NavigateAppContext } from '../../../context/NavigateAppContext';
 //Illustrations & Icons
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 import { Icons } from '../../../assets/icons/IconProvider';
+import { useSelector } from 'react-redux';
 
 const { Arrow1Icon, Compensation1Icon, CompensacionIcon } = Icons; //Icons
 
@@ -15,9 +16,12 @@ export const DashboardInicioTableB = ({
     thTableb = [],
 }) => {
 
-    const { actualPage, setActualPage } = useContext(NavigateAppContext);
+    const { register: { centers } } = useSelector(state => state.persistedData); // selector para obtener los datos del registro
+    const { actualPage, setActualPage } = useContext(NavigateAppContext); //Contexto para navegar entre páginas
 
-    const goNext = () => setActualPage(actualPage + 1);
+    const goNext = () => setActualPage(actualPage + 1); //Función para navegar a la siguiente página
+
+    const filterCenters = (id) => centers.filter((center) => center.id === id)[0]?.nombre; //Función para filtrar los centros de trabajo
 
     return (
         <div className='EmisionesTable mt-8 max-w-[750px]'>
@@ -38,7 +42,7 @@ export const DashboardInicioTableB = ({
                                     <div className='flex items-center gap-3'>
                                         <img className='w-[50px] h-[50px]' src={Illustrations?.[item?.iconChecked]} />
                                         <div>
-                                            <p className='font-bold text-f20 text-darkslategray-200 overflow-x-hidden'>{item?.nameCenter}</p>
+                                            <p className='font-bold text-f20 text-darkslategray-200 overflow-x-hidden'>{filterCenters(item?.id)}</p>
                                             <p className='text-dimgray-200'>{`Medellín`}</p>
                                         </div>
                                     </div>

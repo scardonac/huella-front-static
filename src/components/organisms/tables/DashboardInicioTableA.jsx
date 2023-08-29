@@ -13,7 +13,6 @@ import UnderlineTabs from '../underlineTabs/UnderlineTabs';
 export const DashboardInicioTableA = ({
     emissionsEarring = [],
     thTablea = [],
-    label = "Tipo de Emisiones",
     navigationActive = false,
 }) => {
 

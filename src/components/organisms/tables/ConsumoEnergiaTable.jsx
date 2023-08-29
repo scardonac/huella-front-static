@@ -6,12 +6,12 @@ const { AddDocumentIcon, Arrow1Icon } = Icons;
 //Data
 import { meses } from '../../../Data';
 
-export const ConsumoEnergiaTabla = ({
+export const ConsumoEnergiaTable = ({
     handleValue = null,
     periodos = [...meses]
 }) => {
     return (
-        <div className='ConsumoEnergiaTabla mt-8'>
+        <div className='ConsumoEnergiaTable mt-8'>
             <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md ">
                 <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
                     <thead className="">

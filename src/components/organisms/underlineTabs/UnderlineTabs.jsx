@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Illustrations } from "../../../assets/Illustrations/IllustrationProvider";
 import { StateIndicator } from "../stateIndicator/StateIndicator";
+import { useSelector } from "react-redux";
 
 function UnderlineTabs({
     emissionsEarring = [],
@@ -10,44 +11,12 @@ function UnderlineTabs({
     goNext = null,
     dataIcons = {},
 }) {
-    console.log(emissionsEarring, 'emissionsEarring')
-    const data = [
-        {
-            label: "HTML",
-            value: "html",
-            desc: `It really matters and then like it really doesn't matter...
-      What matters is the people who are sparked by it. And the people 
-      who are like offended by it, it doesn't matter.`,
-        },
-        {
-            label: "React",
-            value: "react",
-            desc: `Because it's about motivating the doers. Because I'm here
-      to follow my dreams and inspire other people to follow their dreams, too.`,
-        },
-        {
-            label: "Vue",
-            value: "vue",
-            desc: `We're not always in the position that we want to be at.
-      We're constantly growing. We're constantly making mistakes...
-      We're constantly trying to express ourselves and actualize our dreams.`,
-        },
-        {
-            label: "Angular",
-            value: "angular",
-            desc: `Because it's about motivating the doers. Because I'm here
-      to follow my dreams and inspire other people to follow their dreams, too.`,
-        },
-        {
-            label: "Svelte",
-            value: "svelte",
-            desc: `We're not always in the position that we want to be at.
-      We're constantly growing. We're constantly making mistakes...
-      We're constantly trying to express ourselves and actualize our dreams.`,
-        },
-    ];
 
-    const [activeTab, setActiveTab] = useState(emissionsEarring[0] ? emissionsEarring[0].categoryName : '');
+    const { register: { centers } } = useSelector(state => state.persistedData); // selector para obtener los datos del registro
+
+    console.log(emissionsEarring, 'emissionsEarring')
+
+    const [activeTab, setActiveTab] = useState(centers[0] ? centers[0].nombre : '');
 
     // useEffect(() => {
     //     if (data.length > 0) {
@@ -57,18 +26,21 @@ function UnderlineTabs({
     //     }
     // }, [data]);
 
+    const filterCenters = (id) => centers.filter((center) => center.id === id)[0]?.nombre; //Función para filtrar los centros de trabajo
+
     console.log(activeTab, 'activeTab')
     return (
         <div>
             <div className="flex border-b border-blue-gray-50">
-                {emissionsEarring.map(({ categoryName, id }) => (
+                {centers.map(({ nombre, id }) => (
                     <div
                         key={id}
-                        onClick={() => setActiveTab(categoryName)}
-                        className={`cursor-pointer p-4 ${activeTab === categoryName ? "text-gray-900 border-b-2 border-primary-title1 opacity-100" : "text-gray-500"
+                        onClick={() => setActiveTab(nombre)}
+                        className={`cursor-pointer p-4 ${activeTab === nombre ? "text-gray-900 border-b-2 border-primary-title1 opacity-100" : "text-gray-500"
                             }`}
                     >
-                        {categoryName}
+                        {/* {filterCenters(id)} */}
+                        {nombre}
                     </div>
                 ))}
             </div>
@@ -97,7 +69,7 @@ function UnderlineTabs({
                                                 className="h-full w-full rounded-lg object-cover object-center"
                                                 src={Illustrations[dataIcons[item?.categoryName].iconChecked]}
                                                 // src={Illustrations.ViajesNegocios_VSuave}
-                                            alt={item?.categoryName}
+                                                alt={item?.categoryName}
                                             />
                                         </div>
                                     </td>

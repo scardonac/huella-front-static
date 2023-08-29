@@ -17,6 +17,8 @@ import { getCenterCurrentCase } from '../../../redux/slices/RegisterSlice'
 import { useEffect, useState } from 'react'
 import { getEmissionsAllAction } from '../../../redux/actions/RegisterAction'
 import UnderlineTabs from '../../organisms/underlineTabs/UnderlineTabs'
+import { AllCenterTable } from '../../organisms/tables/AllCenterTable'
+import GoalsTable from '../../organisms/tables/GoalsTable'
 
 const { office_VSuave } = Illustrations; //Illustrations
 
@@ -57,7 +59,6 @@ export const InitialTemplate = () => {
         const newDataAll = data.map((calculo) => {
             return {
                 id: calculo?.calculo_details?.centro_id,
-                nameCenter: calculo?.calculo_details?.centro_id,
                 registrationDate: `${calculo?.calculo_details?.inicio_reg?.replace(/-/g, "/")}-${calculo?.calculo_details?.final_reg?.replace(/-/g, "/")}`,
                 valor_co2: calculo?.calculo_details?.valor_co2,
                 iconChecked: 'office_VSuave',
@@ -92,11 +93,11 @@ export const InitialTemplate = () => {
                 </div>
                 <div className='ContenedorMetas-Registros flex justify-between gap-8'>
                     <div className='w-full bg-primary-white1 mt-4 rounded-lg px-3'>
-                        <DashboardInicioTableA label='Sier centro de control' emisiones={emisionesDirectasDashboardATable} emissionsEarring={emissionsEarring} thTablea={thTablea} />
+                        <DashboardInicioTableA emisiones={emisionesDirectasDashboardATable} emissionsEarring={emissionsEarring} thTablea={thTablea} />
                         <p className='text-right pt-2 font-bold pr-3 underline underline-offset-2 cursor-pointer'>Ir a Oficinas Sier Medellín</p>
                     </div>
                     <div className='flex flex-col gap-8 justify-between mt-[20px]'>
-                        <div className='w-[400px] h-[264px] bg-primary-title1 rounded-xl p-8'>
+                        {/* <div className='w-[400px] h-[264px] bg-primary-title1 rounded-xl p-8'>
                             <p className='text-primary-white1 text-f18 font-bold mb-4'>Metas</p>
                             <p className='text-primary-white1 text-f18 font-bold mb-2'>Reducción de emisiones</p>
                             <p className='text-primary-white1 text-f18'>Sier centro de control</p>
@@ -104,8 +105,10 @@ export const InitialTemplate = () => {
                             <p className='text-primary-white1 ml-14'>8</p>
                             <div className='w-full h-3 rounded-md bg-primary-white1'><div className='w-1/5 h-3 rounded-md bg-primary-green2'></div></div>
                             <p className='text-primary-white1 text-right'>30 Ton</p>
-                        </div>
-                        <div className='flex justify-center items-center w-[400px] h-[182px] bg-primary-white1 rounded-xl'>
+                        </div> */}
+                        <GoalsTable />
+                        <AllCenterTable />
+                        {/* <div className='flex justify-center items-center w-[400px] h-[182px] bg-primary-white1 rounded-xl'>
                             <div className='flex items-center gap-3'>
                                 <img className='w-[70px] h-[70px]' src={office_VSuave} />
                                 <div>
@@ -113,7 +116,7 @@ export const InitialTemplate = () => {
                                     <p className='text-dimgray-200'>{`Medellín`}</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className='Historial-Calculos w-fit bg-primary-white1 mt-4 rounded-lg px-3 pb-3'>
