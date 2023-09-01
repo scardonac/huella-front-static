@@ -29,7 +29,7 @@ export default function CardResultDetail({ title, subtitle, cantCo2, companyDeta
 
             {!bg && (
                 <div className="self-end">
-                    <Link to={`/app/resultados/empresa/detalle/${companyDetailId}`} className="text-[inherit] relative lg:ml-0 cursor-pointer flex items-center">
+                    <Link to={`/app/results/company/detail/${companyDetailId}`} className="text-[inherit] relative lg:ml-0 cursor-pointer flex items-center">
                         <b className="[text-decoration:underline] tracking-[0.08px] leading-[22px]">
                             Ver detalles
                         </b>

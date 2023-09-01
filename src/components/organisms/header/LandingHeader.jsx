@@ -25,7 +25,7 @@ export const LandingHeader = () => {
                     <b className={`text-primary-white1 text-f16 hover:text-primary-green2  ${pathname === "/contact" ? "underline font-bold text-primary-green2" : ""}`}>Contáctanos</b>
                 </Link>
                 <Link to={paths.PRECIOS}>
-                    <b className={`text-primary-white1 text-f16 hover:text-primary-green2  ${pathname === "/precios" ? "underline font-bold text-primary-green2" : ""}`}>Precios</b>
+                    <b className={`text-primary-white1 text-f16 hover:text-primary-green2  ${pathname === "/prices" ? "underline font-bold text-primary-green2" : ""}`}>Precios</b>
                 </Link>
             </div>
             <div className='flex gap-4'>

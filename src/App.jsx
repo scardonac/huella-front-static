@@ -26,31 +26,29 @@ import GraphicsTest from './components/molecules/graphics/GraphicsTest';
 
 export const App = () => {
   return (
-    <div className='App'>
-      <GlobalContextProvider>
-        <HashRouter>
-          <Routes>
-            <Route path={paths.CONTACT} element={<LandingContact />} />
-            <Route path={paths.HOME} element={<LandingHome />} />
-            <Route path={paths.LOGIN} element={<LandingLogin />} />
-            <Route path={paths.PRECIOS} element={<LandingPrecios />} />
-            <Route path={paths.RECOVERPASSWORD} element={<LandingRecoverPassword />} />
-            <Route path={paths.RECOVERPASSWORDCOMPLETION} element={<CompletionRecoverPassword />} />
-            <Route path={paths.REGISTERCOMPLETION} element={<CompletionRegistration />} />
-            <Route path={paths.REGISTER} element={<LandingRegister />} />
-            <Route path='/GraphicsTest' element={<GraphicsTest />} />
-            <Route path={paths.APP} element={<AppPageLayout />}>
-              <Route path={paths.APPCOMPENSACION} element={<CompensationPage />} />
-              <Route path={paths.APPHOME} element={<HomePage />} />
-              <Route path={paths.APPREGISTROS} element={<ScopeRecordPage />} />
-              <Route path={paths.APPREGISTROSREPORTES} element={<ReportContainer />} />
-              <Route path={paths.APPRESULTADOS} element={<AppPageResults />} />
-              <Route path={paths.APPRESULTADOSEMPRESA} element={<PageCompanyResults />} />
-              <Route path={paths.APPRESULTADOSEMPRESADETALLE} element={<PageCompanyDetailResults />} />
-            </Route>
-          </Routes>
-        </HashRouter>
-      </GlobalContextProvider>
-    </div>
+    <GlobalContextProvider>
+      <HashRouter>
+        <Routes>
+          <Route path={paths.CONTACT} element={<LandingContact />} />
+          <Route path={paths.HOME} element={<LandingHome />} />
+          <Route path={paths.LOGIN} element={<LandingLogin />} />
+          <Route path={paths.PRECIOS} element={<LandingPrecios />} />
+          <Route path={paths.RECOVERPASSWORD} element={<LandingRecoverPassword />} />
+          <Route path={paths.RECOVERPASSWORDCOMPLETION} element={<CompletionRecoverPassword />} />
+          <Route path={paths.REGISTERCOMPLETION} element={<CompletionRegistration />} />
+          <Route path={paths.REGISTER} element={<LandingRegister />} />
+          <Route path='/GraphicsTest' element={<GraphicsTest />} />
+          <Route path={paths.APP} element={<AppPageLayout />}>
+            <Route path={paths.APPCOMPENSACION} element={<CompensationPage />} />
+            <Route path={paths.APPHOME} element={<HomePage />} />
+            <Route path={paths.APPREGISTROS} element={<ScopeRecordPage />} />
+            <Route path={paths.APPREGISTROSREPORTES} element={<ReportContainer />} />
+            <Route path={paths.APPRESULTADOS} element={<AppPageResults />} />
+            <Route path={paths.APPRESULTADOSEMPRESA} element={<PageCompanyResults />} />
+            <Route path={paths.APPRESULTADOSEMPRESADETALLE} element={<PageCompanyDetailResults />} />
+          </Route>
+        </Routes>
+      </HashRouter>
+    </GlobalContextProvider>
   )
 }

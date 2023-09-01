@@ -20,7 +20,7 @@ export const AppPageLayout = () => {
     return (
         <NavigateAppProvider>
             <div className='AppPage flex w-full'>
-                <div className='NavBarLayout w-64'>
+                <div className='NavBarLayout w-60'>
                     <NavBar />
                 </div>
                 <div className='Header&AppContentPageLayout w-full flex flex-col'>

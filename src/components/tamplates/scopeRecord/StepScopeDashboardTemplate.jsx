@@ -68,6 +68,7 @@ export const StepScopeDashboardTemplate = () => {
     if (!verify) return;
     setEmissionsScope(data.emissions)
     setDataRender(data)
+    console.log(data, 'dataRender')
   };
 
   const putSelectedEmisions = async (emisionesToPut) => {
@@ -100,9 +101,16 @@ export const StepScopeDashboardTemplate = () => {
     !centerCurrent && resetPage();
   }, [centerCurrent])
 
-  const handleNavigate = (empresaId, state) => {
+  const handleNavigate = (empresaId, dataState) => {
 
-    const url = `/app/resultados/empresa/${empresaId}`;
+    const url = `/app/results/company/${empresaId}`;
+
+    const state = {
+      ...dataState,
+      centerEmployees: centerCurrent?.numero_de_empleados,
+      nameCenter: centerCurrent?.nombre,
+      registrationDate: `${firstStep?.startDate?.replace(/-/g, "/")} - ${firstStep?.endDate?.replace(/-/g, "/")}`,
+    };
 
     // Utiliza el hook useNavigate para realizar la navegación a la URL deseada
     // y pasar el estado como parte de la navegación.

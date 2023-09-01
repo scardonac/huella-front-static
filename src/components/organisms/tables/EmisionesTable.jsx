@@ -64,7 +64,7 @@ export const EmisionesTable = ({
                                 <td className="px-6 py-4">
                                     {emision.nombre && (
                                         <Link
-                                            to={`/app/registros/reporte/${emision.nombre}`}
+                                            to={`/app/records/report/${emision.nombre}`}
                                             state={{ logId: emision.log_id }} // Pasar el ID como parte del estado
                                             className="text-[inherit] relative lg:ml-0 cursor-pointer flex items-center">
                                             <b className="[text-decoration:underline] tracking-[0.08px] leading-[22px] text-black font-semibold">

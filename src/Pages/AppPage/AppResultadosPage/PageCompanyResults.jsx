@@ -31,7 +31,7 @@ export const PageCompanyResults = () => {
 
     // const { calculo_details, partial_results } = state;
 
-    console.log(state, 'state')
+    console.log(location, 'location')
 
     return (
         <div className="PageCompanyResults flex flex-col items-center bg-whitesmoke-100 w-full min-h-screen text-left text-base text-gray-100 font-sora pb-16">
@@ -54,10 +54,10 @@ export const PageCompanyResults = () => {
                     <img className="w-16 h-16" alt="" src={ImgOficinaazul} />
                     <div className="ml-4">
                         <h4 className="text-xl tracking-[0.1px] leading-[27px] font-bold font-inherit text-darkslategray-200">
-                            {centerCurrent?.nombre}
+                            {state?.nameCenter}
                         </h4>
                         <p className="text-lg tracking-[0.09px] text-dimgray-200">
-                            {firstStep?.startDate?.replace(/-/g, "/")} - {firstStep?.endDate?.replace(/-/g, "/")}
+                            {state?.registrationDate}
                         </p>
                     </div>
                 </div>
@@ -77,7 +77,7 @@ export const PageCompanyResults = () => {
                     Empleados
                 </p>
                 <p className="ml-2 text-lg tracking-[0.09px] font-bold text-darkslategray-200">
-                    {centerCurrent?.numero_de_empleados}
+                    {state?.centerEmployees}
                 </p>
             </div>
 

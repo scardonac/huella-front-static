@@ -6,6 +6,9 @@ import { NavigateAppContext } from '../../../context/NavigateAppContext';
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 import { Icons } from '../../../assets/icons/IconProvider';
 import { useSelector } from 'react-redux';
+import { updateEmissionsAction } from '../../../redux/actions/RegisterAction';
+import { useNavigate } from 'react-router';
+import { useAppDispatch } from '../../../redux/store';
 
 const { Arrow1Icon, Compensation1Icon, CompensacionIcon } = Icons; //Icons
 
@@ -16,17 +19,42 @@ export const DashboardInicioTableB = ({
     thTableb = [],
 }) => {
 
+    const navigate = useNavigate(); // hook para navegar entre páginas
+
+    const dispatch = useAppDispatch(); // Dispatch de acciones de Redux
+
     const { register: { centers } } = useSelector(state => state.persistedData); // selector para obtener los datos del registro
     const { actualPage, setActualPage } = useContext(NavigateAppContext); //Contexto para navegar entre páginas
 
     const goNext = () => setActualPage(actualPage + 1); //Función para navegar a la siguiente página
 
-    const filterCenters = (id) => centers.filter((center) => center.id === id)[0]?.nombre; //Función para filtrar los centros de trabajo
+    const getCalculations = async ({ nameCenter, idCalculo, registrationDate, centerEmployees }) => {
+        const { data, error, verify } = await dispatch(updateEmissionsAction(idCalculo));
+        if (!verify) return;
+        handleNavigate({ nameCenter, registrationDate, centerEmployees }, data)
+    };
 
+    const handleNavigate = ({ nameCenter, registrationDate, centerEmployees }, dataState) => {
+
+        const url = `/app/results/company/${nameCenter}`;
+
+        const state = {
+            ...dataState,
+            centerEmployees,
+            nameCenter: nameCenter,
+            registrationDate,
+        };
+
+        // Utiliza el hook useNavigate para realizar la navegación a la URL deseada
+        // y pasar el estado como parte de la navegación.
+        navigate(url, { state });
+    }
+
+    console.log(dataTable, 'dataTable')
     return (
-        <div className='EmisionesTable mt-8 max-w-[750px]'>
+        <div className='EmisionesTable mt-8'>
             <h3 className='mb-2'>{label}</h3>
-            <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md ">
+            <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md p-3">
                 <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
                     <thead className="">
                         <tr >
@@ -37,13 +65,13 @@ export const DashboardInicioTableB = ({
                     </thead>
                     <tbody className="divide-y divide-lightgray-200">
                         {dataTable.slice(-3).map(item => (
-                            <tr key={item?.id} className="">
+                            <tr key={item?.idCalculo} className="">
                                 <td className="pl-6 py-4">
-                                    <div className='flex items-center gap-3'>
+                                    <div className='flex items-center gap-2'>
                                         <img className='w-[50px] h-[50px]' src={Illustrations?.[item?.iconChecked]} />
                                         <div>
-                                            <p className='font-bold text-f20 text-darkslategray-200 overflow-x-hidden'>{filterCenters(item?.id)}</p>
-                                            <p className='text-dimgray-200'>{`Medellín`}</p>
+                                            <p className='font-bold text-f20 text-darkslategray-200 overflow-x-hidden'>{item?.nameCenter}</p>
+                                            <p className='text-dimgray-200'>{item?.centerCity}</p>
                                         </div>
                                     </div>
                                 </td>
@@ -61,12 +89,8 @@ export const DashboardInicioTableB = ({
                                         <img className="w-4 h-4 ml-2" alt="" src={item?.valor_co2 ? Compensation1Icon : CompensacionIcon} />
                                     </div>
                                 </td>
-                                {/* <td className="pl-6 py-4 flex items-center">
-                                    <p className="">{item?.valor_co2}</p>
-                                    <img className="w-4 h-4 ml-2" alt="" src={item?.valor_co2 ? Compensation1Icon : CompensacionIcon} />
-                                </td> */}
                                 <td className="pl-6 py-4 pr-4">
-                                    <a onClick={navigationActive ? goNext : null} className='underline cursor-pointer text-black font-semibold'>Ver resultados</a>
+                                    <a onClick={() => getCalculations(item)} className='underline cursor-pointer text-black font-semibold'>Ver resultados</a>
                                 </td>
                             </tr>
                         ))}

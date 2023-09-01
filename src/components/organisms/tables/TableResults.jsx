@@ -1,4 +1,3 @@
-//TODO: Esta tabla se utiliza en la página de resultados de la huella de carbono. ruta: /app/resultados/empresa/detalle/:id
 export default function TableResults({ img, title, emissions, participation, headers, data }) {
     return (
         <>
