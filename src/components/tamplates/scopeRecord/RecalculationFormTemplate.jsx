@@ -123,7 +123,7 @@ export const RecalculationFormTemplate = () => {
     return (
         <div className='RecalculationFormTemplate bg-primary-gris1 min-h-full'>
             <StepIndicator step={1} />
-            <form onSubmit={handleSubmit(onSubmit)} className='FormularioRegistro w-[550px] mx-auto pt-2'>
+            <form onSubmit={handleSubmit(onSubmit)} className='FormularioRegistro w-[550px] mx-auto pt-2' autoComplete='off'>
                 <p className='text-f19 font-bold text-primary-title1 mb-4'>Definir el tiempo de la medición</p>
                 <div className='flex gap-12'>
                     <div className='w-1/2 flex flex-col'>

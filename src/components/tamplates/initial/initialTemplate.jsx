@@ -16,6 +16,7 @@ import { useAppDispatch } from '../../../redux/store'
 import { getCenterCurrentCase } from '../../../redux/slices/RegisterSlice'
 //Actions
 import { getCentersAction, getEmissionsAllAction } from '../../../redux/actions/RegisterAction'
+import { StartMeasurTemplate } from './StartMeasurTemplate'
 
 export const InitialTemplate = () => {
 
@@ -97,7 +98,7 @@ export const InitialTemplate = () => {
         dispatch(getCentersAction());
     }, []);
 
-    console.log(emissionsAll, 'emissionsAll')
+    if (centers.length === 0) return <StartMeasurTemplate/>;
 
     return (
         <div className='bg-primary-gris1 h-full'>

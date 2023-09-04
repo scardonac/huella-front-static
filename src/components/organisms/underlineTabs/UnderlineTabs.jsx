@@ -9,9 +9,6 @@ import { Link } from "react-router-dom";
 function UnderlineTabs({
     centersEarring = [],
     thTablea = [],
-    label = "Tipo de Emisiones",
-    navigationActive = false,
-    goNext = null,
     dataIcons = {},
 }) {
 
@@ -118,7 +115,9 @@ function UnderlineTabs({
                     </div>
                 ))}
             </div>
-            <p className='text-right pt-2 font-bold pr-3 underline underline-offset-2 cursor-pointer'>Ir a Oficinas {nameCenter}</p>
+            {nameCenter.trim() && (
+                <p className='text-right pt-2 font-bold pr-3 underline underline-offset-2 cursor-pointer'>Ir a Oficinas {nameCenter}</p>
+            )}
         </div>
     );
 }

@@ -1,7 +1,3 @@
-//Context
-import { useContext } from 'react'
-//Context
-import { NavigateAppContext } from '../../../context/NavigateAppContext';
 //Illustrations & Icons
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 import { Icons } from '../../../assets/icons/IconProvider';
@@ -15,7 +11,6 @@ const { Arrow1Icon, Compensation1Icon, CompensacionIcon } = Icons; //Icons
 export const DashboardInicioTableB = ({
     dataTable = [],
     label = "Tipo de Emisiones",
-    navigationActive = false,
     thTableb = [],
 }) => {
 
@@ -24,9 +19,6 @@ export const DashboardInicioTableB = ({
     const dispatch = useAppDispatch(); // Dispatch de acciones de Redux
 
     const { register: { centers } } = useSelector(state => state.persistedData); // selector para obtener los datos del registro
-    const { actualPage, setActualPage } = useContext(NavigateAppContext); //Contexto para navegar entre páginas
-
-    const goNext = () => setActualPage(actualPage + 1); //Función para navegar a la siguiente página
 
     const getCalculations = async ({ nameCenter, idCalculo, registrationDate, centerEmployees }) => {
         const { data, error, verify } = await dispatch(updateEmissionsAction(idCalculo));
@@ -50,7 +42,6 @@ export const DashboardInicioTableB = ({
         navigate(url, { state });
     }
 
-    console.log(dataTable, 'dataTable')
     return (
         <div className='EmisionesTable mt-8'>
             <h3 className='mb-2'>{label}</h3>
@@ -86,7 +77,7 @@ export const DashboardInicioTableB = ({
                                             </p>
 
                                         </div>
-                                        <img className="w-4 h-4 ml-2" alt="" src={item?.valor_co2 ? Compensation1Icon : CompensacionIcon} />
+                                        {/* <img className="w-4 h-4 ml-2" alt="" src={item?.valor_co2 ? Compensation1Icon : CompensacionIcon} /> */}
                                     </div>
                                 </td>
                                 <td className="pl-6 py-4 pr-4">
