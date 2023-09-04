@@ -1,9 +1,14 @@
 import { useNavigate } from "react-router";
-import { Illustrations } from "../../../assets/Illustrations/IllustrationProvider";
-import { getCenterCurrentCase } from "../../../redux/slices/RegisterSlice";
-import { useAppDispatch } from "../../../redux/store";
-import { paths } from "../../../routes/paths";
+//Components
 import { ButtonTypeA } from "../../molecules/buttons/buttonTypeA/ButtonTypeA";
+//Assets
+import { Illustrations } from "../../../assets/Illustrations/IllustrationProvider";
+//Slice
+import { getCenterCurrentCase } from "../../../redux/slices/RegisterSlice";
+//Redux
+import { useAppDispatch } from "../../../redux/store";
+//Routes
+import { paths } from "../../../routes/paths";
 
 const stepsData = [
     {
