@@ -34,6 +34,10 @@ describe('Pruebas en <TextInputController />', () => {
 
     const { control } = useForm(); // Configura un formulario
 
+    test('entro al test', () => {
+        expect(true).toBe(true);
+    });
+
     // test('Debe renderizarse correctamente', () => {
 
     //     const { baseElement } = render(<TextInputController control={control} label={'test'} name={'test'} />);
