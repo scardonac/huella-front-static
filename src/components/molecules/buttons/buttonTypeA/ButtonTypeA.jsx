@@ -44,6 +44,8 @@ export const ButtonTypeA = ({
 
     return (
         <button
+            id='button_type_a'
+            data-testid="button_type_a"
             className='ButtonTypeA'
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}

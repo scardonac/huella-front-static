@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pruebas en <ButtonTypeA /> Debe renderizarse correctamente 1`] = `
+<body>
+  <div>
+    <button
+      class="ButtonTypeA"
+      data-testid="button_type_a"
+      id="button_type_a"
+      style="border: 1px solid #627173; background-color: rgb(247, 249, 247); color: rgb(98, 113, 115); width: 264px; font-size: 18px; padding: 7px 0px; border-radius: 10px; font-weight: bold;"
+      type="button"
+    >
+      defaultText
+    </button>
+  </div>
+</body>
+`;

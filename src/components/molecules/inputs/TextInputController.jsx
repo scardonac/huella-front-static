@@ -28,6 +28,8 @@ export const TextInputController = ({
 
     return (
         <Controller
+            id='text_input_controller'
+            data-testid="text_input_controller"
             control={control}
             name={name}
             rules={rules}
