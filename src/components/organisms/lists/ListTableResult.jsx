@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 import { Icons } from '../../../assets/icons/IconProvider';
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
 
-const { Arrow1Icon, Compensation1Icon, CompensacionIcon } = Icons;
-const { illustration1 } = Illustrations; //Iconos
+const { Arrow1Icon, Compensation1Icon, CompensacionIcon } = Icons; //Icons
+const { illustration1 } = Illustrations; //Illustrations
 
 export default function ListTableResult({ title, subtitle, period, co2, download, empresaId, isLastRow = false }) {
 
@@ -64,7 +64,7 @@ export default function ListTableResult({ title, subtitle, period, co2, download
                     <b>Descargar informe</b>
                 </button>
 
-                <Link to={`/app/resultados/empresa/${empresaId}`} className="text-[inherit] relative lg:ml-0 cursor-pointer">
+                <Link to={`/app/results/company/${empresaId}`} className="text-[inherit] relative lg:ml-0 cursor-pointer">
                     <b className="text-base tracking-[0.08px] underline mr-1">Ver completo</b>
                     <img
                         className="absolute top-1/2 right-[-3.9px] transform -translate-y-1/2 w-[5.60px] h-[10.05px]"

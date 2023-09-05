@@ -5,7 +5,7 @@ import { NavigateAppContext } from '../../../context/NavigateAppContext';
 //Components
 import { ButtonTypeA } from '../../molecules/buttons/buttonTypeA/ButtonTypeA';
 import { ConsumoEnergiaModal } from '../modalContents/ConsumoEnergiaModal';
-import { ConsumoEnergiaTabla } from '../tables/ConsumoEnergiaTabla';
+import { ConsumoEnergiaTable } from '../tables/ConsumoEnergiaTable';
 import { WrapReports } from '../wrapReports/WrapReports';
 //Assets
 import { Illustrations } from '../../../assets/Illustrations/IllustrationProvider';
@@ -67,7 +67,7 @@ export const EnergyConsumptionReportP = () => {
             icon={ConsumoEnergia_Azul}
             navigateTo={-1}
         >
-            <ConsumoEnergiaTabla label='Reporte periódico' periodos={monthsArray} handleValue={handleValue} />
+            <ConsumoEnergiaTable label='Reporte periódico' periodos={monthsArray} handleValue={handleValue} />
             <div className='flex justify-end gap-4 pt-6'>
                 <ButtonTypeA text='Cancelar' width='130px' />
                 <ButtonTypeA text='Borrador' width='185px' bgColor='#FE5000' txColor='#FFFFFF' bdWidth='0px' bgHvColor='#E6500B' submitBtn={true} action={handleBorrador} />

@@ -52,6 +52,10 @@ import HomeOffice_Azul from '../../assets/Illustrations/illustration_HomeOffice_
 import HomeOffice_Default from '../../assets/Illustrations/illustration_HomeOffice_Default.svg'
 import HomeOffice_VFuerte from '../../assets/Illustrations/illustration_HomeOffice_VFuerte.svg'
 import HomeOffice_VSuave from '../../assets/Illustrations/illustration_HomeOffice_VSuave.svg'
+import Illustration_onboarding_step1 from '../../assets/Illustrations/Illustration_onboarding_step1.svg'
+import Illustration_onboarding_step2 from '../../assets/Illustrations/Illustration_onboarding_step2.svg'
+import Illustration_onboarding_step3 from '../../assets/Illustrations/Illustration_onboarding_step3.svg'
+import Illustration_onboarding_step4 from '../../assets/Illustrations/Illustration_onboarding_step4.svg'
 import Mensajeria_Azul from '../../assets/Illustrations/illustration_Mensajeria_Azul.svg'
 import Mensajeria_Default from '../../assets/Illustrations/illustration_Mensajeria_Default.svg'
 import Mensajeria_VFuerte from '../../assets/Illustrations/illustration_Mensajeria_VFuerte.svg'
@@ -157,6 +161,10 @@ export const Illustrations = {
     HomeOffice_Default,
     HomeOffice_VFuerte,
     HomeOffice_VSuave,
+    Illustration_onboarding_step1,
+    Illustration_onboarding_step2,
+    Illustration_onboarding_step3,
+    Illustration_onboarding_step4,
     Mensajeria_Azul,
     Mensajeria_Default,
     Mensajeria_VFuerte,

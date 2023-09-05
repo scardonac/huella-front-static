@@ -1,18 +1,19 @@
 import { useState } from 'react'
 
 export const ButtonTypeA = ({
-    text = "defaultText",
     action = null,
-    width = "264px",
-    bgColor = "#f7f9f7",
-    bgHvColor = "#FFFFFF",
-    txColor = "#627173",
+    bdColor = "#627173",
     bdType = "solid",
     bdWidth = "1px",
-    bdColor = "#627173",
-    fontSize = "18px",
-    submitBtn = false,
+    bgColor = "#f7f9f7",
+    bgHvColor = "#FFFFFF",
     centrado = false,
+    fontSize = "18px",
+    styles = '',
+    submitBtn = false,
+    text = "defaultText",
+    txColor = "#627173",
+    width = "264px",
 }) => {
 
     const buttonStyle = {
@@ -26,6 +27,7 @@ export const ButtonTypeA = ({
         fontWeight: "bold",
         margin: centrado ? "0 auto" : "inehirt",
         height: "fit-content",
+        ...styles
     };
 
     const hoverStyle = {
