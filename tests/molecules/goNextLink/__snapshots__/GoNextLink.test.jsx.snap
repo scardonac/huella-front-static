@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pruebas en <GoNextLink /> Debe renderizarse correctamente 1`] = `
+<body>
+  <div>
+    <div
+      class="relative"
+    >
+      <link
+        class="text-primary-gris3 underline absolute"
+        data-testid="go_next_link"
+        id="go_next_link"
+        style="left: 120px; top: 30px;"
+        to="#"
+      >
+        Siguiente &gt;
+      </link>
+    </div>
+  </div>
+</body>
+`;

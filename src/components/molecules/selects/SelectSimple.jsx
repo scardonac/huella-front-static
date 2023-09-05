@@ -45,13 +45,6 @@ export const SelectSimple = ({
 
     return (
         <>
-            {/* <select {...register("Title", { required: true })}>
-                <option value="Mr">Mr</option>
-                <option value="Mrs">Mrs</option>
-                <option value="Miss">Miss</option>
-                <option value="Dr">Dr</option>
-            </select> */}
-
             <label className='text-f18 text-primary-gris2'>{label}</label>
             <select
                 className='px-2 py-2 rounded-md border border-dimgray-200'

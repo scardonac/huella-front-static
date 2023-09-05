@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "deploy": "gh-pages -d dist",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll --coverage"
   },
   "dependencies": {
     "@babel/core": "^7.22.10",

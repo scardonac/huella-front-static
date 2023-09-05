@@ -11,7 +11,7 @@ const { beginRegister } = Illustrations;
 export const InitialFirstTemplate = () => {
 
     return (
-        <div className='RecalculationFormTemplate max-w-screen-sm ml-96 mt-16 text-center'>
+        <div className='max-w-screen-sm ml-96 mt-16 text-center'>
         <GoNextLink top='-100px' left='-300px' />
         <p className='text-f28 text-primary-title1 font-bold mb-5'>Antes de comenzar, ingresar un año base</p>
         <p className='text-f18 text-primary-gris2 mb-7'>Es importante para la certificación. Sirve para comparar la eficacia en un plan de reducción de emisiones.</p>

@@ -1,16 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Pruebas en <CheckboxInput /> should render correctly 1`] = `
-<div>
-  <div
-    class=""
-  >
+exports[`Pruebas en <CheckboxInput /> Debe renderizarse correctamente 1`] = `
+<body>
+  <div>
     <div
-      class="custom-checkbox "
-    />
-    <label
       class=""
-    />
+      data-testid="checkbox_div"
+      id="checkbox_div"
+    >
+      <div
+        class="custom-checkbox "
+        data-testid="checkbox_input"
+        id="checkbox_input"
+      />
+      <label
+        class=""
+        for="test"
+      >
+        Test
+      </label>
+    </div>
   </div>
-</div>
+</body>
 `;
